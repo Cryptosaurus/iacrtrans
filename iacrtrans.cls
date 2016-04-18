@@ -21,25 +21,30 @@
 \LoadClass[11pt,twoside]{article}[2007/10/19]
 %\LoadClass{amsart}
 
-%Geometry
-\RequirePackage[a4paper,scale=0.75,hmarginratio=1:1]{geometry}
+% Geometry
+\RequirePackage[a4paper,scale=0.75,marginratio=1:1]{geometry}
 
 % Title fonts: bf+sf
 \RequirePackage{sectsty}
 \allsectionsfont{\sffamily\boldmath}
 \def\@maketitle{%
+  \ifdefined\IACR@last@author%
+  \@temptokena=\expandafter{\IACR@runningauthors}%
+  \@temptokenb=\expandafter{\IACR@last@author}%
+  \xdef\IACR@runningauthors{\the\@temptokena{} and \the\@temptokenb}%
+  \fi%
   \newpage
   \null
   \vskip 2em%
   \begin{center}%
   \let \footnote \thanks
-    {\LARGE \bfseries\sffamily \@title \par}%
+    {\LARGE \bfseries\sffamily\boldmath \@title \par}%
     \vskip 1.5em%
     {\large
       \lineskip .5em%
       \begin{tabular}[t]{c}%
         \if@submission
-        Anonymous submission
+        Anonymous Submission
         \else
         \@author
         \fi
@@ -67,8 +72,12 @@
 \renewcommand{\footrulewidth}{0pt}}
 \fancyhf{} % clear all header and footer fields
 \fancyhead[RO,LE]{\thepage}
-\fancyhead[RE]{\IACR@runningtitle}
+\fancyhead[RE]{\def\thanks##1{}\def\\{}\IACR@runningtitle}
+\if@submission
+\fancyhead[LO]{Anonymous Submission to \publname}
+\else
 \fancyhead[LO]{\def\thanks##1{}\IACR@runningauthors}
+\fi
 \renewcommand{\markboth}[2]{}
 
 %\def\IACR@runningauthors{}
@@ -78,12 +87,15 @@
 \def\IACR@@author#1{\IACR@addauthor{#1}\IACR@saved@author{#1}}
 \newtoks{\@temptokena}
 \newtoks{\@temptokenb}
+%\newtoks{\@IACR@last@author}
 \def\IACR@addauthor#1{
   \ifdefined\IACR@runningauthors
-  \gdef\@tmp@author{#1}
+  \ifdefined\IACR@last@author
   \@temptokena=\expandafter{\IACR@runningauthors}
-  \@temptokenb=\expandafter{\@tmp@author}
+  \@temptokenb=\expandafter{\IACR@last@author}
   \xdef\IACR@runningauthors{\the\@temptokena, \the\@temptokenb}
+  \fi
+  \gdef\IACR@last@author{#1}
   \else
   \gdef\IACR@runningauthors{#1}
   \fi}
@@ -97,6 +109,8 @@
 \let\IACR@maketitle=\maketitle
 \def\maketitle{\IACR@maketitle \thispagestyle{title}\pagestyle{fancy}}
 
+% TODO
+\def\subtitle#1{\gdef\@subtitle{#1}}
 
 %Abstract style, keywords
 \newtoks{\@IACR@keywords}
@@ -153,8 +167,9 @@
 \restylefloat{table}
 \restylefloat{figure}
 
-%Extra packages
+% Extra packages
 \RequirePackage{xcolor}
+\newcommand{\email}[1]{\href{mailto:#1}{\nolinkurl{#1}}}
 
 
 % Line # for submission
