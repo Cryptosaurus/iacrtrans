@@ -74,35 +74,35 @@
   \setbox0\hbox{\def\and{\stepcounter{IACR@inst@cnt}}\@institute}%
   \xdef\IACR@author@last{\theIACR@author@cnt}%
   \edef\IACR@inst@last{\theIACR@inst@cnt}%
-  \ifnum\IACR@author@last=\IACR@inst@last\else
-    \@IACR@autoinstfalse\fi
-  \ifnum\IACR@author@last=1
-    \@IACR@autoinstfalse\fi
-  \setcounter{IACR@author@cnt}{1}%
-  \def\and{\if@IACR@autoinst\inst{\theIACR@author@cnt} \fi
-    \stepcounter{IACR@author@cnt}%
-    \ifnum\theIACR@author@cnt=\IACR@author@last%
-    and
-    \else
-    \unskip,
-    \fi}
+  \ifnum\IACR@author@last=\IACR@inst@last\else\@IACR@autoinstfalse\fi
+  \ifnum\IACR@author@last=1 \@IACR@autoinstfalse\fi
   \newpage
   \null
   \vskip 2em%
   \begin{center}%
   \let \footnote \thanks
     {\def\@makefnmark{\rlap{\@textsuperscript{\normalfont\@thefnmark}}}%
-      \LARGE \bfseries\sffamily\boldmath \@title \par}%
+      {\LARGE \bfseries\sffamily\boldmath \@title} \par
+    \ifdefined\@subtitle\vskip .5em{\large\sffamily\bfseries\@subtitle}\fi}%
     \vskip 1.5em%
     {\large
       \lineskip .5em%
-      \begin{tabular}[t]{c}%
         \if@submission
         Anonymous Submission
         \else
+        \setcounter{IACR@author@cnt}{1}%
+        \def\and{\if@IACR@autoinst\inst{\theIACR@author@cnt} \fi
+          \stepcounter{IACR@author@cnt}%
+          \ifnum\theIACR@author@cnt=\IACR@author@last and \else \unskip, \fi}
         \@author\if@IACR@autoinst\inst{\theIACR@author@cnt}\fi
+        \vskip 1em\par
+        \small
+        \setcounter{IACR@author@cnt}{1}%
+        \def\and{\par\stepcounter{IACR@author@cnt}$^\theIACR@author@cnt$~}
+        \ifnum\IACR@inst@last>1 $^1$~\fi
+        \@institute
         \fi
-      \end{tabular}\par}%
+      }%
   \end{center}%
   \par
   \vskip 1.5em}
@@ -126,6 +126,7 @@
 \def\title{\@ifnextchar[{\IACR@@@title}{\IACR@@title}}
 \def\IACR@@@title[#1]#2{\gdef\@title{#2}\runnintitle{#1}}
 \def\IACR@@title#1{\IACR@@@title[#1]{#1}}
+\newcommand{\subtitle}[1]{\gdef\@subtitle{#1}}
 
 \newcommand{\inst}[1]{\unskip$^{#1}$}
 \def\fnmsep{\unskip$^,$}
