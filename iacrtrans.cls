@@ -59,6 +59,9 @@
 \RequirePackage{authblk}
 \setcounter{Maxaffil}{1}
 \renewcommand\Affilfont{\small~}
+\renewcommand\Authands{ and }
+\newcommand{\inst}[1]{\unskip$^{#1}$}
+\let\institute\affil
 
 % Head/foot
 \RequirePackage{fancyhdr}
@@ -80,7 +83,6 @@
 \fi
 \renewcommand{\markboth}[2]{}
 
-%\def\IACR@runningauthors{}
 \let\IACR@saved@author=\author
 \def\author{\@ifnextchar[{\IACR@@@author}{\IACR@@author}}
 \def\IACR@@@author[#1]#2{\IACR@addauthor{#2}\IACR@saved@author[#1]{#2}}
