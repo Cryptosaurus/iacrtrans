@@ -2,6 +2,8 @@
 \ProvidesClass{iacrtrans}[2016/04/01 v0.1 IACR Transactions Author Class]
 
 % Options
+\def\publname{IACR Transactions on Symmetric Cryptology}
+
 \newif\if@loadhr
 \@loadhrtrue
 \DeclareOption{nohyperref}{\@loadhrfalse}
@@ -27,18 +29,70 @@
 % Title fonts: bf+sf
 \RequirePackage{sectsty}
 \allsectionsfont{\sffamily\boldmath}
+
+% Title/Author/affiliations
+\def\@institute{No institute given.}
+\newcommand{\institute}[1]{\gdef\@institute{#1}}
+\newcommand{\runningauthor}[1]{\gdef\IACR@runningauthors{#1}}
+\newcommand{\runnintitle}[1]{\gdef\IACR@runningtitle{#1}}
+
+\newcounter{IACR@author@cnt}
+\newcounter{IACR@inst@cnt}
+\newif\if@IACR@autoinst
+\@IACR@autoinsttrue
+\def\IACR@author@last{0}
+
+\renewcommand\maketitle{\par
+  \begingroup
+    \renewcommand\thefootnote{\@fnsymbol\c@footnote}%
+    \long\def\@makefntext##1{\parindent 1em\noindent
+            \hb@xt@1.8em{%
+                \hss\@textsuperscript{\normalfont\@thefnmark}}##1}%
+    \newpage
+    \global\@topnum\z@   % Prevents figures from going at top of page.
+    \@maketitle
+    \thispagestyle{title}\@thanks
+  \endgroup
+  \setcounter{footnote}{0}%
+  \global\let\thanks\relax
+  \global\let\maketitle\relax
+  \global\let\@maketitle\relax
+  \global\let\@thanks\@empty
+%  \global\let\@author\@empty
+  \global\let\@date\@empty
+  \global\let\@title\@empty
+  \global\let\title\relax
+  \global\let\author\relax
+  \global\let\date\relax
+  \global\let\and\relax
+}
 \def\@maketitle{%
-  \ifdefined\IACR@last@author%
-  \@temptokena=\expandafter{\IACR@runningauthors}%
-  \@temptokenb=\expandafter{\IACR@last@author}%
-  \xdef\IACR@runningauthors{\the\@temptokena{} and \the\@temptokenb}%
-  \fi%
+  % Count authors and affiliations
+  \setcounter{IACR@author@cnt}{1}%
+  \setcounter{IACR@inst@cnt}{1}%
+  \setbox0\hbox{\def\thanks##1{\global\@IACR@autoinstfalse}\def\inst##1{\global\@IACR@autoinstfalse}\def\and{\stepcounter{IACR@author@cnt}}\@author}%
+  \setbox0\hbox{\def\and{\stepcounter{IACR@inst@cnt}}\@institute}%
+  \xdef\IACR@author@last{\theIACR@author@cnt}%
+  \edef\IACR@inst@last{\theIACR@inst@cnt}%
+  \ifnum\IACR@author@last=\IACR@inst@last\else
+    \@IACR@autoinstfalse\fi
+  \ifnum\IACR@author@last=1
+    \@IACR@autoinstfalse\fi
+  \setcounter{IACR@author@cnt}{1}%
+  \def\and{\if@IACR@autoinst\inst{\theIACR@author@cnt} \fi
+    \stepcounter{IACR@author@cnt}%
+    \ifnum\theIACR@author@cnt=\IACR@author@last%
+    and
+    \else
+    \unskip,
+    \fi}
   \newpage
   \null
   \vskip 2em%
   \begin{center}%
   \let \footnote \thanks
-    {\LARGE \bfseries\sffamily\boldmath \@title \par}%
+    {\def\@makefnmark{\rlap{\@textsuperscript{\normalfont\@thefnmark}}}%
+      \LARGE \bfseries\sffamily\boldmath \@title \par}%
     \vskip 1.5em%
     {\large
       \lineskip .5em%
@@ -46,22 +100,36 @@
         \if@submission
         Anonymous Submission
         \else
-        \@author
+        \@author\if@IACR@autoinst\inst{\theIACR@author@cnt}\fi
         \fi
       \end{tabular}\par}%
   \end{center}%
   \par
   \vskip 1.5em}
 
-\def\publname{IACR Transactions on Symmetric Cryptology}
+\def\IACR@runningauthors{
+  \def\thanks##1{}\def\inst##1{}\def\footnote##1{}%
+  \setcounter{IACR@author@cnt}{1}%
+  \def\and{\stepcounter{IACR@author@cnt}%
+    \ifnum\theIACR@author@cnt=\IACR@author@last%
+    and
+    \else
+    \unskip,
+    \fi}
+  \@author
+}
 
-% Author/affiliations
-\RequirePackage{authblk}
-\setcounter{Maxaffil}{1}
-\renewcommand\Affilfont{\small~}
-\renewcommand\Authands{ and }
+\def\author{\@ifnextchar[{\IACR@@@author}{\IACR@@author}}
+\def\IACR@@@author[#1]#2{\gdef\@author{#2}\runningauthor{#1}}
+\def\IACR@@author#1{\gdef\@author{#1}}
+
+\def\title{\@ifnextchar[{\IACR@@@title}{\IACR@@title}}
+\def\IACR@@@title[#1]#2{\gdef\@title{#2}\runnintitle{#1}}
+\def\IACR@@title#1{\IACR@@@title[#1]{#1}}
+
 \newcommand{\inst}[1]{\unskip$^{#1}$}
-\let\institute\affil
+\def\fnmsep{\unskip$^,$}
+
 
 % Head/foot
 \RequirePackage{fancyhdr}
@@ -79,37 +147,10 @@
 \if@submission
 \fancyhead[LO]{Anonymous Submission to \publname}
 \else
-\fancyhead[LO]{\def\thanks##1{}\IACR@runningauthors}
+\fancyhead[LO]{\IACR@runningauthors}
 \fi
 \renewcommand{\markboth}[2]{}
-
-\let\IACR@saved@author=\author
-\def\author{\@ifnextchar[{\IACR@@@author}{\IACR@@author}}
-\def\IACR@@@author[#1]#2{\IACR@addauthor{#2}\IACR@saved@author[#1]{#2}}
-\def\IACR@@author#1{\IACR@addauthor{#1}\IACR@saved@author{#1}}
-\newtoks{\@temptokena}
-\newtoks{\@temptokenb}
-%\newtoks{\@IACR@last@author}
-\def\IACR@addauthor#1{
-  \ifdefined\IACR@runningauthors
-  \ifdefined\IACR@last@author
-  \@temptokena=\expandafter{\IACR@runningauthors}
-  \@temptokenb=\expandafter{\IACR@last@author}
-  \xdef\IACR@runningauthors{\the\@temptokena, \the\@temptokenb}
-  \fi
-  \gdef\IACR@last@author{#1}
-  \else
-  \gdef\IACR@runningauthors{#1}
-  \fi}
-
-
-\def\title{\@ifnextchar[{\IACR@@@title}{\IACR@@title}}
-\def\IACR@@@title[#1]#2{\gdef\IACR@runningtitle{#1}\gdef\@title{#2}}
-\def\IACR@@title#1{\IACR@@@title[#1]{#1}}
-\def\runningtitle#1{\gdef\IACR@runningtitle{#1}}
-
-\let\IACR@maketitle=\maketitle
-\def\maketitle{\IACR@maketitle \thispagestyle{title}\pagestyle{fancy}}
+\pagestyle{fancy}
 
 % TODO
 \def\subtitle#1{\gdef\@subtitle{#1}}
