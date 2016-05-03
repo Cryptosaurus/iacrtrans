@@ -50,6 +50,9 @@
 \DeclareOption{preprint}{\@preprinttrue}
 \DeclareOption{submission}{\@submissiontrue}
 \DeclareOption{draft}{\@preprinttrue\PassOptionsToClass{\CurrentOption}{article}}
+\newif\if@spthm
+\@spthmfalse
+\DeclareOption{spthm}{\@spthmtrue}
 
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
 \ProcessOptions\relax
@@ -222,6 +225,7 @@
 \newtheorem{property}{Property}
 \newtheorem{question}{Question}
 \newtheorem{solution}{Solution}
+
 \theoremstyle{plain}
 \newtheorem{theorem}{Theorem}
 \newtheorem{proposition}{Proposition}
@@ -229,13 +233,24 @@
 \newtheorem{lemma}{Lemma}
 \newtheorem{conjecture}{Conjecture}
 \newtheorem{corollary}{Corollary}
-\newtheorem{claim}{Claim}
+\newtheorem*{claim}{Claim}
 
 \theoremstyle{remark}
 \newtheorem{remark}{Remark}
 \newtheorem{note}{Note}
 \newtheorem{case}{Case}
 
+\theoremstyle{plain}
+
+%Emulate LLNCS spnewtheorem
+\if@spthm
+\def\spnewtheorem{\@ifstar{\IACR@spstar}{\IACR@sp}}
+\def\IACR@spstar#1#2#3#4{\newtheorem*{#1}{#2}}
+\def\IACR@sp#1{\@ifnextchar[{\IACR@sp@b{#1}}{\IACR@sp@a{#1}}}
+\def\IACR@sp@a#1#2[#3]#4#5{\newtheorem{#1}{#2}[#3]}
+\def\IACR@sp@b#1[#2]#3#4#5{\newtheorem{#1}[#2]{#3}}
+\renewcommand{\pushQED}[1]{}
+\fi
 
 % Floats and captions
 \RequirePackage{float}
