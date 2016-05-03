@@ -1,5 +1,41 @@
+% IACR Transactions DOCUMENT CLASS -- version 0.1 (1 May 2016)
+% Written by Gaetan Leurent gaetan.leurent@inria.fr (2016)
+%
+% To the extent possible under law, the author(s) have dedicated all
+% copyright and related and neighboring rights to this software to the
+% public domain worldwide. This software is distributed without any
+% warranty.
+%
+% You should have received a copy of the CC0 Public Domain Dedication
+% along with this software. If not, see
+% <http://creativecommons.org/publicdomain/zero/1.0/>.
+%
+%
+%%% Class options:
+%
+% [preprint]   Preprint (no copyright info)
+% [submission] Anonymous submission
+% [nohyperref] disable automatic loading of hyperref
+% [draft]
+%
+%%% HOWTO use this class
+%
+%% Title
+% \title[short]{Long title}
+%
+%% Authors/affiliation: 
+% \author{Alice \and Bob}
+% \institute{ABC\\ \email{alice@abc} \and DEF\\ \email{bob@def}}
+%
+%% Keywords/abstract:
+% \keywords{banana \and apple}
+% \begin{abstract}
+% Lorem ipsum dolor sit amet...
+% \end{abstract}
+
+
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesClass{iacrtrans}[2016/04/01 v0.1 IACR Transactions Author Class]
+\ProvidesClass{iacrtrans}[2016/05/01 v0.1 IACR Transactions Author Class]
 
 % Options
 \def\publname{IACR Transactions on Symmetric Cryptology}
