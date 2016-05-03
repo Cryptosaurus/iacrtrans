@@ -1,4 +1,4 @@
-% IACR Transactions DOCUMENT CLASS -- version 0.1 (1 May 2016)
+% IACR Transactions DOCUMENT CLASS -- version 0.2 (3 May 2016)
 % Written by Gaetan Leurent gaetan.leurent@inria.fr (2016)
 %
 % To the extent possible under law, the author(s) have dedicated all
@@ -35,7 +35,7 @@
 
 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesClass{iacrtrans}[2016/05/01 v0.1 IACR Transactions Author Class]
+\ProvidesClass{iacrtrans}[2016/05/03 v0.2 IACR Transactions Author Class]
 
 % Options
 \def\publname{IACR Transactions on Symmetric Cryptology}
