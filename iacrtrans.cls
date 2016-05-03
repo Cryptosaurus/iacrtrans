@@ -15,7 +15,8 @@
 %
 % [preprint]   Preprint (no copyright info)
 % [submission] Anonymous submission
-% [nohyperref] disable automatic loading of hyperref
+% [spthm]      Emulate llnc sptheorem and remove automatic \qed in proof
+% [nohyperref] Disable automatic loading of hyperref
 % [draft]
 %
 %%% HOWTO use this class
@@ -32,7 +33,11 @@
 % \begin{abstract}
 % Lorem ipsum dolor sit amet...
 % \end{abstract}
-
+%
+%% Warnings
+% - please don't use any \pagestyle of \thispagestyle command
+% - if you have proof with explicit \qed inside, you should either
+%   remove \qed symbols, replace them by \qedhere, or add option [spthm]
 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{iacrtrans}[2016/05/03 v0.2 IACR Transactions Author Class]
