@@ -118,8 +118,8 @@
   \begin{center}%
   \let \footnote \thanks
     {\def\@makefnmark{\rlap{\@textsuperscript{\normalfont\@thefnmark}}}%
-      {\LARGE \bfseries\sffamily\boldmath \@title} \par
-    \ifdefined\@subtitle\vskip .5em{\large\sffamily\bfseries\@subtitle}\fi}%
+      {\LARGE \bfseries\sffamily\boldmath \@title\par}
+    \ifdefined\@subtitle\vskip .5em{\large\sffamily\bfseries\@subtitle\par}\fi}%
     \vskip 1.5em%
     {\large
       \lineskip .5em%
