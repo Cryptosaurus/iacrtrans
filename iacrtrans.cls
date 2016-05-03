@@ -173,8 +173,8 @@
 \fancypagestyle{title}{%
 \fancyhf{} % clear all header and footer fields
 \if@submission\else\if@preprint\else
-\fancyfoot[L]{\publname\\DOI:xxx}
-\fancyfoot[R]{\textcopyright IACR}
+\fancyfoot[L]{\small \publname\\DOI:xxx}
+\fancyfoot[R]{\small \textcopyright IACR}
 \fi\fi
 \renewcommand{\headrulewidth}{0pt}
 \renewcommand{\footrulewidth}{0pt}}
