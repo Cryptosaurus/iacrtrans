@@ -1,4 +1,4 @@
-% IACR Transactions DOCUMENT CLASS -- version 0.2 (3 May 2016)
+% IACR Transactions DOCUMENT CLASS -- version 0.21 (4 May 2016)
 % Written by Gaetan Leurent gaetan.leurent@inria.fr (2016)
 %
 % To the extent possible under law, the author(s) have dedicated all
@@ -40,7 +40,7 @@
 %   remove \qed symbols, replace them by \qedhere, or add option [spthm]
 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesClass{iacrtrans}[2016/05/03 v0.2 IACR Transactions Author Class]
+\ProvidesClass{iacrtrans}[2016/05/04 v0.21 IACR Transactions Author Class]
 
 % Options
 \def\publname{IACR Transactions on Symmetric Cryptology}
@@ -213,8 +213,14 @@
 
 % Hyperref
 \if@loadhr
+  \RequirePackage{xcolor}
   \RequirePackage{etoolbox}
-  \AtEndPreamble{\@ifpackageloaded{hyperref}{}{\usepackage{hyperref}}}
+  \AtEndPreamble{
+    \@ifpackageloaded{hyperref}{}{\usepackage{hyperref}}
+    \hypersetup{colorlinks=true,
+      citecolor=black!70!green,
+      linkcolor=black!70!red}
+  }
   \setcounter{tocdepth}{2}
 \fi
 
