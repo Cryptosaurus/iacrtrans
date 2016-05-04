@@ -63,12 +63,10 @@
 \ProcessOptions\relax
 
 % article class with a4paper
-%\LoadClass[11pt,oneside]{article}[2007/10/19]
-\LoadClass[11pt,twoside]{article}[2007/10/19]
-%\LoadClass{amsart}
+\LoadClass[10pt,twoside]{article}[2007/10/19]
 
 % Geometry
-\RequirePackage[a4paper,scale=0.75,marginratio=1:1]{geometry}
+\RequirePackage[a4paper,hscale=0.65,vscale=0.75,marginratio=1:1]{geometry}
 
 % Title fonts: bf+sf
 \RequirePackage{sectsty}
@@ -210,7 +208,7 @@
   \small\quotation\setlength{\parindent}{0pt}\noindent
   \textbf{\textsf{Abstract.}}}
   {\smallskip\par\textbf{\textsf{Keywords:}}
-    \def\and{\unskip, }\the\@IACR@keywords
+    \def\and{\unskip\ \textperiodcentered\ }\the\@IACR@keywords
   \endquotation}
 
 % Hyperref
