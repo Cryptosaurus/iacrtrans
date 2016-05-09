@@ -15,7 +15,7 @@
 %
 % [preprint]   Preprint (no copyright info)
 % [submission] Anonymous submission
-% [spthm]      Emulate llnc sptheorem and remove automatic \qed in proof
+% [spthm]      Emulate llncs sptheorem and remove automatic \qed in proof
 % [nohyperref] Disable automatic loading of hyperref
 % [draft]
 %
@@ -42,9 +42,11 @@
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{iacrtrans}[2016/05/04 v0.21 IACR Transactions Author Class]
 
-% Options
+% Common definitions
 \def\publname{IACR Transactions on Symmetric Cryptology}
 
+
+% Options
 \newif\if@loadhr
 \@loadhrtrue
 \DeclareOption{nohyperref}{\@loadhrfalse}
@@ -52,6 +54,7 @@
 \@submissionfalse
 \newif\if@preprint
 \@preprintfalse
+\DeclareOption{final}{}         % Default
 \DeclareOption{preprint}{\@preprinttrue}
 \DeclareOption{submission}{\@submissiontrue}
 \DeclareOption{draft}{\@preprinttrue\PassOptionsToClass{\CurrentOption}{article}}
@@ -71,6 +74,10 @@
 % Title fonts: bf+sf
 \RequirePackage{sectsty}
 \allsectionsfont{\sffamily\boldmath}
+% Also for descrptions
+\renewcommand*\descriptionlabel[1]{\hspace\labelsep
+                                   \normalfont\bfseries\sffamily #1}
+
 
 % Title/Author/affiliations
 \def\@institute{No institute given.}
@@ -180,7 +187,7 @@
 \fancyhf{} % clear all header and footer fields
 \if@submission\else\if@preprint\else
 \fancyfoot[L]{\small \publname\\DOI:xxx}
-\fancyfoot[R]{\small \textcopyright IACR}
+\fancyfoot[R]{\small \textcopyright{} IACR}
 \fi\fi
 \renewcommand{\headrulewidth}{0pt}
 \renewcommand{\footrulewidth}{0pt}}
@@ -271,8 +278,7 @@
 \restylefloat{table}
 \restylefloat{figure}
 
-% Extra packages
-\RequirePackage{xcolor}
+% Extra commands
 \newcommand{\email}[1]{\href{mailto:#1}{\nolinkurl{#1}}}
 
 
