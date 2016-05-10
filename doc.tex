@@ -1,0 +1,106 @@
+\documentclass[preprint]{iacrtrans}
+\usepackage[utf8]{inputenc}
+
+\author{Gaëtan Leurent\inst{1} \and Alice\inst{2} \and Bob\inst{2}}
+\institute{Inria, France, \email{gaetan.leurent@inria.fr} \and ACME}
+\title{\publname}
+\subtitle{\LaTeX{} Class Documentation}
+
+\begin{document}
+
+\maketitle
+
+\keywords{\publname \and FSE \and \LaTeX}
+\begin{abstract}
+  This document is a quick introduction to the \LaTeX{} class for the
+  \publname journal.
+\end{abstract}
+
+\section*{Introduction}
+
+The \texttt{iacrtans} \LaTeX{} class will be used by the new
+``\publname'' journal.  The class is based on standard \LaTeX{}
+classes and packages (mainly the \texttt{article} class with
+\texttt{amsmath}), and should be similar in use to the \texttt{llncs}
+class used by Springer's proceedings.  The \LaTeX{} source of this
+documentation is meant as an example to show basic usage of the class.
+
+Since this is the zero-th issue of the journal, the class is still in
+developpement and feedback and comments are welcome.
+
+\subsection*{Packages used}
+
+The class is based on the standard \texttt{article} class, and loads
+the following packages:
+\begin{itemize}
+\item \texttt{geometry}, \texttt{secsty}, \texttt{fancyhdr}, \texttt{mathtools},
+  \texttt{float}, \texttt{microtype}
+\item \texttt{amsmath}, \texttt{amssymb}, \texttt{amsthm}
+\item \texttt{hyperref}, \texttt{etoolbox}, \texttt{xcolor} (unless
+  the \texttt{[nohyperref]} option is used)
+\item \texttt{lineno} (in \texttt{[submission]} mode)
+\end{itemize}
+
+\section{Publication type}
+
+The class supports three publication types, selected with the
+following class options
+\begin{itemize}
+\item \texttt{[final]} for final papers (default mode)
+\item \texttt{[preprint]} for preprint (without copyright info)
+\item \texttt{[submission]} for submissions (anonymous)
+\item \texttt{[draft]} is similar to preprint, but activates draft
+  mode for other packages (\emph{e.g.} \texttt{gaphicx, tikz})
+\end{itemize}
+
+\section{Other Class Options}
+
+The \texttt{[spthm]} option provide theorem environments that emulates
+\texttt{llncs} class's \texttt{sptheorem}, while the
+\texttt{iacrtrans} class is based on \AmS{} theorem.
+\begin{itemize}
+\item A \texttt{\textbackslash{}spnewtheorem} wrapper is provided
+  around \AmS{} \texttt{\textbackslash{}newtheorem}.  Note that the
+  styling option are ignored, and you should use standard
+  \texttt{amsthm} command for fine control.
+\item The \AmS{} theorem environments will not automatically add a
+  QED symbol at the end of proofs.
+\end{itemize}
+
+The \texttt{[nohyperref]} option disables the automatic loading of
+\texttt{hyperref}.  Use this is if your document fails to compile with
+\texttt{hyperref} for some reason.
+
+\section{Commands}
+
+\subsection{Title, authors, affiliations, ...}
+
+Author names and affiliations should be seperated by the
+\texttt{\textbackslash{}and} macro.
+
+
+
+
+\subsection{Theorems}
+
+
+
+
+\section{Further instructions}
+
+\paragraph{Floats}
+
+Float captions should be below the float.  The \texttt{float} package
+loaded by the class should take of this automatically.
+
+\paragraph{Pictures}
+
+We recommend to use the \texttt{tikz} package to render pictures.
+
+\paragraph{Algorithms}
+
+We recommend the \texttt{algorithmcx} package.
+
+\paragraph{Bibliography}
+
+\end{document}
