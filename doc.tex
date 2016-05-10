@@ -25,7 +25,7 @@
 \keywords{\publname \and FSE \and \LaTeX}
 \begin{abstract}
   This document is a quick introduction to the \LaTeX{} class for the
-  \publname{} journal (the journal of the FSE conference).
+  \publname{}.
 \end{abstract}
 
 \section*{Introduction}
@@ -40,7 +40,7 @@ documentation is meant as an example to show basic usage of the class.
 Since we are now preparing the zero-th issue of the journal, the class
 is still in development and feedback and comments are welcome.
 
-\subsection*{\textcolor{red!70!black}{TL;DR}: Converting \texttt{llncs} papers to \texttt{iacrtrans}}
+\subsection*{\textcolor{red!70!black}{FAQ:} Converting \texttt{llncs} papers to \texttt{iacrtrans}}
 
 If you have a paper typeset with the \texttt{llncs} class, conversion
 should be relatively easy.  The following steps should be sufficient
@@ -50,18 +50,20 @@ in most cases (for the submission version):
 \item Replace \verb+\bibliographystyle{splncs03}+ with
   \verb+\bibliographystyle{alpha}+;
 \item Add a \verb+\keywords{}+ command before the abstract, with
-  keywords seperated by \verb+\and+;
+  keywords separated by \verb+\and+;
 \item Remove commands that might override the class style, such as
   \verb+\pagestyle{...}+ or \verb+\thispagestyle{...}+,
   change of margins (\emph{e.g.}  with the \texttt{geometry} package),
   change of fonts, ....
+\item See also \autoref{sec:biblio} for information about how to
+  typeset the bibliography.
 \end{enumerate}
 
 \section{Main Commands}
 
 \subsection{Title page}
 
-The following commands are used to input bibliographic data:
+The following commands are used to input informations for the title page.
 
 \paragraph{\texttt{\textbackslash title}} to define the title.
 
@@ -81,18 +83,31 @@ optional argument.
 
 \paragraph{\texttt{\textbackslash institute}} to give author's affiliation(s).
 
-If there are several affiliations, they must be seperated by
+If there are several affiliations, they must be separated by
 \verb+\and+ macros, and will be numbered automatically.
+
+\paragraph{\texttt{\textbackslash keywords}} to give a list of
+keywords.
+
+Individual keywords should be separated by the \verb+\and+ macro.
 
 \paragraph{\texttt{\textbackslash thanks}}
 can be used inside the \verb+\title+ or
 \verb+\author+ argument to generate a footnote with additional
 information, if needed.
 
+\paragraph{\texttt{\textbackslash maketitle}} is used to actually
+typeset the title.
+
+\paragraph{The \texttt{abstract} environment} should be used to typeset the abstract.
+
+Note that the keywords should be given before starting the abstract environment.
+
+
 \subsection{Theorems}
 
 The \texttt{iacrtrans} class uses the \AmS{} packages to typeset
-math.  In particular, it load the \texttt{amsthm} package, and
+math.  In particular, it loads the \texttt{amsthm} package, and
 predefines the following environments:
 \begin{center}
   \ttfamily
@@ -110,7 +125,7 @@ claim       &            &        \\
 Note that the \texttt{proof} environment automatically adds a QED
 symbol at the end of the proof (unless you give option
 \texttt{[spthm]} to the \texttt{iacrtrans} class).  If the QED symbol
-is typeset at a wrong position, you can force it's position with
+is typeset at a wrong position, you can force its position with
 \verb+\qedhere+.
 
 \section{Class options}
@@ -127,7 +142,7 @@ following class options:
 \item[\texttt{[submission]}] for submissions (anonymous, with line numbers)
 \item[\texttt{[draft]}] is similar to preprint, but activates draft
   mode for the underlying \texttt{article} class (which shows overfull hboxes), and other packages
-  (\emph{e.g.} \texttt{gaphicx}, \texttt{hyperref}).
+  (\emph{e.g.} \texttt{graphicx}, \texttt{hyperref}).
 \end{description}
 
 \subsection{Other Options}
@@ -149,23 +164,31 @@ disables the automatic loading of
 \texttt{hyperref}.  Use this is if your document fails to compile with
 \texttt{hyperref} for some reason.
 
-The \texttt{iacrtrans} class automatically load \texttt{hyperref}
+The \texttt{iacrtrans} class automatically loads \texttt{hyperref}
 after all other packages.  If you need some packages to be loaded
 \emph{after} \texttt{hyperref}, you should load \texttt{hyperref}
 explicitly at the correct position, but not use the \texttt{[nohyperref]} option.
 
-\section{Further instructions}
+\section{Typesetting the Bibliography}
+\label{sec:biblio}
 
-\paragraph{Bibliography.}
 % Borrowed from btxdoc.tex
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 
-We strongly encourage authors to use \BibTeX{} for the bibliograpy.
-Moreover, we encourage them to use bibliographic data from
-\url{http://www.dblp.org} or \url{https://cryptobib.di.ens.fr/}.
-We also plan to write a dedicated \BibTeX{} style for the final
-publication.
+Having good bibliographic references is very important for the
+visibility of the journal.  Since we don't have a commercial editor,
+authors need to make sure themselves that references are standardized
+and clean.  We strongly encourage authors to use \BibTeX{} for the
+bibliograpy, using bibliographic data
+from \url{http://www.dblp.org} or \url{https://cryptobib.di.ens.fr/}.
+
+We are still working on a good solution for the bibliography, and we
+expect to have more specific instructions when producing the final
+version of the papers, including a dedicated \BibTeX{} style.
+
+
+\section{Further instructions}
 
 \paragraph{Internal references.}
 
