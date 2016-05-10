@@ -1,10 +1,22 @@
+% IACR Transactions CLASS DOCUMENTATION -- version 0.22 (10 May 2016)
+% Written by Gaetan Leurent gaetan.leurent@inria.fr (2016)
+%
+% To the extent possible under law, the author(s) have dedicated all
+% copyright and related and neighboring rights to this software to the
+% public domain worldwide. This software is distributed without any
+% warranty.
+%
+% You should have received a copy of the CC0 Public Domain Dedication
+% along with this software. If not, see
+% <http://creativecommons.org/publicdomain/zero/1.0/>.
+
 \documentclass[preprint]{iacrtrans}
 \usepackage[utf8]{inputenc}
 
 \author{Gaëtan Leurent\inst{1} \and Alice\inst{2} \and Bob\inst{2}}
 \institute{Inria, France, \email{gaetan.leurent@inria.fr} \and ACME}
-\title{\publname}
-\subtitle{\LaTeX{} Class Documentation}
+\title[\texttt{iacrtans} class documentation]{\publname}
+\subtitle{\LaTeX{} Class Documentation (v. 0.22)}
 
 \begin{document}
 
@@ -13,7 +25,7 @@
 \keywords{\publname \and FSE \and \LaTeX}
 \begin{abstract}
   This document is a quick introduction to the \LaTeX{} class for the
-  \publname journal.
+  \publname{} journal (the journal of the FSE conference).
 \end{abstract}
 
 \section*{Introduction}
@@ -22,13 +34,174 @@ The \texttt{iacrtans} \LaTeX{} class will be used by the new
 ``\publname'' journal.  The class is based on standard \LaTeX{}
 classes and packages (mainly the \texttt{article} class with
 \texttt{amsmath}), and should be similar in use to the \texttt{llncs}
-class used by Springer's proceedings.  The \LaTeX{} source of this
+class used for Springer's proceedings.  The \LaTeX{} source of this
 documentation is meant as an example to show basic usage of the class.
 
-Since this is the zero-th issue of the journal, the class is still in
-developpement and feedback and comments are welcome.
+Since we are now preparing the zero-th issue of the journal, the class
+is still in development and feedback and comments are welcome.
 
-\subsection*{Packages used}
+\subsection*{\textcolor{red!70!black}{TL;DR}: Converting \texttt{llncs} papers to \texttt{iacrtrans}}
+
+If you have a paper typeset with the \texttt{llncs} class, conversion
+should be relatively easy.  The following steps should be sufficient
+in most cases (for the submission version):
+\begin{enumerate}
+\item Replace \verb+\documentclass{llncs}+ with\\ \verb+\documentclass[submission,spthm]{iacrtrans}+;
+\item Replace \verb+\bibliographystyle{splncs03}+ with
+  \verb+\bibliographystyle{alpha}+;
+\item Add a \verb+\keywords{}+ command before the abstract, with
+  keywords seperated by \verb+\and+;
+\item Remove commands that might override the class style, such as
+  \verb+\pagestyle{...}+ or \verb+\thispagestyle{...}+,
+  change of margins (\emph{e.g.}  with the \texttt{geometry} package),
+  change of fonts, ....
+\end{enumerate}
+
+\section{Main Commands}
+
+\subsection{Title page}
+
+The following commands are used to input bibliographic data:
+
+\paragraph{\texttt{\textbackslash title}} to define the title.
+
+A shorter running title can be given as optional argument.
+
+\paragraph{\texttt{\textbackslash subtitle}} to give an optional
+subtitle.
+
+\paragraph{\texttt{\textbackslash author}} to define the author list.
+
+Author names must be delimited by \verb+\and+ macros.  If authors
+have different affiliations, each author name must be followed by
+\verb+\inst{...}+ with the corresponding affiliation(s).
+
+A shorter list of authors for the running head can be given as
+optional argument.
+
+\paragraph{\texttt{\textbackslash institute}} to give author's affiliation(s).
+
+If there are several affiliations, they must be seperated by
+\verb+\and+ macros, and will be numbered automatically.
+
+\paragraph{\texttt{\textbackslash thanks}}
+can be used inside the \verb+\title+ or
+\verb+\author+ argument to generate a footnote with additional
+information, if needed.
+
+\subsection{Theorems}
+
+The \texttt{iacrtrans} class uses the \AmS{} packages to typeset
+math.  In particular, it load the \texttt{amsthm} package, and
+predefines the following environments:
+\begin{center}
+  \ttfamily
+\begin{tabular}{l@{\hspace{1cm}}l@{\hspace{1cm}}l}
+theorem     & definition & remark \\
+proposition & example    & note   \\
+problem     & exercise   & case   \\
+lemma       & property   &        \\
+conjecture  & question   &        \\
+corollary   & solution   &        \\
+claim       &            &        \\
+\end{tabular}
+\end{center}
+
+Note that the \texttt{proof} environment automatically adds a QED
+symbol at the end of the proof (unless you give option
+\texttt{[spthm]} to the \texttt{iacrtrans} class).  If the QED symbol
+is typeset at a wrong position, you can force it's position with
+\verb+\qedhere+.
+
+\section{Class options}
+\label{sec:options}
+
+\subsection{Publication type}
+
+The class supports four publication types, selected with the
+following class options:
+
+\begin{description}
+\item[\texttt{[final]}] for final papers (default mode)
+\item[\texttt{[preprint]}] for preprints (without copyright info)
+\item[\texttt{[submission]}] for submissions (anonymous, with line numbers)
+\item[\texttt{[draft]}] is similar to preprint, but activates draft
+  mode for the underlying \texttt{article} class (which shows overfull hboxes), and other packages
+  (\emph{e.g.} \texttt{gaphicx}, \texttt{hyperref}).
+\end{description}
+
+\subsection{Other Options}
+
+\paragraph{\texttt{[spthm]}}
+provides theorem environments that emulates
+\texttt{llncs} class's \texttt{sptheorem}:
+\begin{itemize}
+\item A \texttt{\textbackslash spnewtheorem} wrapper is provided
+  around \AmS{} \texttt{\textbackslash newtheorem}.  Note that the
+  styling options are ignored; you should use standard
+  \texttt{amsthm} commands for fine control.
+\item The \AmS{} \texttt{proof} environment will not automatically add a
+  QED symbol at the end of the proof.
+\end{itemize}
+
+\paragraph{\texttt{[nohyperref]}}
+disables the automatic loading of
+\texttt{hyperref}.  Use this is if your document fails to compile with
+\texttt{hyperref} for some reason.
+
+The \texttt{iacrtrans} class automatically load \texttt{hyperref}
+after all other packages.  If you need some packages to be loaded
+\emph{after} \texttt{hyperref}, you should load \texttt{hyperref}
+explicitly at the correct position, but not use the \texttt{[nohyperref]} option.
+
+\section{Further instructions}
+
+\paragraph{Bibliography.}
+% Borrowed from btxdoc.tex
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+We strongly encourage authors to use \BibTeX{} for the bibliograpy.
+Moreover, we encourage them to use bibliographic data from
+\url{http://www.dblp.org} or \url{https://cryptobib.di.ens.fr/}.
+We also plan to write a dedicated \BibTeX{} style for the final
+publication.
+
+\paragraph{Internal references.}
+
+We recommend the use of \verb+\autoref+ from \texttt{hyperref}
+(automatically loaded by the class).  For instance,
+\verb+\autoref{sec:options}+ links to \autoref{sec:options}.
+
+\paragraph{Floats.}
+
+Float captions should be below the float.  The \texttt{float} package
+loaded by the class should take care of this automatically.
+
+\paragraph{Pictures.}
+
+We recommend the use of the \texttt{tikz} package to render pictures.
+
+\paragraph{Algorithms.}
+
+We recommend the \texttt{algorithmcx} package for pseudocode.
+
+\section{Further information}
+
+More general information can be found in the following documents:
+\begin{itemize}
+\item General \LaTeX{} documentation, such as the
+  \href{http://mirrors.ctan.org/info/lshort/english/lshort.pdf}{(not
+    so) short introduction to \LaTeXe};
+\item The \texttt{article} class
+  \href{http://mirrors.ctan.org/macros/latex/doc/clsguide.pdf}{documentation};
+\item The \AmS-\LaTeX{}
+  \href{http://mirrors.ctan.org/macros/latex/required/amslatex/math/amsldoc.pdf}{documentation}
+  and \texttt{amsthm} \href{ftp://ftp.ams.org/pub/tex/doc/amscls/amsthdoc.pdf}{documentation};
+\item Documentation of the \LaTeX{} packages used in the class (see below).
+\end{itemize}
+
+\subsection{Packages used}
 
 The class is based on the standard \texttt{article} class, and loads
 the following packages:
@@ -41,66 +214,12 @@ the following packages:
 \item \texttt{lineno} (in \texttt{[submission]} mode)
 \end{itemize}
 
-\section{Publication type}
+\section*{Changes}
 
-The class supports three publication types, selected with the
-following class options
-\begin{itemize}
-\item \texttt{[final]} for final papers (default mode)
-\item \texttt{[preprint]} for preprint (without copyright info)
-\item \texttt{[submission]} for submissions (anonymous)
-\item \texttt{[draft]} is similar to preprint, but activates draft
-  mode for other packages (\emph{e.g.} \texttt{gaphicx, tikz})
-\end{itemize}
+\begin{description}
+\item[v 0.21] First public version
+\item[v 0.22] Added documentations.  Minor tweaks in the class.
+\end{description}
 
-\section{Other Class Options}
-
-The \texttt{[spthm]} option provide theorem environments that emulates
-\texttt{llncs} class's \texttt{sptheorem}, while the
-\texttt{iacrtrans} class is based on \AmS{} theorem.
-\begin{itemize}
-\item A \texttt{\textbackslash{}spnewtheorem} wrapper is provided
-  around \AmS{} \texttt{\textbackslash{}newtheorem}.  Note that the
-  styling option are ignored, and you should use standard
-  \texttt{amsthm} command for fine control.
-\item The \AmS{} theorem environments will not automatically add a
-  QED symbol at the end of proofs.
-\end{itemize}
-
-The \texttt{[nohyperref]} option disables the automatic loading of
-\texttt{hyperref}.  Use this is if your document fails to compile with
-\texttt{hyperref} for some reason.
-
-\section{Commands}
-
-\subsection{Title, authors, affiliations, ...}
-
-Author names and affiliations should be seperated by the
-\texttt{\textbackslash{}and} macro.
-
-
-
-
-\subsection{Theorems}
-
-
-
-
-\section{Further instructions}
-
-\paragraph{Floats}
-
-Float captions should be below the float.  The \texttt{float} package
-loaded by the class should take of this automatically.
-
-\paragraph{Pictures}
-
-We recommend to use the \texttt{tikz} package to render pictures.
-
-\paragraph{Algorithms}
-
-We recommend the \texttt{algorithmcx} package.
-
-\paragraph{Bibliography}
 
 \end{document}
