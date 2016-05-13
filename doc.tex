@@ -91,9 +91,12 @@ keywords.
 
 Individual keywords should be separated by the \verb+\and+ macro.
 
+\paragraph{\texttt{\textbackslash email}} should be used inside the
+\verb+\institute+ argument to typeset author's email address(es).
+
 \paragraph{\texttt{\textbackslash thanks}}
-can be used inside the \verb+\title+ or
-\verb+\author+ argument to generate a footnote with additional
+can be used inside the \verb+\title+,
+\verb+\author+ or \verb+\institute+ argument to generate a footnote with additional
 information, if needed.
 
 \paragraph{\texttt{\textbackslash maketitle}} is used to actually
@@ -190,6 +193,29 @@ version of the papers, including a dedicated \BibTeX{} style.
 
 \section{Further instructions}
 
+\paragraph{\LaTeX{} distribution, and worklow.}  \LaTeX{}
+distributions are available on a variaty of platforms.  In particular,
+we recommand the \href{https://www.tug.org/texlive/}{TeX Live}
+distribution, which is updated regularly, include a large number of
+packages, and is available on many platforms.
+\begin{description}
+\item[Linux] A LaTeX installation is included in most Linux
+  distributions.  Alternatively,
+  \href{https://www.tug.org/texlive/}{TeX Live} can be installed
+  easily without root access.
+\item[Windows] There are also good \LaTeX{} distributions for Windows,
+  such as \href{http://www.miktex.org/}{MikTeX} and
+  \href{https://www.tug.org/texlive/}{TeX Live}.
+\item[MacOSX] On MacOSX, TeX Live is available inside
+  \href{http://www.tug.org/mactex/}{MacTeX}.
+\end{description}
+
+
+We recommand the use of \texttt{pdflatex} because it generally
+supports more features than \texttt{latex} and \texttt{dvips}
+(\texttt{xelatex} and \texttt{lualatex} are also missing some advanced
+features from \texttt{pdflatex}).
+
 \paragraph{Internal references.}
 
 We recommend the use of \verb+\autoref+ from \texttt{hyperref}
@@ -201,9 +227,27 @@ We recommend the use of \verb+\autoref+ from \texttt{hyperref}
 Float captions should be below the float.  The \texttt{float} package
 loaded by the class should take care of this automatically.
 
+\paragraph{Tables.}
+
+We recommend the \texttt{booktabs} package to typeset taables.
+
 \paragraph{Pictures.}
 
 We recommend the use of the \texttt{tikz} package to render pictures.
+In particular, 
+% TODO
+\url{http://www.iacr.org/authors/tikz/}
+
+\paragraph{External pictures.}  We recommand the \texttt{graphicx}
+package for external figures.
+
+If possible, external figures should be in a vector format: you can
+use PDF files when compiling with \texttt{pdflatex}, and EPS files
+when compiling with \texttt{latex}, and \texttt{dvips}.  Note that the
+\verb+\includegraphics+ command will automatically select a file with
+the right extension, so if you write \verb+\includegraphics{figure}+
+and have two files \texttt{figure.pdf} and \texttt{figure.eps}, it
+should work with both workflow.
 
 \paragraph{Algorithms.}
 
@@ -229,7 +273,7 @@ More general information can be found in the following documents:
 The class is based on the standard \texttt{article} class, and loads
 the following packages:
 \begin{itemize}
-\item \texttt{geometry}, \texttt{secsty}, \texttt{fancyhdr}, \texttt{mathtools},
+\item \href{http://ctan.org/pkg/geometry}{\texttt{geometry}}, \href{http://ctan.org/pkg/secsty}{\texttt{secsty}}, \href{http://ctan.org/pkg/fancyhdr}{\texttt{fancyhdr}}, \href{http://ctan.org/pkg/mathtools}{\texttt{mathtools}},
   \texttt{float}, \texttt{microtype}
 \item \texttt{amsmath}, \texttt{amssymb}, \texttt{amsthm}
 \item \texttt{hyperref}, \texttt{etoolbox}, \texttt{xcolor} (unless
