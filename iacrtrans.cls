@@ -286,18 +286,35 @@
 \RequirePackage[mathlines]{lineno}
 \linenumbers
 \def\linenumberfont{\normalfont\tiny\sffamily\color{gray}}
+
+\newcommand\linenomathWithnumbersforAMS{%
+  \ifLineNumbers 
+%%  \ifx\@@par\@@@par\else
+    \ifnum\interlinepenalty>-\linenopenaltypar
+      \global\holdinginserts\thr@@ 
+      \advance\interlinepenalty \linenopenalty
+     \ifhmode                                   % v4.3 
+      \advance\predisplaypenalty \linenopenalty
+     \fi 
+%%      \advance\postdisplaypenalty \linenopenalty
+      \advance\interdisplaylinepenalty \linenopenalty
+    \fi
+  \fi
+\LineNumbersfalse  \ignorespaces
+  }
+
 % Taken from http://phaseportrait.blogspot.fr/2007/08/lineno-and-amsmath-compatibility.html
 \newcommand*\patchAmsMathEnvironmentForLineno[1]{%
   \expandafter\let\csname old#1\expandafter\endcsname\csname #1\endcsname
   \expandafter\let\csname oldend#1\expandafter\endcsname\csname end#1\endcsname
   \renewenvironment{#1}%
-     {\linenomath\csname old#1\endcsname}%
+     {\linenomathWithnumbersforAMS\csname old#1\endcsname}%
      {\csname oldend#1\endcsname\endlinenomath}}% 
 \newcommand*\patchBothAmsMathEnvironmentsForLineno[1]{%
   \patchAmsMathEnvironmentForLineno{#1}%
   \patchAmsMathEnvironmentForLineno{#1*}}%
 \AtBeginDocument{%
-\patchBothAmsMathEnvironmentsForLineno{equation}%
+%\patchBothAmsMathEnvironmentsForLineno{equation}%
 \patchBothAmsMathEnvironmentsForLineno{align}%
 \patchBothAmsMathEnvironmentsForLineno{flalign}%
 \patchBothAmsMathEnvironmentsForLineno{alignat}%
