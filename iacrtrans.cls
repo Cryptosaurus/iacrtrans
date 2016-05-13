@@ -1,4 +1,4 @@
-% IACR Transactions DOCUMENT CLASS -- version 0.21 (4 May 2016)
+% IACR Transactions DOCUMENT CLASS -- version 0.22 (10 May 2016)
 % Written by Gaetan Leurent gaetan.leurent@inria.fr (2016)
 %
 % To the extent possible under law, the author(s) have dedicated all
@@ -40,7 +40,7 @@
 %   remove \qed symbols, replace them by \qedhere, or add option [spthm]
 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesClass{iacrtrans}[2016/05/04 v0.21 IACR Transactions Author Class]
+\ProvidesClass{iacrtrans}[2016/05/10 v0.22 IACR Transactions Author Class]
 
 % Common definitions
 \def\publname{IACR Transactions on Symmetric Cryptology}
@@ -54,7 +54,7 @@
 \@submissionfalse
 \newif\if@preprint
 \@preprintfalse
-\DeclareOption{final}{}         % Default
+\DeclareOption{final}{\PassOptionsToClass{\CurrentOption}{article}}      % Default
 \DeclareOption{preprint}{\@preprinttrue}
 \DeclareOption{submission}{\@submissiontrue}
 \DeclareOption{draft}{\@preprinttrue\PassOptionsToClass{\CurrentOption}{article}}
@@ -202,7 +202,6 @@
 \renewcommand{\markboth}[2]{}
 \pagestyle{fancy}
 
-% TODO
 \def\subtitle#1{\gdef\@subtitle{#1}}
 
 %Abstract style, keywords
