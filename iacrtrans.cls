@@ -1,4 +1,4 @@
-% IACR Transactions DOCUMENT CLASS -- version 0.22 (10 May 2016)
+% IACR Transactions DOCUMENT CLASS -- version 0.23 (15 May 2016)
 % Written by Gaetan Leurent gaetan.leurent@inria.fr (2016)
 %
 % To the extent possible under law, the author(s) have dedicated all
@@ -40,7 +40,7 @@
 %   remove \qed symbols, replace them by \qedhere, or add option [spthm]
 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesClass{iacrtrans}[2016/05/10 v0.22 IACR Transactions Author Class]
+\ProvidesClass{iacrtrans}[2016/05/15 v0.23 IACR Transactions Author Class]
 
 % Common definitions
 \def\publname{IACR Transactions on Symmetric Cryptology}
@@ -229,6 +229,24 @@
   }
   \setcounter{tocdepth}{2}
 \fi
+% autoref with algorithm
+\def\equationautorefname{Equation}%
+\def\footnoteautorefname{footnote}%
+\def\itemautorefname{item}%
+\def\figureautorefname{Figure}%
+\def\tableautorefname{Table}%
+\def\partautorefname{Part}%
+\def\appendixautorefname{Appendix}%
+\def\chapterautorefname{Chapter}%
+\def\sectionautorefname{Section}%
+\def\subsectionautorefname{Subsection}%
+\def\subsubsectionautorefname{Subsubsection}%
+\def\paragraphautorefname{paragraph}%
+\def\subparagraphautorefname{subparagraph}%
+\def\FancyVerbLineautorefname{line}%
+\def\theoremautorefname{Theorem}%
+\def\pageautorefname{page}%
+\def\algorithmautorefname{Algorithm}
 
 % AMS math
 \RequirePackage{amsmath,amssymb,amsthm}
@@ -269,12 +287,20 @@
 
 % Floats and captions
 \RequirePackage{float}
-\newcommand\fs@iacr{\def\@fs@cfont{\sffamily\bfseries}\let\@fs@capt\floatc@plain
-  \def\@fs@pre{}\def\@fs@post{}%
-  \def\@fs@mid{\vspace\abovecaptionskip\relax}%
-  \let\@fs@iftopcapt\iffalse}
-\floatstyle{iacr}
+\newcommand\fs@iacrabove{%
+  % Swap \abovecaptionskip and \belowcaptionskip
+  \addtolength\abovecaptionskip{-\belowcaptionskip}
+  \addtolength\belowcaptionskip{\abovecaptionskip}
+  \addtolength\abovecaptionskip{-\belowcaptionskip}
+  \setlength\abovecaptionskip{-\abovecaptionskip}
+  \fs@plaintop%
+  \def\@fs@cfont{\sffamily\bfseries}}
+\newcommand\fs@iacrbelow{%
+  \fs@plain%
+  \def\@fs@cfont{\sffamily\bfseries}}
+\floatstyle{iacrabove}
 \restylefloat{table}
+\floatstyle{iacrbelow}
 \restylefloat{figure}
 
 % Extra commands
@@ -282,6 +308,22 @@
 
 
 % Line # for submission
+\newcommand\linenomathWithnumbersforAMS{%
+  \ifLineNumbers 
+%%  \ifx\@@par\@@@par\else
+    \ifnum\interlinepenalty>-\linenopenaltypar
+      \global\holdinginserts\thr@@ 
+      \advance\interlinepenalty \linenopenalty
+     \ifhmode                                   % v4.3 
+      \advance\predisplaypenalty \linenopenalty
+     \fi 
+%%      \advance\postdisplaypenalty \linenopenalty
+      \advance\interdisplaylinepenalty \linenopenalty
+    \fi
+  \fi
+  \ignorespaces
+  }
+
 \if@submission
 \RequirePackage[mathlines]{lineno}
 \linenumbers
@@ -291,13 +333,13 @@
   \expandafter\let\csname old#1\expandafter\endcsname\csname #1\endcsname
   \expandafter\let\csname oldend#1\expandafter\endcsname\csname end#1\endcsname
   \renewenvironment{#1}%
-     {\linenomath\csname old#1\endcsname}%
+     {\linenomathWithnumbersforAMS\csname old#1\endcsname}%
      {\csname oldend#1\endcsname\endlinenomath}}% 
 \newcommand*\patchBothAmsMathEnvironmentsForLineno[1]{%
   \patchAmsMathEnvironmentForLineno{#1}%
   \patchAmsMathEnvironmentForLineno{#1*}}%
 \AtBeginDocument{%
-\patchBothAmsMathEnvironmentsForLineno{equation}%
+%\patchBothAmsMathEnvironmentsForLineno{equation}%
 \patchBothAmsMathEnvironmentsForLineno{align}%
 \patchBothAmsMathEnvironmentsForLineno{flalign}%
 \patchBothAmsMathEnvironmentsForLineno{alignat}%
