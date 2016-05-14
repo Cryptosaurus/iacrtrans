@@ -1,4 +1,4 @@
-% IACR Transactions CLASS DOCUMENTATION -- version 0.22 (10 May 2016)
+% IACR Transactions CLASS DOCUMENTATION -- version 0.23 (15 May 2016)
 % Written by Gaetan Leurent gaetan.leurent@inria.fr (2016)
 %
 % To the extent possible under law, the author(s) have dedicated all
@@ -16,7 +16,7 @@
 \author{Gaëtan Leurent\inst{1} \and Alice\inst{2} \and Bob\inst{2}}
 \institute{Inria, France, \email{gaetan.leurent@inria.fr} \and ACME}
 \title[\texttt{iacrtans} class documentation]{\publname}
-\subtitle{\LaTeX{} Class Documentation (v. 0.22)}
+\subtitle{\LaTeX{} Class Documentation (v. 0.23)}
 
 \begin{document}
 
@@ -222,21 +222,12 @@ We recommend the use of \verb+\autoref+ from \texttt{hyperref}
 (automatically loaded by the class).  For instance,
 \verb+\autoref{sec:options}+ links to \autoref{sec:options}.
 
-\paragraph{Floats.}
-
-Float captions should be below the float.  The \texttt{float} package
-loaded by the class should take care of this automatically.
-
-\paragraph{Tables.}
-
-We recommend the \texttt{booktabs} package to typeset taables.
-
 \paragraph{Pictures.}
 
 We recommend the use of the \texttt{tikz} package to render pictures.
-In particular, 
-% TODO
-\url{http://www.iacr.org/authors/tikz/}
+
+In particular, a large variety of crypto pictures made with
+\texttt{tikz} is available at \url{http://www.iacr.org/authors/tikz/}.
 
 \paragraph{External pictures.}  We recommand the \texttt{graphicx}
 package for external figures.
@@ -249,9 +240,20 @@ the right extension, so if you write \verb+\includegraphics{figure}+
 and have two files \texttt{figure.pdf} and \texttt{figure.eps}, it
 should work with both workflow.
 
+\paragraph{Floats.}
+
+Figure captions should be below the figures, and table captions above
+the tables.  The \texttt{float} package loaded by the class should
+take care of this automatically.
+
+\paragraph{Tables.}
+
+We recommend the \texttt{booktabs} package to typeset tables.
+
 \paragraph{Algorithms.}
 
-We recommend the \texttt{algorithmcx} package for pseudocode.
+We recommend the \texttt{algorithm}, \texttt{algorithmcx} packages for
+algorithms (in particular, \texttt{algpseudocode} for pseudo-code).
 
 \section{Further information}
 
@@ -260,8 +262,8 @@ More general information can be found in the following documents:
 \item General \LaTeX{} documentation, such as the
   \href{http://mirrors.ctan.org/info/lshort/english/lshort.pdf}{(not
     so) short introduction to \LaTeXe};
-\item The \texttt{article} class
-  \href{http://mirrors.ctan.org/macros/latex/doc/clsguide.pdf}{documentation};
+% \item The \texttt{article} class
+%   \href{http://mirrors.ctan.org/macros/latex/doc/clsguide.pdf}{documentation};
 \item The \AmS-\LaTeX{}
   \href{http://mirrors.ctan.org/macros/latex/required/amslatex/math/amsldoc.pdf}{documentation}
   and \texttt{amsthm} \href{ftp://ftp.ams.org/pub/tex/doc/amscls/amsthdoc.pdf}{documentation};
@@ -273,7 +275,7 @@ More general information can be found in the following documents:
 The class is based on the standard \texttt{article} class, and loads
 the following packages:
 \begin{itemize}
-\item \href{http://ctan.org/pkg/geometry}{\texttt{geometry}}, \href{http://ctan.org/pkg/secsty}{\texttt{secsty}}, \href{http://ctan.org/pkg/fancyhdr}{\texttt{fancyhdr}}, \href{http://ctan.org/pkg/mathtools}{\texttt{mathtools}},
+\item \texttt{geometry}, \texttt{secsty}, \texttt{fancyhdr}, \texttt{mathtools},
   \texttt{float}, \texttt{microtype}
 \item \texttt{amsmath}, \texttt{amssymb}, \texttt{amsthm}
 \item \texttt{hyperref}, \texttt{etoolbox}, \texttt{xcolor} (unless
@@ -286,6 +288,9 @@ the following packages:
 \begin{description}
 \item[v 0.21] First public version
 \item[v 0.22] Added documentations.  Minor tweaks in the class.
+\item[v 0.23] More documentation.  Removed some extra line-numbers
+  with AMS environments in submission mode.  Make \verb+autoref+
+  capitalize sections.  Table caption are now above tables.
 \end{description}
 
 
