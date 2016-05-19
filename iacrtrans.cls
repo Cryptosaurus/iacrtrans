@@ -229,7 +229,7 @@
   }
   \setcounter{tocdepth}{2}
 \fi
-% autoref with algorithm
+% autoref: capitals for Sections, and adding Algorithm
 \def\equationautorefname{Equation}%
 \def\footnoteautorefname{footnote}%
 \def\itemautorefname{item}%
