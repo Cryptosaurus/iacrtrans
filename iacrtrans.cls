@@ -295,12 +295,13 @@
 
 % Floats and captions
 \RequirePackage{float}
-\newcommand\fs@iacr{\def\@fs@cfont{\sffamily\bfseries}\let\@fs@capt\floatc@plain
-  \def\@fs@pre{}\def\@fs@post{}%
-  \def\@fs@mid{\vspace\abovecaptionskip\relax}%
-  \let\@fs@iftopcapt\iffalse}
-\floatstyle{iacr}
+\newcommand\fs@iacrabove{\fs@plaintop%
+  \def\@fs@cfont{\sffamily\bfseries}}
+\newcommand\fs@iacrbelow{\fs@plain%
+  \def\@fs@cfont{\sffamily\bfseries}}
+\floatstyle{iacrabove}
 \restylefloat{table}
+\floatstyle{iacrbelow}
 \restylefloat{figure}
 
 % Extra commands
