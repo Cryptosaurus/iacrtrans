@@ -205,17 +205,25 @@
 \def\subtitle#1{\gdef\@subtitle{#1}}
 
 %Abstract style, keywords
-\newtoks{\@IACR@keywords}
-\@IACR@keywords={No keywords given.}
-\newcommand{\keywords}[1]{
-  \def\@tmp@keywords{#1}\@IACR@keywords=\expandafter{\@tmp@keywords}}
+\def\@IACR@keywords{No keywords given.}
+\def\keywords#1{\gdef\@IACR@keywords{#1}}
 
 \renewenvironment{abstract}{%
   \small\quotation\setlength{\parindent}{0pt}\noindent
   \textbf{\textsf{Abstract.}}}
   {\smallskip\par\textbf{\textsf{Keywords:}}
-    \def\and{\unskip\ \textperiodcentered\ }\the\@IACR@keywords
-  \endquotation}
+    \def\and{\unskip\ \textperiodcentered\ }\@IACR@keywords
+  \endquotation%
+  \if@loadhr%  PDF keywords
+  \def\and{, }%
+  \def\zap@comma@space##1 ,##2{%
+    ##1%
+    \ifx##2\@empty\else, \expandafter\zap@comma@space\fi
+    ##2}
+  \edef\@tmp{\expandafter\@IACR@keywords}
+  \edef\@tmp{\expandafter\zap@comma@space\@tmp{} ,\@empty}
+  \hypersetup{pdfkeywords=\@tmp}
+  \fi}
 
 % Hyperref
 \if@loadhr
