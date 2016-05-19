@@ -305,7 +305,9 @@
 \restylefloat{figure}
 
 % Extra commands
-\newcommand{\email}[1]{\href{mailto:#1}{\nolinkurl{#1}}}
+\def\email{\@ifnextchar[{\IACR@@email}{\IACR@email}}
+\def\IACR@@email[#1]#2{\href{mailto:#1}{\nolinkurl{#2}}}
+\def\IACR@email#1{\href{mailto:#1}{\nolinkurl{#1}}}
 
 
 % Line # for submission
