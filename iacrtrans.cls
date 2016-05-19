@@ -82,8 +82,8 @@
 % Title/Author/affiliations
 \def\@institute{No institute given.}
 \newcommand{\institute}[1]{\gdef\@institute{#1}}
-\newcommand{\runningauthor}[1]{\gdef\IACR@runningauthors{#1}}
-\newcommand{\runnintitle}[1]{\gdef\IACR@runningtitle{#1}}
+\newcommand{\authorrunning}[1]{\gdef\IACR@runningauthors{#1}}
+\newcommand{\titlerunning}[1]{\gdef\IACR@runningtitle{#1}}
 
 \newcounter{IACR@author@cnt}
 \newcounter{IACR@inst@cnt}
@@ -107,7 +107,7 @@
   \global\let\maketitle\relax
   \global\let\@maketitle\relax
   \global\let\@thanks\@empty
-%  \global\let\@author\@empty
+  \global\let\@author\@empty
   \global\let\@date\@empty
   \global\let\@title\@empty
   \global\let\title\relax
@@ -116,6 +116,11 @@
   \global\let\and\relax
 }
 \def\@maketitle{%
+  % PDF info
+  \if@loadhr%
+  \hypersetup{pdfauthor=\IACR@runningauthors}%
+  \hypersetup{pdftitle=\IACR@runningtitle}%
+  \fi%
   % Count authors and affiliations
   \setcounter{IACR@author@cnt}{1}%
   \setcounter{IACR@inst@cnt}{1}%
@@ -142,7 +147,7 @@
         \setcounter{IACR@author@cnt}{1}%
         \def\and{\if@IACR@autoinst\inst{\theIACR@author@cnt} \fi
           \stepcounter{IACR@author@cnt}%
-          \ifnum\theIACR@author@cnt=\IACR@author@last and \else \unskip, \fi}
+          \ifnum\theIACR@author@cnt=\IACR@author@last\unskip\ and \ignorespaces\else\unskip, \fi}
         \@author\if@IACR@autoinst\inst{\theIACR@author@cnt}\fi
         \vskip 1em\par
         \small
@@ -156,25 +161,42 @@
   \par
   \vskip 1.5em}
 
-\def\IACR@runningauthors{
-  \def\thanks##1{}\def\inst##1{}\def\footnote##1{}%
-  \setcounter{IACR@author@cnt}{1}%
-  \def\and{\stepcounter{IACR@author@cnt}%
-    \ifnum\theIACR@author@cnt=\IACR@author@last%
-    and
-    \else
-    \unskip,
-    \fi}
-  \@author
-}
-
 \def\author{\@ifnextchar[{\IACR@@@author}{\IACR@@author}}
-\def\IACR@@@author[#1]#2{\gdef\@author{#2}\runningauthor{#1}}
-\def\IACR@@author#1{\gdef\@author{#1}}
+\def\IACR@@@author[#1]#2{\authorrunning{#1}\gdef\@author{#2}}
+\def\IACR@@author#1{%
+  \gdef\@author{#1}%
+  \if@submission\gdef\IACR@runningauthors{Anonymous Submission to \publname}%
+  \else{%
+    \def\thanks##1{}%
+    \def\\{}%
+    \def\and{, }%
+    \def\zap@one,##1{}
+    \def\zap@last##1,##2{\ifx##1\@empty\else and ##1\expandafter\zap@one\fi}
+    \def\zap@last@comma##1,##2,##3{%
+      ##1%
+      \ifx##3\@empty%
+      \expandafter\zap@last\else
+      ,\expandafter\zap@last@comma\fi%
+      ##2,##3}
+    \edef\IACR@runningauthors{\expandafter\@author}
+    \edef\IACR@runningauthors{\expandafter\zap@last@comma\IACR@runningauthors,\@empty,\@empty}
+    \def\zap@comma@space##1 ,##2{%
+      ##1%
+      \ifx##2\@empty\else, \expandafter\zap@comma@space\fi
+      ##2}
+    \edef\IACR@runningauthors{\expandafter\zap@comma@space\IACR@runningauthors{} ,\@empty}
+    \def\zap@dbl@space##1 ##2{%
+      ##1 %
+      \ifx##2\@empty\else \expandafter\zap@dbl@space\fi
+      ##2}
+    \xdef\IACR@runningauthors{\expandafter\zap@dbl@space\IACR@runningauthors{} \@empty}}\fi}
+
 
 \def\title{\@ifnextchar[{\IACR@@@title}{\IACR@@title}}
-\def\IACR@@@title[#1]#2{\gdef\@title{#2}\runnintitle{#1}}
-\def\IACR@@title#1{\IACR@@@title[#1]{#1}}
+\def\IACR@@@title[#1]#2{\gdef\@title{#2}\titlerunning{#1}}
+\def\IACR@@title#1{\gdef\@title{#1}%
+  {\def\thanks##1{}\def\\{}\xdef\IACR@runningtitle{#1}}}
+
 \newcommand{\subtitle}[1]{\gdef\@subtitle{#1}}
 
 \newcommand{\inst}[1]{\unskip$^{#1}$}
@@ -193,12 +215,8 @@
 \renewcommand{\footrulewidth}{0pt}}
 \fancyhf{} % clear all header and footer fields
 \fancyhead[RO,LE]{\thepage}
-\fancyhead[RE]{\def\thanks##1{}\def\\{}\IACR@runningtitle}
-\if@submission
-\fancyhead[LO]{Anonymous Submission to \publname}
-\else
+\fancyhead[RE]{\IACR@runningtitle}
 \fancyhead[LO]{\IACR@runningauthors}
-\fi
 \renewcommand{\markboth}[2]{}
 \pagestyle{fancy}
 
@@ -212,7 +230,7 @@
   \small\quotation\setlength{\parindent}{0pt}\noindent
   \textbf{\textsf{Abstract.}}}
   {\smallskip\par\textbf{\textsf{Keywords:}}
-    \def\and{\unskip\ \textperiodcentered\ }\@IACR@keywords
+    \def\and{\unskip\ \textperiodcentered\ \ignorespaces}\@IACR@keywords
   \endquotation%
   \if@loadhr%  PDF keywords
   \def\and{, }%
