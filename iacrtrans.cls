@@ -311,11 +311,6 @@
 
 
 % Line # for submission
-\if@submission
-\RequirePackage[mathlines]{lineno}
-\linenumbers
-\def\linenumberfont{\normalfont\tiny\sffamily\color{gray}}
-
 \newcommand\linenomathWithnumbersforAMS{%
   \ifLineNumbers 
 %%  \ifx\@@par\@@@par\else
@@ -329,8 +324,13 @@
       \advance\interdisplaylinepenalty \linenopenalty
     \fi
   \fi
-\LineNumbersfalse  \ignorespaces
+  \ignorespaces
   }
+
+\if@submission
+\RequirePackage[mathlines]{lineno}
+\linenumbers
+\def\linenumberfont{\normalfont\tiny\sffamily\color{gray}}
 
 % Taken from http://phaseportrait.blogspot.fr/2007/08/lineno-and-amsmath-compatibility.html
 \newcommand*\patchAmsMathEnvironmentForLineno[1]{%
