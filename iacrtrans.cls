@@ -160,15 +160,13 @@
 \def\IACR@@@author[#1]#2{\authorrunning{#1}\gdef\@author{#2}}
 \def\IACR@@author#1{%
   \gdef\@author{#1}%
-  \if@submission\gdef\IACR@runningauthors{Anonymous Submission to \publname}%
-  \else{%
-    \def\thanks##1{}%
+   {\def\thanks##1{}%
     \def\inst##1{}%
     \def\fnmsep{}%
     \def\\{}%
     \def\and{, }%
     \def\zap@one,##1{}
-    \def\zap@last##1,##2{\ifx##1\@empty\else and ##1\expandafter\zap@one\fi}
+    \def\zap@last##1,##2{\ifx##1\@empty\else\space and ##1\expandafter\zap@one\fi}
     \def\zap@last@comma##1,##2,##3{%
       ##1%
       \ifx##3\@empty%
@@ -186,7 +184,15 @@
       ##1 %
       \ifx##2\@empty\else \expandafter\zap@dbl@space\fi
       ##2}
-    \protected@xdef\IACR@runningauthors{\expandafter\zap@dbl@space\IACR@runningauthors{} \@empty}}\fi}
+    \protected@xdef\IACR@runningauthors{\expandafter\zap@dbl@space\IACR@runningauthors{} \@empty}}}
+
+
+\if@submission
+\gdef\@author{Anonymous Submission to \publname}
+\renewcommand{\author}[2][]{}
+\renewcommand{\authorrunning}[1]{}
+\renewcommand{\institute}[2][]{}
+\fi
 
 
 \def\title{\@ifnextchar[{\IACR@@@title}{\IACR@@title}}
