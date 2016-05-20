@@ -168,6 +168,8 @@
   \if@submission\gdef\IACR@runningauthors{Anonymous Submission to \publname}%
   \else{%
     \def\thanks##1{}%
+    \def\inst##1{}%
+    \def\fnmsep{}%
     \def\\{}%
     \def\and{, }%
     \def\zap@one,##1{}
@@ -178,24 +180,24 @@
       \expandafter\zap@last\else
       ,\expandafter\zap@last@comma\fi%
       ##2,##3}
-    \edef\IACR@runningauthors{\expandafter\@author}
-    \edef\IACR@runningauthors{\expandafter\zap@last@comma\IACR@runningauthors,\@empty,\@empty}
+    \protected@edef\IACR@runningauthors{\expandafter\@author}
+    \protected@edef\IACR@runningauthors{\expandafter\zap@last@comma\IACR@runningauthors,\@empty,\@empty}
     \def\zap@comma@space##1 ,##2{%
       ##1%
       \ifx##2\@empty\else, \expandafter\zap@comma@space\fi
       ##2}
-    \edef\IACR@runningauthors{\expandafter\zap@comma@space\IACR@runningauthors{} ,\@empty}
+    \protected@edef\IACR@runningauthors{\expandafter\zap@comma@space\IACR@runningauthors{} ,\@empty}
     \def\zap@dbl@space##1 ##2{%
       ##1 %
       \ifx##2\@empty\else \expandafter\zap@dbl@space\fi
       ##2}
-    \xdef\IACR@runningauthors{\expandafter\zap@dbl@space\IACR@runningauthors{} \@empty}}\fi}
+    \protected@xdef\IACR@runningauthors{\expandafter\zap@dbl@space\IACR@runningauthors{} \@empty}}\fi}
 
 
 \def\title{\@ifnextchar[{\IACR@@@title}{\IACR@@title}}
 \def\IACR@@@title[#1]#2{\gdef\@title{#2}\titlerunning{#1}}
 \def\IACR@@title#1{\gdef\@title{#1}%
-  {\def\thanks##1{}\def\\{}\xdef\IACR@runningtitle{#1}}}
+  {\def\thanks##1{}\def\\{}\protected@xdef\IACR@runningtitle{#1}}}
 
 \newcommand{\subtitle}[1]{\gdef\@subtitle{#1}}
 
@@ -238,8 +240,8 @@
     ##1%
     \ifx##2\@empty\else, \expandafter\zap@comma@space\fi
     ##2}
-  \edef\@tmp{\expandafter\@IACR@keywords}
-  \edef\@tmp{\expandafter\zap@comma@space\@tmp{} ,\@empty}
+  \protected@edef\@tmp{\expandafter\@IACR@keywords}
+  \protected@edef\@tmp{\expandafter\zap@comma@space\@tmp{} ,\@empty}
   \hypersetup{pdfkeywords=\@tmp}
   \fi}
 
@@ -331,9 +333,14 @@
 
 % Extra commands
 \def\email{\@ifnextchar[{\IACR@@email}{\IACR@email}}
+\if@loadhr
 \def\IACR@@email[#1]#2{\href{mailto:#1}{\nolinkurl{#2}}}
 \def\IACR@email#1{\href{mailto:#1}{\nolinkurl{#1}}}
-
+\else
+\RequirePackage{url}
+\def\IACR@@email[#1]#2{\url{#2}}
+\def\IACR@email#1{\url{#1}}
+\fi
 
 % Line # for submission
 \newcommand\linenomathWithnumbersforAMS{%
