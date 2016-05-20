@@ -116,11 +116,6 @@
   \global\let\and\relax
 }
 \def\@maketitle{%
-  % PDF info
-  \if@loadhr%
-  \hypersetup{pdfauthor=\IACR@runningauthors}%
-  \hypersetup{pdftitle=\IACR@runningtitle}%
-  \fi%
   % Count authors and affiliations
   \setcounter{IACR@author@cnt}{1}%
   \setcounter{IACR@inst@cnt}{1}%
@@ -243,6 +238,8 @@
   \protected@edef\@tmp{\expandafter\@IACR@keywords}
   \protected@edef\@tmp{\expandafter\zap@comma@space\@tmp{} ,\@empty}
   \hypersetup{pdfkeywords=\@tmp}
+  \hypersetup{pdfauthor=\IACR@runningauthors}%
+  \hypersetup{pdftitle=\IACR@runningtitle}%
   \fi}
 
 % Hyperref
