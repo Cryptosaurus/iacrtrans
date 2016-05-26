@@ -1,4 +1,4 @@
-% IACR Transactions DOCUMENT CLASS -- version 0.23 (15 May 2016)
+% IACR Transactions DOCUMENT CLASS -- version 0.23 (26 May 2016)
 % Written by Gaetan Leurent gaetan.leurent@inria.fr (2016)
 %
 % To the extent possible under law, the author(s) have dedicated all
@@ -40,7 +40,7 @@
 %   remove \qed symbols, replace them by \qedhere, or add option [spthm]
 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesClass{iacrtrans}[2016/05/15 v0.23 IACR Transactions Author Class]
+\ProvidesClass{iacrtrans}[2016/05/26 v0.23 IACR Transactions Author Class]
 
 % Common definitions
 \def\publname{IACR Transactions on Symmetric Cryptology}
@@ -107,9 +107,9 @@
   \global\let\maketitle\relax
   \global\let\@maketitle\relax
   \global\let\@thanks\@empty
-  \global\let\@author\@empty
+%  \global\let\@author\@empty
   \global\let\@date\@empty
-  \global\let\@title\@empty
+%  \global\let\@title\@empty
   \global\let\title\relax
   \global\let\author\relax
   \global\let\date\relax
@@ -142,7 +142,7 @@
         \setcounter{IACR@author@cnt}{1}%
         \def\and{\if@IACR@autoinst\inst{\theIACR@author@cnt} \fi
           \stepcounter{IACR@author@cnt}%
-          \ifnum\theIACR@author@cnt=\IACR@author@last\unskip\ and \ignorespaces\else\unskip, \fi}
+          \ifnum\theIACR@author@cnt=\IACR@author@last\unskip\space and \ignorespaces\else\unskip, \ignorespaces\fi}
         \@author\if@IACR@autoinst\inst{\theIACR@author@cnt}\fi
         \vskip 1em\par
         \small
@@ -156,36 +156,27 @@
   \par
   \vskip 1.5em}
 
+\def\IACR@runningauthors{
+  \def\thanks##1{}%
+  \def\inst##1{}%
+  \def\fnmsep{}%
+  \def\\{}%
+  \def\footnote##1{}%
+  \setcounter{IACR@author@cnt}{1}%
+  \def\and{\stepcounter{IACR@author@cnt}%
+    \ifnum\theIACR@author@cnt=\IACR@author@last\unskip\space and \ignorespaces\else\unskip, \ignorespaces\fi}
+  \@author}
+
+\def\IACR@runningtitle{
+  \def\thanks##1{}%
+  \def\fnmsep{}%
+  \def\\{}%
+  \def\footnote##1{}%
+  \@title}
+
 \def\author{\@ifnextchar[{\IACR@@@author}{\IACR@@author}}
 \def\IACR@@@author[#1]#2{\authorrunning{#1}\gdef\@author{#2}}
-\def\IACR@@author#1{%
-  \gdef\@author{#1}%
-   {\def\thanks##1{}%
-    \def\inst##1{}%
-    \def\fnmsep{}%
-    \def\\{}%
-    \def\and{, }%
-    \def\zap@one,##1{}
-    \def\zap@last##1,##2{\ifx##1\@empty\else\space and ##1\expandafter\zap@one\fi}
-    \def\zap@last@comma##1,##2,##3{%
-      ##1%
-      \ifx##3\@empty%
-      \expandafter\zap@last\else
-      ,\expandafter\zap@last@comma\fi%
-      ##2,##3}
-    \protected@edef\IACR@runningauthors{\expandafter\@author}
-    \protected@edef\IACR@runningauthors{\expandafter\zap@last@comma\IACR@runningauthors,\@empty,\@empty}
-    \def\zap@comma@space##1 ,##2{%
-      ##1%
-      \ifx##2\@empty\else, \expandafter\zap@comma@space\fi
-      ##2}
-    \protected@edef\IACR@runningauthors{\expandafter\zap@comma@space\IACR@runningauthors{} ,\@empty}
-    \def\zap@dbl@space##1 ##2{%
-      ##1 %
-      \ifx##2\@empty\else \expandafter\zap@dbl@space\fi
-      ##2}
-    \protected@xdef\IACR@runningauthors{\expandafter\zap@dbl@space\IACR@runningauthors{} \@empty}}}
-
+\def\IACR@@author#1{\gdef\@author{#1}}
 
 \if@submission
 \gdef\@author{Anonymous Submission to \publname}
@@ -197,8 +188,7 @@
 
 \def\title{\@ifnextchar[{\IACR@@@title}{\IACR@@title}}
 \def\IACR@@@title[#1]#2{\gdef\@title{#2}\titlerunning{#1}}
-\def\IACR@@title#1{\gdef\@title{#1}%
-  {\def\thanks##1{}\def\\{}\protected@xdef\IACR@runningtitle{#1}}}
+\def\IACR@@title#1{\gdef\@title{#1}}
 
 \newcommand{\subtitle}[1]{\gdef\@subtitle{#1}}
 
@@ -229,24 +219,53 @@
 \def\@IACR@keywords{No keywords given.}
 \def\keywords#1{\gdef\@IACR@keywords{#1}}
 
+\def\@IACR@PDF@keywords{
+  \def\and{\unskip,\space\ignorespaces}
+  \@IACR@keywords}
+
 \renewenvironment{abstract}{%
   \small\quotation\setlength{\parindent}{0pt}\noindent
   \textbf{\textsf{Abstract.}}}
   {\smallskip\par\textbf{\textsf{Keywords:}}
-    \def\and{\unskip\ \textperiodcentered\ \ignorespaces}\@IACR@keywords
+    \def\and{\unskip\space\textperiodcentered\space\ignorespaces}\@IACR@keywords
   \endquotation%
-  \if@loadhr%  PDF keywords
+  \if@loadhr
+  %% PDF keywords
   \def\and{, }%
+  \def\thanks##1{}%
+  \def\footnote##1{}%
+  \def\inst##1{}%
+  \def\fnmsep{}%
+  \def\\{}%
   \def\zap@comma@space##1 ,##2{%
     ##1%
     \ifx##2\@empty\else, \expandafter\zap@comma@space\fi
     ##2}
   \protected@edef\@tmp{\expandafter\@IACR@keywords}
   \protected@edef\@tmp{\expandafter\zap@comma@space\@tmp{} ,\@empty}
-  \hypersetup{pdfkeywords=\@tmp}
-  \hypersetup{pdfauthor=\IACR@runningauthors}%
-  \hypersetup{pdftitle=\IACR@runningtitle}%
-  \fi}
+  \hypersetup{pdfkeywords=\@IACR@PDF@keywords}
+  %% PDF author
+  \def\zap@one,##1{}
+  \def\zap@last##1,##2{\ifx##1\@empty\else\space and ##1\expandafter\zap@one\fi}
+  \def\zap@last@comma##1,##2,##3{%
+    ##1%
+    \ifx##3\@empty%
+    \expandafter\zap@last\else
+    ,\expandafter\zap@last@comma\fi%
+    ##2,##3}
+  \def\zap@dbl@space##1 ##2{%
+    ##1 %
+    \ifx##2\@empty\else \expandafter\zap@dbl@space\fi
+    ##2}
+  \protected@edef\@tmp{\expandafter\@author}
+  \protected@edef\@tmp{\expandafter\zap@last@comma\@tmp,\@empty,\@empty}
+  \protected@edef\@tmp{\expandafter\zap@comma@space\@tmp{} ,\@empty}
+  \protected@edef\@tmp{\expandafter\zap@dbl@space\@tmp{} \@empty}
+  \hypersetup{pdfauthor=\@tmp}
+  %% PDF title
+  \hypersetup{pdftitle=\IACR@runningtitle}
+}
+
 
 % Hyperref
 \if@loadhr
