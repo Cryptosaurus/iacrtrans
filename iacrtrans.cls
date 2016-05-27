@@ -1,4 +1,4 @@
-% IACR Transactions DOCUMENT CLASS -- version 0.23 (26 May 2016)
+% IACR Transactions DOCUMENT CLASS -- version 0.23 (27 May 2016)
 % Written by Gaetan Leurent gaetan.leurent@inria.fr (2016)
 %
 % To the extent possible under law, the author(s) have dedicated all
@@ -40,7 +40,7 @@
 %   remove \qed symbols, replace them by \qedhere, or add option [spthm]
 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesClass{iacrtrans}[2016/05/26 v0.23 IACR Transactions Author Class]
+\ProvidesClass{iacrtrans}[2016/05/27 v0.23 IACR Transactions Author Class]
 
 % Common definitions
 \def\publname{IACR Transactions on Symmetric Cryptology}
@@ -50,6 +50,9 @@
 \newif\if@loadhr
 \@loadhrtrue
 \DeclareOption{nohyperref}{\@loadhrfalse}
+\newif\if@floatrow
+\@floatrowfalse
+\DeclareOption{floatrow}{\@floatrowtrue}
 \newif\if@submission
 \@submissionfalse
 \newif\if@preprint
@@ -217,11 +220,10 @@
 
 %Abstract style, keywords
 \def\@IACR@keywords{No keywords given.}
-\def\keywords#1{\gdef\@IACR@keywords{#1}}
 
-\def\@IACR@PDF@keywords{
-  \def\and{\unskip,\space\ignorespaces}
-  \@IACR@keywords}
+\def\keywords{\@ifnextchar[{\IACR@@@keywords}{\IACR@@keywords}}
+\def\IACR@@@keywords[#1]#2{\gdef\@IACR@PDFkeywords{#1}\gdef\@IACR@keywords{#2}}
+\def\IACR@@keywords#1{\gdef\@IACR@keywords{#1}}
 
 \renewenvironment{abstract}{%
   \small\quotation\setlength{\parindent}{0pt}\noindent
@@ -241,9 +243,13 @@
     ##1%
     \ifx##2\@empty\else, \expandafter\zap@comma@space\fi
     ##2}
-  \protected@edef\@tmp{\expandafter\@IACR@keywords}
-  \protected@edef\@tmp{\expandafter\zap@comma@space\@tmp{} ,\@empty}
-  \hypersetup{pdfkeywords=\@IACR@PDF@keywords}
+  \ifdefined\@IACR@PDFkeywords
+    \hypersetup{pdfkeywords=\@IACR@PDFkeywords}
+  \else
+    \protected@edef\@tmp{\expandafter\@IACR@keywords}
+    \protected@edef\@tmp{\expandafter\zap@comma@space\@tmp{} ,\@empty}
+    \hypersetup{pdfkeywords=\@tmp}
+  \fi
   %% PDF author
   \def\zap@one,##1{}
   \def\zap@last##1,##2{\ifx##1\@empty\else\space and ##1\expandafter\zap@one\fi}
@@ -336,6 +342,12 @@
 \fi
 
 % Floats and captions
+\if@floatrow
+\RequirePackage{floatrow}
+\floatsetup[table]{style=Plaintop} 
+\RequirePackage{caption}
+\captionsetup{labelfont={sf,bf}}
+\else
 \RequirePackage{float}
 \newcommand\fs@iacrabove{%
   % Swap \abovecaptionskip and \belowcaptionskip
@@ -352,6 +364,7 @@
 \restylefloat{table}
 \floatstyle{iacrbelow}
 \restylefloat{figure}
+\fi
 
 % Extra commands
 \def\email{\@ifnextchar[{\IACR@@email}{\IACR@email}}
