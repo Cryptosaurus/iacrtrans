@@ -76,8 +76,9 @@ subtitle.
 
 \paragraph{\texttt{\textbackslash author}} to define the author list.
 
-Author names must be delimited by \verb+\and+ macros.  If authors
-have different affiliations, each author name must be followed by
+Author names must be delimited by \verb+\and+ macros.  If there is one
+different affiliation for each author, authors and affiliations will be
+numbered automatically.  Otherwise, each author name must be followed by
 \verb+\inst{...}+ with the corresponding affiliation(s).
 
 A shorter list of authors for the running head can be given as
@@ -96,13 +97,6 @@ Individual keywords should be separated by the \verb+\and+ macro.
 If there are fragile commands in the keywords, use the optional argument
 to give a text-only version of the keywords; this will be used for the
 PDF meta-data.
-
-\paragraph{Note:} If there are fragile commands in the title, author, or
-keywords, they should either be \verb+\protect+-ed, or you should give a
-non-fragile optional argument.  For instance, use
-\verb+\title{Crypto with \protect\LaTeX}+ or
-\verb+\title[Crypto with \LaTeX]{Crypto with \LaTeX}+.
-
 
 \paragraph{\texttt{\textbackslash email}} should be used inside the
 \verb+\institute+ argument to typeset author's email address(es).  An
@@ -199,7 +193,10 @@ floats side by side as shown in this example:
 \end{document}
 \end{verbatim}
 
-For more advanced use, see the \texttt{floatrow} documentation.
+The row will be divided equally according to the number of figures, but
+you can ask each figure to take its natural space instead with
+\verb+\ffigbox[\FBwidth]+.  For more advanced use, see the
+\texttt{floatrow} documentation.
 
 
 \paragraph{\texttt{[nohyperref]}}
@@ -239,14 +236,14 @@ we recommand the \href{https://www.tug.org/texlive/}{TeX Live}
 distribution, which is updated regularly, include a large number of
 packages, and is available on many platforms.
 \begin{description}
-\item[Linux] A LaTeX installation is included in most Linux
+\item[Linux:] A LaTeX installation is included in most Linux
   distributions.  Alternatively,
   \href{https://www.tug.org/texlive/}{TeX Live} can be installed
   easily without root access.
-\item[Windows] There are also good \LaTeX{} distributions for Windows,
+\item[Windows:] There are also good \LaTeX{} distributions for Windows,
   such as \href{http://www.miktex.org/}{MikTeX} and
   \href{https://www.tug.org/texlive/}{TeX Live}.
-\item[MacOSX] On MacOSX, TeX Live is available inside
+\item[MacOSX:] On MacOSX, TeX Live is available inside
   \href{http://www.tug.org/mactex/}{MacTeX}.
 \end{description}
 
@@ -284,7 +281,8 @@ should work with both workflow.
 
 Figure captions should be below the figures, and table captions above
 the tables.  The \texttt{float} package loaded by the class should
-take care of this automatically.
+take care of this automatically.  If want to have several figures side
+by side, see the \texttt{[floatrow]} option.
 
 \paragraph{Tables.}
 
@@ -326,7 +324,7 @@ the following packages:
 
 \section*{Thanks}
 
-I would like to thank people who helped design and improve the
+We would like to thank people who helped design and improve the
 class:
 Anne Canteaut,
 Jérémy Jean,
