@@ -44,7 +44,18 @@
 
 % Common definitions
 \def\publname{IACR Transactions on Symmetric Cryptology}
+\def\IACR@vol{0}
+\def\IACR@no{0}
+\def\IACR@fp{1}
+\def\IACR@DOI{XXXXXXXX}
+\usepackage{lastpage}
+\def\IACR@lp{\pageref*{LastPage}}
 
+\newcommand{\setfirstpage}[1]{\def\IACR@fp{#1}\setcounter{page}{#1}}
+\newcommand{\setlastpage}[1]{\def\IACR@lp{#1}}
+\newcommand{\setvolume}[1]{\def\IACR@vol{#1}}
+\newcommand{\setnumber}[1]{\def\IACR@no{#1}}
+\newcommand{\setDOI}[1]{\def\IACR@DOI{#1}}
 
 % Options
 \newif\if@loadhr
@@ -170,7 +181,7 @@
     \ifnum\theIACR@author@cnt=\IACR@author@last\unskip\space and \ignorespaces\else\unskip, \ignorespaces\fi}
   \@author}
 
-\def\IACR@runningtitle{
+\def\IACR@runningtitle{%
   \def\thanks##1{}%
   \def\fnmsep{}%
   \def\\{}%
@@ -201,11 +212,19 @@
 
 % Head/foot
 \RequirePackage{fancyhdr}
+\RequirePackage{graphicx}
 \fancypagestyle{title}{%
 \fancyhf{} % clear all header and footer fields
 \if@submission\else\if@preprint\else
-\fancyfoot[L]{\small \publname\\DOI:xxx}
-\fancyfoot[R]{\small \textcopyright{} IACR}
+\fancyfoot[L]{\small Licensed under \href{http://creativecommons.org/licenses/by/4.0/}{Creative Commons License CC-BY 4.0.}\\
+\publname{} Vol.~\IACR@vol, No.\IACR@no, pp.\IACR@fp---\IACR@lp, \href{https://doi.org/\IACR@DOI}{DOI:\IACR@DOI}}
+\fancyfoot[R]{\includegraphics[height=2ex]{CC-by}}
+\if@loadhr
+  \hypersetup{pdfcopyright={Licensed under Creative Commons License CC-BY 4.0.}}
+  \hypersetup{pdflicenseurl={http://creativecommons.org/licenses/by/4.0/}}
+  \hypersetup{pdfsubject={IACR Transactions on Symmetric Cryptology}}
+  \hypersetup{pdflang=en}
+\fi
 \fi\fi
 \renewcommand{\headrulewidth}{0pt}
 \renewcommand{\footrulewidth}{0pt}}
@@ -232,44 +251,45 @@
     \def\and{\unskip\space\textperiodcentered\space\ignorespaces}\@IACR@keywords
   \endquotation%
   \if@loadhr
-  %% PDF keywords
-  \def\and{, }%
-  \def\thanks##1{}%
-  \def\footnote##1{}%
-  \def\inst##1{}%
-  \def\fnmsep{}%
-  \def\\{}%
-  \def\zap@comma@space##1 ,##2{%
-    ##1%
-    \ifx##2\@empty\else, \expandafter\zap@comma@space\fi
-    ##2}
-  \ifdefined\@IACR@PDFkeywords
-    \hypersetup{pdfkeywords=\@IACR@PDFkeywords}
-  \else
-    \protected@edef\@tmp{\expandafter\@IACR@keywords}
+    %% PDF keywords
+    \def\and{, }%
+    \def\thanks##1{}%
+    \def\footnote##1{}%
+    \def\inst##1{}%
+    \def\fnmsep{}%
+    \def\\{}%
+    \def\zap@comma@space##1 ,##2{%
+      ##1%
+      \ifx##2\@empty\else, \expandafter\zap@comma@space\fi
+      ##2}
+    \ifdefined\@IACR@PDFkeywords
+      \hypersetup{pdfkeywords=\@IACR@PDFkeywords}
+    \else
+      \protected@edef\@tmp{\expandafter\@IACR@keywords}
+      \protected@edef\@tmp{\expandafter\zap@comma@space\@tmp{} ,\@empty}
+      \hypersetup{pdfkeywords=\@tmp}
+    \fi
+    %% PDF author
+    \def\zap@one,##1{}
+    \def\zap@last##1,##2{\ifx##1\@empty\else\space and ##1\expandafter\zap@one\fi}
+    \def\zap@last@comma##1,##2,##3{%
+      ##1%
+      \ifx##3\@empty%
+      \expandafter\zap@last\else
+      ,\expandafter\zap@last@comma\fi%
+      ##2,##3}
+      \def\zap@dbl@space##1 ##2{%
+        ##1%
+        \ifx##2\@empty\else\space\expandafter\zap@dbl@space##2\fi}
+    \protected@edef\@tmp{\expandafter\@author}
+  %  \protected@edef\@tmp{\expandafter\IACR@runningauthors}
+    \protected@edef\@tmp{\expandafter\zap@last@comma\@tmp,\@empty,\@empty}
     \protected@edef\@tmp{\expandafter\zap@comma@space\@tmp{} ,\@empty}
-    \hypersetup{pdfkeywords=\@tmp}
+    \protected@edef\@tmp{\expandafter\zap@dbl@space\@tmp{} \@empty}
+    \hypersetup{pdfauthor=\@tmp}
+    %% PDF title
+    \hypersetup{pdftitle=\IACR@runningtitle}
   \fi
-  %% PDF author
-  \def\zap@one,##1{}
-  \def\zap@last##1,##2{\ifx##1\@empty\else\space and ##1\expandafter\zap@one\fi}
-  \def\zap@last@comma##1,##2,##3{%
-    ##1%
-    \ifx##3\@empty%
-    \expandafter\zap@last\else
-    ,\expandafter\zap@last@comma\fi%
-    ##2,##3}
-  \def\zap@dbl@space##1 ##2{%
-    ##1 %
-    \ifx##2\@empty\else \expandafter\zap@dbl@space\fi
-    ##2}
-  \protected@edef\@tmp{\expandafter\@author}
-  \protected@edef\@tmp{\expandafter\zap@last@comma\@tmp,\@empty,\@empty}
-  \protected@edef\@tmp{\expandafter\zap@comma@space\@tmp{} ,\@empty}
-  \protected@edef\@tmp{\expandafter\zap@dbl@space\@tmp{} \@empty}
-  \hypersetup{pdfauthor=\@tmp}
-  %% PDF title
-  \hypersetup{pdftitle=\IACR@runningtitle}
 }
 
 
@@ -279,6 +299,7 @@
   \RequirePackage{etoolbox}
   \AtEndPreamble{
     \@ifpackageloaded{hyperref}{}{\usepackage{hyperref}}
+    \@ifpackageloaded{hyperxmp}{}{\usepackage{hyperxmp}}
     \hypersetup{colorlinks=true,
       citecolor=black!70!green,
       linkcolor=black!70!red}
