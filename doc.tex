@@ -1,4 +1,4 @@
-% IACR Transactions CLASS DOCUMENTATION -- version 0.23 (27 May 2016)
+% IACR Transactions CLASS DOCUMENTATION -- version 0.24 (26 August 2016)
 % Written by Gaetan Leurent gaetan.leurent@inria.fr (2016)
 %
 % To the extent possible under law, the author(s) have dedicated all
@@ -16,7 +16,7 @@
 \author{Gaëtan Leurent\inst{1} \and Alice\inst{2} \and Bob\inst{2}}
 \institute{Inria, France, \email{gaetan.leurent@inria.fr} \and ACME}
 \title[\texttt{iacrtans} class documentation]{\publname}
-\subtitle{\LaTeX{} Class Documentation (v. 0.23)}
+\subtitle{\LaTeX{} Class Documentation (v. 0.24)}
 
 \begin{document}
 
@@ -266,8 +266,8 @@ We recommend the use of the \texttt{tikz} package to render pictures.
 In particular, a large variety of crypto pictures made with
 \texttt{tikz} is available at \url{http://www.iacr.org/authors/tikz/}.
 
-\paragraph{External pictures.}  We recommand the \texttt{graphicx}
-package for external figures.
+\paragraph{External pictures.}  The \texttt{graphicx} is loaded by the
+class, and is recommended for external figures.
 
 If possible, external figures should be in a vector format: you can
 use PDF files when compiling with \texttt{pdflatex}, and EPS files
@@ -293,6 +293,24 @@ We recommend the \texttt{booktabs} package to typeset tables.
 We recommend the \texttt{algorithm}, \texttt{algorithmcx} packages for
 algorithms (in particular, \texttt{algpseudocode} for pseudo-code).
 
+
+\section{For the Editor}
+
+The following commands should be used by the editor to prepare the final
+version:
+
+\paragraph{\texttt{\textbackslash setfirstpage}} to set the first page number.
+
+\paragraph{\texttt{\textbackslash setlastpage}} to set the first page
+number (optional).
+
+\paragraph{\texttt{\textbackslash setvolume}} to set the volume number.
+
+\paragraph{\texttt{\textbackslash setnumber}} to set the edition number.
+
+\paragraph{\texttt{\textbackslash setDOI}} to set the DOI.
+
+
 \section{Further information}
 
 More general information can be found in the following documents:
@@ -314,9 +332,10 @@ The class is based on the standard \texttt{article} class, and loads
 the following packages:
 \begin{itemize}
 \item \texttt{geometry}, \texttt{secsty}, \texttt{fancyhdr}, \texttt{mathtools},
-  \texttt{float}, \texttt{microtype}
+  \texttt{float}, \texttt{microtype}, \texttt{lastpage}
 \item \texttt{amsmath}, \texttt{amssymb}, \texttt{amsthm}
-\item \texttt{hyperref}, \texttt{etoolbox}, \texttt{xcolor} (unless
+\item \texttt{graphicx}
+\item \texttt{hyperref}, \texttt{hyperxmp}, \texttt{etoolbox}, \texttt{xcolor} (unless
   the \texttt{[nohyperref]} option is used)
 \item \texttt{lineno} (in \texttt{[submission]} mode)
 \item \texttt{floatrow,caption} (with option \texttt{[floatrow]})
@@ -344,6 +363,8 @@ Friedrich Wiemer.
   running authors and running title.  Added PDF info (title, author,
   keyword).  Optional argument for \verb+\email+.  Added
   \texttt{floatrow} option.
+\item[v 0.24] Added CC licence text, and added XMP metadata.  Fixed some
+  metadata transformations.
 \end{description}
 
 

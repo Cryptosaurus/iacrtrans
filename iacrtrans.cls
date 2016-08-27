@@ -1,4 +1,4 @@
-% IACR Transactions DOCUMENT CLASS -- version 0.23 (27 May 2016)
+% IACR Transactions DOCUMENT CLASS -- version 0.24 (26 August 2016)
 % Written by Gaetan Leurent gaetan.leurent@inria.fr (2016)
 %
 % To the extent possible under law, the author(s) have dedicated all
@@ -40,7 +40,7 @@
 %   remove \qed symbols, replace them by \qedhere, or add option [spthm]
 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesClass{iacrtrans}[2016/05/27 v0.23 IACR Transactions Author Class]
+\ProvidesClass{iacrtrans}[2016/08/26 v0.24 IACR Transactions Author Class]
 
 % Common definitions
 \def\publname{IACR Transactions on Symmetric Cryptology}
