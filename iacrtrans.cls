@@ -258,34 +258,45 @@
     \def\inst##1{}%
     \def\fnmsep{}%
     \def\\{}%
+    \def\zap@first@space ##1{##1}
+    \def\insert@last@space##1,##2{%
+      ##1%
+      \ifx##2\@empty\space\else, \expandafter\insert@last@space##2\fi}
     \def\zap@comma@space##1 ,##2{%
       ##1%
-      \ifx##2\@empty\else, \expandafter\zap@comma@space\fi
-      ##2}
+      \ifx##2\@empty\else, \expandafter\zap@comma@space##2\fi}
+    \def\zap@dbl@space##1 ##2{%
+      ##1%
+      \ifx##2\@empty\else\space\expandafter\zap@dbl@space##2\fi}
     \ifdefined\@IACR@PDFkeywords
       \hypersetup{pdfkeywords=\@IACR@PDFkeywords}
     \else
       \protected@edef\@tmp{\expandafter\@IACR@keywords}
-      \protected@edef\@tmp{\expandafter\zap@comma@space\@tmp{} ,\@empty}
+      \protected@edef\@tmp{\expandafter\insert@last@space\@tmp,\@empty}
+      \protected@edef\@tmp{\expandafter\zap@comma@space\@tmp ,\@empty}
+      \protected@edef\@tmp{\expandafter\insert@last@space\@tmp,\@empty}
+      \protected@edef\@tmp{\expandafter\zap@dbl@space\@tmp \@empty}
+      \protected@edef\@tmp{\expandafter\zap@first@space \@tmp}
+      \show\@tmp
       \hypersetup{pdfkeywords=\@tmp}
     \fi
     %% PDF author
-    \def\zap@one,##1{}
-    \def\zap@last##1,##2{\ifx##1\@empty\else\space and ##1\expandafter\zap@one\fi}
+    \def\zap@one##1,##2{##1}
+    \def\zap@last##1,##2{\ifx##1\@empty\else\space and \expandafter\zap@one##1\fi}
     \def\zap@last@comma##1,##2,##3{%
       ##1%
       \ifx##3\@empty%
       \expandafter\zap@last\else
       ,\expandafter\zap@last@comma\fi%
       ##2,##3}
-      \def\zap@dbl@space##1 ##2{%
-        ##1%
-        \ifx##2\@empty\else\space\expandafter\zap@dbl@space##2\fi}
     \protected@edef\@tmp{\expandafter\@author}
-  %  \protected@edef\@tmp{\expandafter\IACR@runningauthors}
     \protected@edef\@tmp{\expandafter\zap@last@comma\@tmp,\@empty,\@empty}
-    \protected@edef\@tmp{\expandafter\zap@comma@space\@tmp{} ,\@empty}
-    \protected@edef\@tmp{\expandafter\zap@dbl@space\@tmp{} \@empty}
+    \protected@edef\@tmp{\expandafter\insert@last@space\@tmp,\@empty}
+    \protected@edef\@tmp{\expandafter\zap@comma@space\@tmp ,\@empty}
+    \protected@edef\@tmp{\expandafter\insert@last@space\@tmp,\@empty}
+    \protected@edef\@tmp{\expandafter\zap@dbl@space\@tmp \@empty}
+    \protected@edef\@tmp{\expandafter\zap@first@space \@tmp}
+    \show\@tmp
     \hypersetup{pdfauthor=\@tmp}
     %% PDF title
     \hypersetup{pdftitle=\IACR@runningtitle}
