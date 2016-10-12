@@ -288,8 +288,8 @@
       \expandafter\zap@last\else
       ,\expandafter\zap@last@comma\fi%
       ##2,##3}
-    \ifdefined\@IACR@runningauthors
-      \hypersetup{pdfkeywords=\@IACR@runningauthors}
+    \ifdefined\IACR@runningauthors
+      \hypersetup{pdfauthor=\IACR@runningauthors}
     \else
       \protected@edef\@tmp{\expandafter\@author}
       \protected@edef\@tmp{\expandafter\zap@last@comma\@tmp,\@empty,\@empty}
@@ -301,7 +301,7 @@
       \hypersetup{pdfauthor=\@tmp}
     \fi
     %% PDF title
-    \ifdefined\@IACR@runningtitle
+    \ifdefined\IACR@runningtitle
       \hypersetup{pdftitle=\IACR@runningtitle}
     \else
       \protected@edef\@tmp{\expandafter\@title}
