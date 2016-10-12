@@ -334,7 +334,24 @@
 \def\FancyVerbLineautorefname{line}%
 \def\theoremautorefname{Theorem}%
 \def\pageautorefname{page}%
+
 \def\algorithmautorefname{Algorithm}
+
+\def\definitionautorefname{Definition}
+\def\exampleautorefname{Example}
+\def\exerciseautorefname{Exercise}
+\def\propertyautorefname{Property}
+\def\questionautorefname{Question}
+\def\solutionautorefname{Solution}
+\def\propositionautorefname{Proposition}
+\def\problemautorefname{Problem}
+\def\lemmaautorefname{Lemma}
+\def\conjectureautorefname{Conjecture}
+\def\corollaryautorefname{Corollary}
+\def\claimautorefname{Claim}
+\def\remarkautorefname{Remark}
+\def\noteautorefname{Note}
+\def\caseautorefname{Case}
 
 % AMS math
 \RequirePackage{amsmath,amssymb,amsthm}
