@@ -1,4 +1,4 @@
-% IACR Transactions DOCUMENT CLASS -- version 0.24 (26 August 2016)
+% IACR Transactions DOCUMENT CLASS -- version 0.24 (12 October 2016)
 % Written by Gaetan Leurent gaetan.leurent@inria.fr (2016)
 %
 % To the extent possible under law, the author(s) have dedicated all
@@ -40,7 +40,7 @@
 %   remove \qed symbols, replace them by \qedhere, or add option [spthm]
 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesClass{iacrtrans}[2016/08/26 v0.24 IACR Transactions Author Class]
+\ProvidesClass{iacrtrans}[2016/10/12 v0.24 IACR Transactions Author Class]
 
 % Common definitions
 \def\publname{IACR Transactions on Symmetric Cryptology}
@@ -199,12 +199,12 @@
 \fancyhf{} % clear all header and footer fields
 \if@submission\else\if@preprint\else
 \fancyfoot[L]{\small Licensed under \href{http://creativecommons.org/licenses/by/4.0/}{Creative Commons License CC-BY 4.0.}\\
-\publname{} Vol.~\IACR@vol, No.\IACR@no, pp.\IACR@fp---\IACR@lp, \href{https://doi.org/\IACR@DOI}{DOI:\IACR@DOI}}
+\publname{} Vol.~\IACR@vol, No.~\IACR@no, pp.~\IACR@fp---\IACR@lp\\ \href{https://doi.org/\IACR@DOI}{DOI:\IACR@DOI}}
 \fancyfoot[R]{\includegraphics[height=2ex]{CC-by}}
 \if@loadhr
   \hypersetup{pdfcopyright={Licensed under Creative Commons License CC-BY 4.0.}}
   \hypersetup{pdflicenseurl={http://creativecommons.org/licenses/by/4.0/}}
-  \hypersetup{pdfsubject={IACR Transactions on Symmetric Cryptology}}
+  \hypersetup{pdfsubject={IACR Transactions on Symmetric Cryptology, DOI:\IACR@DOI}}
   \hypersetup{pdflang=en}
 \fi
 \fi\fi
@@ -321,6 +321,25 @@
   \AtEndPreamble{
     \@ifpackageloaded{hyperref}{}{\usepackage{hyperref}}
     \@ifpackageloaded{hyperxmp}{}{\usepackage{hyperxmp}}
+    % Add Doi to dc schema
+    \renewcommand*{\hyxmp@dc@schema}{%
+      \hyxmp@add@to@xml{%
+    ______<rdf:Description rdf:about=""^^J%
+    ____________xmlns:dc="http://purl.org/dc/elements/1.1/">^^J%
+    _________<dc:format>application/pdf</dc:format>^^J%
+      }%
+      \hyxmp@rdf@dc{title}{\@pdftitle}%
+      \hyxmp@rdf@dc{description}{\@pdfsubject}%
+      \hyxmp@rdf@dc{rights}{\@pdfcopyright}%
+      \hyxmp@rdf@dc{identifier}{doi:\IACR@DOI}%
+      \hyxmp@list@to@xml{creator}{Seq}{\@pdfauthor}%
+      \hyxmp@list@to@xml{subject}{Bag}{\@pdfkeywords}%
+      \hyxmp@list@to@xml{date}{Seq}{\hyxmp@today}%
+      \hyxmp@add@to@xml{%
+    ______</rdf:Description>^^J%
+      }%
+    }
+
     \hypersetup{colorlinks=true,
       citecolor=black!70!green,
       linkcolor=black!70!red}
