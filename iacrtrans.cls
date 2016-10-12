@@ -170,24 +170,6 @@
   \par
   \vskip 1.5em}
 
-\def\IACR@runningauthors{
-  \def\thanks##1{}%
-  \def\inst##1{}%
-  \def\fnmsep{}%
-  \def\\{}%
-  \def\footnote##1{}%
-  \setcounter{IACR@author@cnt}{1}%
-  \def\and{\stepcounter{IACR@author@cnt}%
-    \ifnum\theIACR@author@cnt=\IACR@author@last\unskip\space and \ignorespaces\else\unskip, \ignorespaces\fi}
-  \@author}
-
-\def\IACR@runningtitle{%
-  \def\thanks##1{}%
-  \def\fnmsep{}%
-  \def\\{}%
-  \def\footnote##1{}%
-  \@title}
-
 \def\author{\@ifnextchar[{\IACR@@@author}{\IACR@@author}}
 \def\IACR@@@author[#1]#2{\authorrunning{#1}\gdef\@author{#2}}
 \def\IACR@@author#1{\gdef\@author{#1}}
@@ -230,8 +212,26 @@
 \renewcommand{\footrulewidth}{0pt}}
 \fancyhf{} % clear all header and footer fields
 \fancyhead[RO,LE]{\thepage}
-\fancyhead[RE]{\IACR@runningtitle}
-\fancyhead[LO]{\IACR@runningauthors}
+\fancyhead[RE]{\ifdefined\IACR@runningtitle\IACR@runningtitle%
+  \else%
+    \def\thanks##1{}%
+    \def\fnmsep{}%
+    \def\\{}%
+    \def\footnote##1{}%
+    \@title%
+  \fi}
+\fancyhead[LO]{\ifdefined\IACR@runningauthors\IACR@runningauthors%
+  \else%
+    \def\thanks##1{}%
+    \def\inst##1{}%
+    \def\fnmsep{}%
+    \def\\{}%
+    \def\footnote##1{}%
+    \setcounter{IACR@author@cnt}{1}%
+    \def\and{\stepcounter{IACR@author@cnt}%
+      \ifnum\theIACR@author@cnt=\IACR@author@last\unskip\space and \ignorespaces\else\unskip, \ignorespaces\fi}
+    \@author%
+  \fi}
 \renewcommand{\markboth}[2]{}
 \pagestyle{fancy}
 
@@ -277,7 +277,6 @@
       \protected@edef\@tmp{\expandafter\insert@last@space\@tmp,\@empty}
       \protected@edef\@tmp{\expandafter\zap@dbl@space\@tmp \@empty}
       \protected@edef\@tmp{\expandafter\zap@first@space \@tmp}
-      \show\@tmp
       \hypersetup{pdfkeywords=\@tmp}
     \fi
     %% PDF author
@@ -289,17 +288,28 @@
       \expandafter\zap@last\else
       ,\expandafter\zap@last@comma\fi%
       ##2,##3}
-    \protected@edef\@tmp{\expandafter\@author}
-    \protected@edef\@tmp{\expandafter\zap@last@comma\@tmp,\@empty,\@empty}
-    \protected@edef\@tmp{\expandafter\insert@last@space\@tmp,\@empty}
-    \protected@edef\@tmp{\expandafter\zap@comma@space\@tmp ,\@empty}
-    \protected@edef\@tmp{\expandafter\insert@last@space\@tmp,\@empty}
-    \protected@edef\@tmp{\expandafter\zap@dbl@space\@tmp \@empty}
-    \protected@edef\@tmp{\expandafter\zap@first@space \@tmp}
-    \show\@tmp
-    \hypersetup{pdfauthor=\@tmp}
+    \ifdefined\@IACR@runningauthors
+      \hypersetup{pdfkeywords=\@IACR@runningauthors}
+    \else
+      \protected@edef\@tmp{\expandafter\@author}
+      \protected@edef\@tmp{\expandafter\zap@last@comma\@tmp,\@empty,\@empty}
+      \protected@edef\@tmp{\expandafter\insert@last@space\@tmp,\@empty}
+      \protected@edef\@tmp{\expandafter\zap@comma@space\@tmp ,\@empty}
+      \protected@edef\@tmp{\expandafter\insert@last@space\@tmp,\@empty}
+      \protected@edef\@tmp{\expandafter\zap@dbl@space\@tmp \@empty}
+      \protected@edef\@tmp{\expandafter\zap@first@space \@tmp}
+      \hypersetup{pdfauthor=\@tmp}
+    \fi
     %% PDF title
-    \hypersetup{pdftitle=\IACR@runningtitle}
+    \ifdefined\@IACR@runningtitle
+      \hypersetup{pdftitle=\IACR@runningtitle}
+    \else
+      \protected@edef\@tmp{\expandafter\@title}
+      \protected@edef\@tmp{\expandafter\insert@last@space\@tmp,\@empty}
+      \protected@edef\@tmp{\expandafter\zap@dbl@space\@tmp \@empty}
+      \protected@edef\@tmp{\expandafter\zap@first@space \@tmp}
+      \hypersetup{pdftitle=\@tmp}
+    \fi
   \fi
 }
 
@@ -379,6 +389,8 @@
 \newtheorem{case}{Case}
 
 \theoremstyle{plain}
+
+
 
 %Emulate LLNCS spnewtheorem
 \if@spthm
