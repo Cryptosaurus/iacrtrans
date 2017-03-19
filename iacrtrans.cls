@@ -1,4 +1,11 @@
-% IACR Transactions DOCUMENT CLASS -- version 0.24 (12 October 2016)
+\def\fileversion{0.26}
+\def\filedate{2017/03/19}
+
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+\typeout{^^J  ***  LaTeX class for IACR Transactions v\fileversion\space ***^^J}
+\ProvidesClass{iacrtrans}[\filedate]
+
+% IACR Transactions DOCUMENT CLASS
 % Written by Gaetan Leurent gaetan.leurent@inria.fr (2016)
 %
 % To the extent possible under law, the author(s) have dedicated all
@@ -39,8 +46,6 @@
 % - if you have proof with explicit \qed inside, you should either
 %   remove \qed symbols, replace them by \qedhere, or add option [spthm]
 
-\NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesClass{iacrtrans}[2016/10/12 v0.24 IACR Transactions Author Class]
 
 % Common definitions
 \def\publname{IACR Transactions on Symmetric Cryptology}
@@ -49,7 +54,7 @@
 \def\IACR@fp{1}
 \def\IACR@ISSN{XXXX-XXXX}
 \def\IACR@DOI{XXXXXXXX}
-\usepackage{lastpage}
+\RequirePackage{lastpage}
 \def\IACR@lp{\pageref*{LastPage}}
 
 \newcommand{\setfirstpage}[1]{\def\IACR@fp{#1}\setcounter{page}{#1}}
@@ -321,8 +326,8 @@
   \RequirePackage{xcolor}
   \RequirePackage{etoolbox}
   \AtEndPreamble{
-    \@ifpackageloaded{hyperref}{}{\usepackage{hyperref}}
-    \@ifpackageloaded{hyperxmp}{}{\usepackage{hyperxmp}}
+    \@ifpackageloaded{hyperref}{}{\RequirePackage{hyperref}}
+    \@ifpackageloaded{hyperxmp}{}{\RequirePackage{hyperxmp}}
     % Add Doi to dc schema
     \renewcommand*{\hyxmp@dc@schema}{%
       \hyxmp@add@to@xml{%
@@ -409,19 +414,34 @@
 \newtheorem{note}{Note}
 \newtheorem{case}{Case}
 
-\theoremstyle{plain}
-
-
-
 %Emulate LLNCS spnewtheorem
 \if@spthm
 \def\spnewtheorem{\@ifstar{\IACR@spstar}{\IACR@sp}}
-\def\IACR@spstar#1#2#3#4{\newtheorem*{#1}{#2}}
+\def\IACR@spstar#1#2#3#4{%
+  \expandafter\def\csname th@#1\endcsname{\thm@headfont{#3}#4}\thm@style{#1}
+  \newtheorem*{#1}{#2}}
 \def\IACR@sp#1{\@ifnextchar[{\IACR@sp@b{#1}}{\IACR@sp@a{#1}}}
-\def\IACR@sp@a#1#2[#3]#4#5{\newtheorem{#1}{#2}[#3]}
-\def\IACR@sp@b#1[#2]#3#4#5{\newtheorem{#1}[#2]{#3}}
-\renewcommand{\pushQED}[1]{}
+\def\IACR@sp@a#1#2{%
+  \@ifnextchar[{\IACR@sp@ab{#1}{#2}}{\IACR@sp@aa{#1}{#2}}}
+\def\IACR@sp@ab#1#2[#3]#4#5{%
+ \expandafter\def\csname th@#1\endcsname{\thm@headfont{#4}#5}\thm@style{#1}
+  \newtheorem{#1}{#2}[#3]}
+\def\IACR@sp@aa#1#2#3#4{%
+ \expandafter\def\csname th@#1\endcsname{\thm@headfont{#3}#4}\thm@style{#1}
+  \newtheorem{#1}{#2}}
+\def\IACR@sp@b#1[#2]#3#4#5{%
+ \expandafter\def\csname th@#1\endcsname{\thm@headfont{#4}#5}\thm@style{#1}
+  \newtheorem{#1}[#2]{#3}}
+\let\real@proof\proof
+\def\proof{\@ifnextchar[{\proof@sptm}{\proof@@sptm}}
+\def\proof@sptm[#1]{\real@proof[\proofname{} (#1)]}
+\def\proof@@sptm{\real@proof}
+\let\real@pushQED\pushQED
+\let\real@qed\qed
+\def\pushQED#1{\real@pushQED{\real@qed}}
+\let\qed\qedhere
 \fi
+\theoremstyle{plain} %back to default
 
 % Floats and captions
 \if@floatrow
@@ -505,5 +525,8 @@
 \RequirePackage{microtype}
 
 % Fonts
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
+\RequirePackage[T1]{fontenc}
+\RequirePackage{lmodern}
+
+\endinput
+%end of file iacrtrans.cls
