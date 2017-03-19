@@ -6,7 +6,11 @@
 \ProvidesClass{iacrtrans}[\filedate]
 
 % IACR Transactions DOCUMENT CLASS
+<<<<<<< HEAD
+% Written by Gaetan Leurent gaetan.leurent@inria.fr (2016-2017)
+=======
 % Written by Gaetan Leurent gaetan.leurent@inria.fr (2016)
+>>>>>>> 10ddd2283aba1567344a7132e81ca4dbf7f9a153
 %
 % To the extent possible under law, the author(s) have dedicated all
 % copyright and related and neighboring rights to this software to the
