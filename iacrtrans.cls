@@ -47,6 +47,7 @@
 \def\IACR@vol{0}
 \def\IACR@no{0}
 \def\IACR@fp{1}
+\def\IACR@ISSN{XXXX-XXXX}
 \def\IACR@DOI{XXXXXXXX}
 \usepackage{lastpage}
 \def\IACR@lp{\pageref*{LastPage}}
@@ -55,6 +56,7 @@
 \newcommand{\setlastpage}[1]{\def\IACR@lp{#1}}
 \newcommand{\setvolume}[1]{\def\IACR@vol{#1}}
 \newcommand{\setnumber}[1]{\def\IACR@no{#1}}
+\newcommand{\setISSN}[1]{\def\IACR@ISSN{#1}}
 \newcommand{\setDOI}[1]{\def\IACR@DOI{#1}}
 
 % Options
@@ -199,7 +201,7 @@
 \fancyhf{} % clear all header and footer fields
 \if@submission\else\if@preprint\else
 \fancyfoot[L]{\small Licensed under \href{http://creativecommons.org/licenses/by/4.0/}{Creative Commons License CC-BY 4.0.}\\
-\publname{} Vol.~\IACR@vol, No.~\IACR@no, pp.~\IACR@fp---\IACR@lp\\ \href{https://doi.org/\IACR@DOI}{DOI:\IACR@DOI}}
+\publname{} ISSN~\IACR@ISSN, Vol.~\IACR@vol, No.~\IACR@no, pp.~\IACR@fp--\IACR@lp\\  \href{https://doi.org/\IACR@DOI}{DOI:\IACR@DOI}}
 \fancyfoot[R]{\includegraphics[height=2ex]{CC-by}}
 \if@loadhr
   \hypersetup{pdfcopyright={Licensed under Creative Commons License CC-BY 4.0.}}
