@@ -6,11 +6,7 @@
 \ProvidesClass{iacrtrans}[\filedate]
 
 % IACR Transactions DOCUMENT CLASS
-<<<<<<< HEAD
 % Written by Gaetan Leurent gaetan.leurent@inria.fr (2016-2017)
-=======
-% Written by Gaetan Leurent gaetan.leurent@inria.fr (2016)
->>>>>>> 10ddd2283aba1567344a7132e81ca4dbf7f9a153
 %
 % To the extent possible under law, the author(s) have dedicated all
 % copyright and related and neighboring rights to this software to the
@@ -35,7 +31,7 @@
 %% Title
 % \title[short]{Long title}
 %
-%% Authors/affiliation: 
+%% Authors/affiliation:
 % \author{Alice \and Bob}
 % \institute{ABC\\ \email{alice@abc} \and DEF\\ \email{bob@def}}
 %
@@ -46,7 +42,7 @@
 % \end{abstract}
 %
 %% Warnings
-% - please don't use any \pagestyle of \thispagestyle command
+% - please don't use any \pagestyle or \thispagestyle command
 % - if you have proof with explicit \qed inside, you should either
 %   remove \qed symbols, replace them by \qedhere, or add option [spthm]
 
@@ -418,6 +414,8 @@
 \newtheorem{note}{Note}
 \newtheorem{case}{Case}
 
+\theoremstyle{plain}
+
 %Emulate LLNCS spnewtheorem
 \if@spthm
 \def\spnewtheorem{\@ifstar{\IACR@spstar}{\IACR@sp}}
@@ -450,7 +448,7 @@
 % Floats and captions
 \if@floatrow
 \RequirePackage{floatrow}
-\floatsetup[table]{style=Plaintop} 
+\floatsetup[table]{style=Plaintop}
 \RequirePackage{caption}
 \captionsetup{labelfont={sf,bf}}
 \else
@@ -485,14 +483,14 @@
 
 % Line # for submission
 \newcommand\linenomathWithnumbersforAMS{%
-  \ifLineNumbers 
+  \ifLineNumbers
 %%  \ifx\@@par\@@@par\else
     \ifnum\interlinepenalty>-\linenopenaltypar
-      \global\holdinginserts\thr@@ 
+      \global\holdinginserts\thr@@
       \advance\interlinepenalty \linenopenalty
-     \ifhmode                                   % v4.3 
+     \ifhmode                                   % v4.3
       \advance\predisplaypenalty \linenopenalty
-     \fi 
+     \fi
 %%      \advance\postdisplaypenalty \linenopenalty
       \advance\interdisplaylinepenalty \linenopenalty
     \fi
@@ -511,7 +509,7 @@
   \expandafter\let\csname oldend#1\expandafter\endcsname\csname end#1\endcsname
   \renewenvironment{#1}%
      {\linenomathWithnumbersforAMS\csname old#1\endcsname}%
-     {\csname oldend#1\endcsname\endlinenomath}}% 
+     {\csname oldend#1\endcsname\endlinenomath}}%
 \newcommand*\patchBothAmsMathEnvironmentsForLineno[1]{%
   \patchAmsMathEnvironmentForLineno{#1}%
   \patchAmsMathEnvironmentForLineno{#1*}}%
