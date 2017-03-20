@@ -514,7 +514,7 @@
   \patchAmsMathEnvironmentForLineno{#1}%
   \patchAmsMathEnvironmentForLineno{#1*}}%
 \AtBeginDocument{%
-%\patchBothAmsMathEnvironmentsForLineno{equation}%
+\patchBothAmsMathEnvironmentsForLineno{equation}%
 \patchBothAmsMathEnvironmentsForLineno{align}%
 \patchBothAmsMathEnvironmentsForLineno{flalign}%
 \patchBothAmsMathEnvironmentsForLineno{alignat}%
