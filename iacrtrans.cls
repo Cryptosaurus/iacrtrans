@@ -90,7 +90,7 @@
 \LoadClass[10pt,twoside]{article}[2007/10/19]
 
 % Geometry
-\RequirePackage[a4paper,hscale=0.65,vscale=0.75,marginratio=1:1]{geometry}
+\RequirePackage[a4paper,hscale=0.65,vscale=0.75,marginratio=1:1,marginparwidth=2.7cm]{geometry}
 
 % Title fonts: bf+sf
 \RequirePackage{sectsty}
