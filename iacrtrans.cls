@@ -304,8 +304,10 @@
       \protected@edef\@tmp{\expandafter\zap@comma@space\@tmp ,\@empty}
       \protected@edef\@tmp{\expandafter\insert@last@space\@tmp,\@empty}
       \protected@edef\@tmp{\expandafter\zap@dbl@space\@tmp \@empty}
-      \protected@edef\@tmp{\expandafter\zap@first@space \@tmp}
-      \hypersetup{pdfauthor=\@tmp}
+      \ifx\@tmp\empty\else
+        \protected@edef\@tmp{\expandafter\zap@first@space \@tmp}
+        \hypersetup{pdfauthor=\@tmp}
+      \fi
     \fi
     %% PDF title
     \ifdefined\IACR@runningtitle
@@ -314,8 +316,10 @@
       \protected@edef\@tmp{\expandafter\@title}
       \protected@edef\@tmp{\expandafter\insert@last@space\@tmp,\@empty}
       \protected@edef\@tmp{\expandafter\zap@dbl@space\@tmp \@empty}
-      \protected@edef\@tmp{\expandafter\zap@first@space \@tmp}
-      \hypersetup{pdftitle=\@tmp}
+      \ifx\@tmp\empty\else
+        \protected@edef\@tmp{\expandafter\zap@first@space \@tmp}
+        \hypersetup{pdftitle=\@tmp}
+      \fi
     \fi
   \fi
 }
