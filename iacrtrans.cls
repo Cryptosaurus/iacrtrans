@@ -88,7 +88,7 @@
 \DeclareOption{final}{\PassOptionsToClass{\CurrentOption}{article}}      % Default
 \DeclareOption{preprint}{\@preprinttrue}
 \DeclareOption{submission}{\@submissiontrue}
-\DeclareOption{draft}{\@opreprinttrue\PassOptionsToClass{\CurrentOption}{article}}
+\DeclareOption{draft}{\@preprinttrue\PassOptionsToClass{\CurrentOption}{article}}
 \newif\if@spthm
 \@spthmfalse
 \DeclareOption{spthm}{\@spthmtrue}
