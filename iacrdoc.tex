@@ -50,7 +50,9 @@ If you have a paper typeset with the \texttt{llncs} class, conversion
 should be relatively easy.  The following steps should be sufficient
 in most cases (for the submission version):
 \begin{enumerate}
-\item Replace \verb+\documentclass{llncs}+ with\\ \verb+\documentclass[submission,spthm]{iacrtrans}+;
+\item Replace \verb+\documentclass{llncs}+ with\\
+    \verb+\documentclass[journal=XXX,submission,spthm]{iacrtrans}+,
+    where \verb+XXX+ is either \verb+tosc+, or \verb+tches+;
 \item Replace \verb+\bibliographystyle{splncs03}+ with
   \verb+\bibliographystyle{alpha}+;
 \item Add a \verb+\keywords{}+ command before the abstract, with
@@ -165,6 +167,8 @@ The class supports four publication types, selected with the
 following class options:
 
 \begin{description}
+\item[\texttt{[journal=XXX]}] allowed values are \texttt{tosc} and \texttt{tches},
+    sets the \texttt{publname} macro accordingly to the right journal
 \item[\texttt{[final]}] for final papers (default mode)
 \item[\texttt{[preprint]}] for preprints (without copyright info)
 \item[\texttt{[submission]}] for submissions (anonymous, with line numbers)

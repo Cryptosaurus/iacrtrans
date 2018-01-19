@@ -48,7 +48,17 @@
 
 
 % Common definitions
-\def\publname{IACR Transactions on Symmetric Cryptology}
+\RequirePackage{xkeyval}
+\def\publname{IACR Transactions}
+\define@choicekey*+{IACR}{journal}[\val\nr]{tosc,tches}{%
+    \ifcase\nr\relax
+        \def\publname{IACR Transactions on Symmetric Cryptology}%
+    \or
+        \def\publname{IACR Transactions on Cryptographic Hardware and Embedded Systems}%
+    \fi
+}{%
+    \ClassError{iacrtrans}{journal value is only allowed to be: tosc, or tches}%
+}
 \def\IACR@vol{0}
 \def\IACR@no{0}
 \def\IACR@fp{1}
@@ -78,12 +88,13 @@
 \DeclareOption{final}{\PassOptionsToClass{\CurrentOption}{article}}      % Default
 \DeclareOption{preprint}{\@preprinttrue}
 \DeclareOption{submission}{\@submissiontrue}
-\DeclareOption{draft}{\@preprinttrue\PassOptionsToClass{\CurrentOption}{article}}
+\DeclareOption{draft}{\@opreprinttrue\PassOptionsToClass{\CurrentOption}{article}}
 \newif\if@spthm
 \@spthmfalse
 \DeclareOption{spthm}{\@spthmtrue}
 
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
+\ProcessOptionsX<IACR>
 \ProcessOptions\relax
 
 % article class with a4paper
