@@ -10,25 +10,30 @@
 % along with this software. If not, see
 % <http://creativecommons.org/publicdomain/zero/1.0/>.
 
+%%% script AUTHOR: Ga{\"{e}}tan Leurent, Friedrich Wiemer%%%
+%%% script TITLE: {IACR} Transactions on Syemmetric Cryptology%%%
 \documentclass[preprint]{iacrtrans}
 \usepackage[utf8]{inputenc}
 
-\author{Gaëtan Leurent\inst{1} \and Alice\inst{2} \and Bob\inst{2}}
-\institute{Inria, France, \email{gaetan.leurent@inria.fr} \and ACME}
+\author{Gaëtan Leurent\inst{1} \and Friedrich Wiemer\inst{2}}
+\institute{Inria, France, \email{gaetan.leurent@inria.fr} \and
+           Ruhr-Universität Bochum, Germany, \email{friedrich.wiemer@rub.de}}
 \title[\texttt{iacrtans} class documentation]{\publname}
-\subtitle{\LaTeX{} Class Documentation (v. 0.24)}
+\subtitle{\LaTeX{} Class Documentation (v. 0.27)}
 
 \begin{document}
 
 \maketitle
 
 % use optional argument because the \LaTeX command breaks the PDF keywords
-\keywords[\publname, ToSC, LaTeX]{\publname \and ToSC \and \LaTeX}
+\keywords[\publname, ToSC, LaTeX]{\publname{} \and ToSC \and \LaTeX}
 
 \begin{abstract}
   This document is a quick introduction to the \LaTeX{} class for the
   \publname{}.
 \end{abstract}
+
+\tableofcontents{}
 
 \section*{Introduction}
 
@@ -39,8 +44,7 @@ classes and packages (mainly the \texttt{article} class with
 class used for Springer's proceedings.  The \LaTeX{} source of this
 documentation is meant as an example to show basic usage of the class.
 
-Since we are now preparing the zero-th issue of the journal, the class
-is still in development and feedback and comments are welcome.
+The class is still in development and feedback and comments are welcome.
 
 \section{\textcolor{red!70!black}{FAQ}: Frequently Asked Questions}
 
@@ -58,7 +62,7 @@ in most cases (for the submission version):
 \item Remove commands that might override the class style, such as
   \verb+\pagestyle{...}+ or \verb+\thispagestyle{...}+,
   change of margins (\emph{e.g.}  with the \texttt{geometry} package),
-  change of fonts, ....
+  change of fonts, \ldots
 \item See also \autoref{sec:biblio} for information about how to
   typeset the bibliography.
 \end{enumerate}
@@ -75,6 +79,21 @@ problems, please try to define a clean version of \texttt{author},
 these commands (in particular, remove \LaTeX{}  macros, and write
 everything on a single line), and see if you document now compiles
 without the \texttt{[nohyperref]} option.
+
+\subsection{Helping the editor}
+
+We would be very grateful, if you help us to prepare the final version for publishing.
+In order to generate bibliographic information for your paper, we parse the author and title fields of your tex files.
+As there are a lot of special cases that the script needs to take into account, there are special \texttt{hints} you can provide.
+Currently, this template supports \texttt{author-} and \texttt{title-hints}.
+An example how these hints are used, e.\,g., for this document is:
+\begin{verbatim}
+%%% script AUTHOR: Ga{\"{e}}tan Leurent, Friedrich Wiemer%%%
+%%% script TITLE: {IACR} Transactions on Syemmetric Cryptology%%%
+\documentclass[preprint]{iacrtrans}
+\end{verbatim}
+Note the extra \{\} which are needed to tell bibtex how to handle special characters or parts that should be set in uppercase (e.\,g., for cipher names).
+When using this hint fields, you should not use any custom \LaTeX-macro defined in your paper.
 
 \section{Main Commands}
 
@@ -323,17 +342,16 @@ algorithms (in particular, \texttt{algpseudocode} for pseudo-code).
 The following commands should be used by the editor to prepare the final
 version:
 
-\paragraph{\texttt{\textbackslash setfirstpage}} to set the first page number.
+\begin{itemize}
+\item \texttt{\textbackslash{}setfirstpage} to set the first page number.
+\item \texttt{\textbackslash{}setlastpage} to set the first page number (optional).
+\item \texttt{\textbackslash{}setvolume} to set the volume number.
+\item \texttt{\textbackslash{}setnumber} to set the edition number.
+\item \texttt{\textbackslash{}setDOI} to set the DOI\@.
+\end{itemize}
 
-\paragraph{\texttt{\textbackslash setlastpage}} to set the first page
-number (optional).
-
-\paragraph{\texttt{\textbackslash setvolume}} to set the volume number.
-
-\paragraph{\texttt{\textbackslash setnumber}} to set the edition number.
-
-\paragraph{\texttt{\textbackslash setDOI}} to set the DOI.
-
+There is a special \texttt{settings.tosc.tex} file, that sets default values for these commands
+and which can be included in the beginning of the main tex file.
 
 \section{Further information}
 
@@ -367,31 +385,32 @@ the following packages:
 
 \section*{Thanks}
 
-We would like to thank people who helped design and improve the
-class:
+We would like to thank people who helped design and improve the class:
 Anne Canteaut,
 Jérémy Jean,
 Marc Joye,
 Bart Preneel,
 Christian Rechberger,
 Tyge Tiessen,
-Friedrich Wiemer.
 
 \section*{Changes}
 
 \begin{description}
 \item[v 0.21] First public version
-\item[v 0.22] Added documentations.  Minor tweaks in the class.
-\item[v 0.23] More documentation.  Removed some extra line-numbers
-  with AMS environments in submission mode.  Make \verb+autoref+
-  capitalize sections.  Table caption are now above tables.  Rewritten
-  running authors and running title.  Added PDF info (title, author,
-  keyword).  Optional argument for \verb+\email+.  Added
-  \texttt{floatrow} option.
-\item[v 0.24] Added CC licence text, and added XMP metadata.  Fixed some
-  metadata transformations.
-\item[v 0.26] Added ISSN number (thanks to <friedrich.wiemer@rub.de>), and
-  fixed a few bugs with spthm (thanks to <marc.joye@nxp.com>)
+\item[v 0.22] Added documentations.
+              Minor tweaks in the class.
+\item[v 0.23] More documentation.
+              Removed some extra line-numbers with AMS environments in submission mode.
+              Make \verb+autoref+ capitalize sections.
+              Table caption are now above tables.
+              Rewritten running authors and running title.
+              Added PDF info (title, author, keyword).
+              Optional argument for \verb+\email+.
+              Added \texttt{floatrow} option.
+\item[v 0.24] Added CC licence text, and added XMP metadata.
+              Fixed some metadata transformations.
+\item[v 0.26] Added ISSN number and fixed a few bugs with spthm (thanks to <marc.joye@nxp.com>).
+\item[v 0.27] Added paragraph \emph{Helping the editor} in the documentation, added \texttt{settings.tosc.tex}.
 \end{description}
 
 
