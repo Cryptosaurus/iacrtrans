@@ -65,7 +65,7 @@
 \def\IACR@ISSN{XXXX-XXXX}
 \def\IACR@DOI{XXXXXXXX}
 \RequirePackage{lastpage}
-\def\IACR@lp{\pageref*{LastPage}}
+\def\IACR@lp{\if@loadhr\pageref*{LastPage}\else\pageref{LastPage}\fi}
 
 \newcommand{\setfirstpage}[1]{\def\IACR@fp{#1}\setcounter{page}{#1}}
 \newcommand{\setlastpage}[1]{\def\IACR@lp{#1}}
@@ -216,8 +216,13 @@
 \fancypagestyle{title}{%
 \fancyhf{} % clear all header and footer fields
 \if@submission\else\if@preprint\else
+\if@loadhr
 \fancyfoot[L]{\small Licensed under \href{http://creativecommons.org/licenses/by/4.0/}{Creative Commons License CC-BY 4.0.}\\
 \publname{} ISSN~\IACR@ISSN, Vol.~\IACR@vol, No.~\IACR@no, pp.~\IACR@fp--\IACR@lp\\  \href{https://doi.org/\IACR@DOI}{DOI:\IACR@DOI}}
+\else
+\fancyfoot[L]{\small Licensed under Creative Commons License CC-BY 4.0.\\
+\publname{} ISSN~\IACR@ISSN, Vol.~\IACR@vol, No.~\IACR@no, pp.~\IACR@fp--\IACR@lp\\  DOI:\IACR@DOI}
+\fi
 \fancyfoot[R]{\includegraphics[height=2ex]{CC-by}}
 \if@loadhr
   \hypersetup{pdfcopyright={Licensed under Creative Commons License CC-BY 4.0.}}
@@ -515,6 +520,7 @@
 
 \if@submission
 \RequirePackage[mathlines]{lineno}
+\RequirePackage{xcolor}
 \linenumbers
 \def\linenumberfont{\normalfont\tiny\sffamily\color{gray}}
 
