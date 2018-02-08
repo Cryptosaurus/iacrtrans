@@ -223,7 +223,7 @@
 \fancyfoot[L]{\small Licensed under Creative Commons License CC-BY 4.0.\\
 \publname{} ISSN~\IACR@ISSN, Vol.~\IACR@vol, No.~\IACR@no, pp.~\IACR@fp--\IACR@lp\\  DOI:\IACR@DOI}
 \fi
-\fancyfoot[R]{\includegraphics[height=2ex]{CC-by}}
+\fancyfoot[R]{\includegraphics[clip,height=2ex]{CC-by}}
 \if@loadhr
   \hypersetup{pdfcopyright={Licensed under Creative Commons License CC-BY 4.0.}}
   \hypersetup{pdflicenseurl={http://creativecommons.org/licenses/by/4.0/}}
