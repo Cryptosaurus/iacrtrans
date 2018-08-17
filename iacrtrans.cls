@@ -109,9 +109,9 @@
 % Title fonts: bf+sf
 \RequirePackage{sectsty}
 \allsectionsfont{\sffamily\boldmath}
-% Also for descrptions
+% Also for descriptions
 \renewcommand*\descriptionlabel[1]{\hspace\labelsep
-                                   \normalfont\bfseries\sffamily #1}
+                                   \normalfont\bfseries\sffamily\boldmath #1}
 
 
 % Title/Author/affiliations
