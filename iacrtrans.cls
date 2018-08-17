@@ -50,11 +50,14 @@
 % Common definitions
 \RequirePackage{xkeyval}
 \def\publname{IACR Transactions}
+\def\publnameshort{IACR Transactions}
 \define@choicekey*+{IACR}{journal}[\val\nr]{tosc,tches}{%
     \ifcase\nr\relax
         \def\publname{IACR Transactions on Symmetric Cryptology}%
+        \def\publnameshort{IACR ToSC}%
     \or
         \def\publname{IACR Transactions on Cryptographic Hardware and Embedded Systems}%
+        \def\publnameshort{IACR TCHES}%
     \fi
 }{%
     \ClassError{iacrtrans}{journal value is only allowed to be: tosc, or tches}%
@@ -193,7 +196,7 @@
 \def\IACR@@author#1{\gdef\@author{#1}}
 
 \if@submission
-\gdef\@author{Anonymous Submission to \publname}
+\gdef\@author{Anonymous Submission to \publnameshort}
 \renewcommand{\author}[2][]{}
 \renewcommand{\authorrunning}[1]{}
 \renewcommand{\institute}[2][]{}
