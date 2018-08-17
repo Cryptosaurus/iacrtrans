@@ -84,9 +84,9 @@
 \newif\if@submission
 \@submissionfalse
 \newif\if@preprint
-\@preprintfalse
-\DeclareOption{final}{\PassOptionsToClass{\CurrentOption}{article}}      % Default
-\DeclareOption{preprint}{\@preprinttrue}
+\@preprinttrue
+\DeclareOption{final}{\PassOptionsToClass{\CurrentOption}{article}\@preprintfalse}
+\DeclareOption{preprint}{\@preprinttrue}      % Default
 \DeclareOption{submission}{\@submissiontrue}
 \DeclareOption{draft}{\@preprinttrue\PassOptionsToClass{\CurrentOption}{article}}
 \newif\if@spthm
