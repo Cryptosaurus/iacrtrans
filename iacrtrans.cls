@@ -1,12 +1,12 @@
-\def\fileversion{0.26}
-\def\filedate{2017/03/19}
+\def\fileversion{0.90}
+\def\filedate{2018/08/17}
 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \typeout{^^J  ***  LaTeX class for IACR Transactions v\fileversion\space ***^^J}
 \ProvidesClass{iacrtrans}[\filedate]
 
 % IACR Transactions DOCUMENT CLASS
-% Written by Gaetan Leurent gaetan.leurent@inria.fr (2016-2017)
+% Written by Gaetan Leurent gaetan.leurent@inria.fr (2016-2018)
 %
 % To the extent possible under law, the author(s) have dedicated all
 % copyright and related and neighboring rights to this software to the
