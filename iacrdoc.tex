@@ -1,5 +1,5 @@
 % IACR Transactions CLASS DOCUMENTATION
-% Written by Gaetan Leurent gaetan.leurent@inria.fr (2016-2017)
+% Written by Gaetan Leurent gaetan.leurent@inria.fr (2016-2018)
 %
 % To the extent possible under law, the author(s) have dedicated all
 % copyright and related and neighboring rights to this software to the
@@ -11,22 +11,23 @@
 % <http://creativecommons.org/publicdomain/zero/1.0/>.
 
 %%% script AUTHOR: Ga{\"{e}}tan Leurent, Friedrich Wiemer%%%
-%%% script TITLE: {IACR} Transactions on Syemmetric Cryptology%%%
-\documentclass[preprint]{iacrtrans}
+%%% script TITLE: {IACR} Transactions class documentation%%%
+\documentclass{iacrtrans}
 \usepackage[utf8]{inputenc}
 
 \author{Gaëtan Leurent\inst{1} \and Friedrich Wiemer\inst{2}}
 \institute{Inria, France, \email{gaetan.leurent@inria.fr} \and
            Ruhr-Universität Bochum, Germany, \email{friedrich.wiemer@rub.de}}
 \title[\texttt{iacrtans} class documentation]{\publname}
-\subtitle{\LaTeX{} Class Documentation (v. 0.27)}
+\subtitle{\LaTeX{} Class Documentation (v. 0.90)}
 
 \begin{document}
 
 \maketitle
 
 % use optional argument because the \LaTeX command breaks the PDF keywords
-\keywords[\publname, ToSC, LaTeX]{\publname{} \and ToSC \and \LaTeX}
+\keywords[\publname, ToSC, TCHES, LaTeX]{\publname{} \and ToSC
+  \and TCHES \and \LaTeX}
 
 \begin{abstract}
   This document is a quick introduction to the \LaTeX{} class for the
@@ -37,14 +38,19 @@
 
 \section*{Introduction}
 
-The \texttt{iacrtans} \LaTeX{} class will be used by the new
-``\publname'' journal.  The class is based on standard \LaTeX{}
-classes and packages (mainly the \texttt{article} class with
-\texttt{amsmath}), and should be similar in use to the \texttt{llncs}
-class used for Springer's proceedings.  The \LaTeX{} source of this
-documentation is meant as an example to show basic usage of the class.
+The \texttt{iacrtans} \LaTeX{} class is used by the new ``IACR
+Transactions'' journals ToSC (IACR Transactions on Symmetric Cryptology)
+and TCHES (IACR Transactions on Cryptographic Hardware and Embedded
+Systems).  The class is based on standard \LaTeX{} classes and packages
+(mainly the \texttt{article} class with \texttt{amsmath}), and should be
+similar in use to the \texttt{llncs} class used for Springer's
+proceedings.  The \LaTeX{} source of this documentation is meant as an
+example to show basic usage of the class.
 
 The class is still in development and feedback and comments are welcome.
+The latest version can be found on the Github page of the project:
+\url{https://github.com/Cryptosaurus/iacrtrans}, feel free to open
+tickets for issues or to submit pull requests.
 
 \section{\textcolor{red!70!black}{FAQ}: Frequently Asked Questions}
 
@@ -63,7 +69,7 @@ in most cases (for the submission version):
   keywords separated by \verb+\and+;
 \item Remove commands that might override the class style, such as
   \verb+\pagestyle{...}+ or \verb+\thispagestyle{...}+,
-  change of margins (\emph{e.g.}  with the \texttt{geometry} package),
+  change of margins (\emph{e.\,g.}  with the \texttt{geometry} package),
   change of fonts, \ldots
 \item See also \autoref{sec:biblio} for information about how to
   typeset the bibliography.
@@ -82,19 +88,35 @@ these commands (in particular, remove \LaTeX{}  macros, and write
 everything on a single line), and see if you document now compiles
 without the \texttt{[nohyperref]} option.
 
+\subsection{Line number issues}
+
+In submission mode, the class adds line numbers to help reviewers refer
+to specific elements.  Unfortunately, the code that does this is rather
+fragile, and some constructions break the line numbering.  In
+particular, old-style equations with \verb+$$...$$+ are known to cause
+issues, please use \verb+\[...\]+ instead\footnote{For more background
+  on \texttt{\$\$...\$\$} and \texttt{\textbackslash[...\textbackslash]},
+  see \url{https://tex.stackexchange.com/questions/503/why-is-preferable-to}}.
+
+If you find other cases where line numbering is broken, please open a
+ticket on github, and we will try to find a solution when possible.
+As a quick workaround, you can wrap the offending environment with
+\verb+\begin{linenomath}+ / \verb+\end{linenomath}+ (this will do
+nothing in preprint or final mode when line numbers are deactivated).
+
 \subsection{Helping the editor}
 
 We would be very grateful, if you help us to prepare the final version for publishing.
 In order to generate bibliographic information for your paper, we parse the author and title fields of your tex files.
 As there are a lot of special cases that the script needs to take into account, there are special \texttt{hints} you can provide.
 Currently, this template supports \texttt{author-} and \texttt{title-hints}.
-An example how these hints are used, e.\,g., for this document is:
+An example how these hints are used, \emph{e.\,g.}, for this document is:
 \begin{verbatim}
 %%% script AUTHOR: Ga{\"{e}}tan Leurent, Friedrich Wiemer%%%
-%%% script TITLE: {IACR} Transactions on Syemmetric Cryptology%%%
-\documentclass[preprint]{iacrtrans}
+%%% script TITLE: {IACR} Transactions class documentation%%%
+\documentclass{iacrtrans}
 \end{verbatim}
-Note the extra \{\} which are needed to tell bibtex how to handle special characters or parts that should be set in uppercase (e.\,g., for cipher names).
+Note the extra \{\} which are needed to tell bibtex how to handle special characters or parts that should be set in uppercase (\emph{e.\,g.}, for cipher names).
 When using this hint fields, you should not use any custom \LaTeX-macro defined in your paper.
 
 \section{Main Commands}
@@ -188,12 +210,12 @@ following class options:
 \begin{description}
 \item[\texttt{[journal=XXX]}] allowed values are \texttt{tosc} and \texttt{tches},
     sets the \texttt{publname} macro accordingly to the right journal
-\item[\texttt{[final]}] for final papers (default mode)
-\item[\texttt{[preprint]}] for preprints (without copyright info)
+\item[\texttt{[final]}] for final papers
+\item[\texttt{[preprint]}] for preprints (without copyright info, default)
 \item[\texttt{[submission]}] for submissions (anonymous, with line numbers)
 \item[\texttt{[draft]}] is similar to preprint, but activates draft
   mode for the underlying \texttt{article} class (which shows overfull hboxes), and other packages
-  (\emph{e.g.} \texttt{graphicx}, \texttt{hyperref}).
+  (\emph{e.\,g.} \texttt{graphicx}, \texttt{hyperref}).
 \end{description}
 
 \subsection{Other Options}
@@ -377,7 +399,7 @@ More general information can be found in the following documents:
 The class is based on the standard \texttt{article} class, and loads
 the following packages:
 \begin{itemize}
-\item \texttt{geometry}, \texttt{secsty}, \texttt{fancyhdr}, \texttt{mathtools},
+\item \texttt{geometry}, \texttt{sectsty}, \texttt{fancyhdr}, \texttt{mathtools},
   \texttt{float}, \texttt{microtype}, \texttt{lastpage}
 \item \texttt{amsmath}, \texttt{amssymb}, \texttt{amsthm}
 \item \texttt{graphicx}
@@ -396,6 +418,7 @@ Marc Joye,
 Bart Preneel,
 Christian Rechberger,
 Tyge Tiessen,
+Jonas Wloka.
 
 \section*{Changes}
 
@@ -414,7 +437,11 @@ Tyge Tiessen,
 \item[v 0.24] Added CC licence text, and added XMP metadata.
               Fixed some metadata transformations.
 \item[v 0.26] Added ISSN number and fixed a few bugs with spthm (thanks to <marc.joye@nxp.com>).
-\item[v 0.27] Added paragraph \emph{Helping the editor} in the documentation, added \texttt{settings.tosc.tex}.
+\item[v 0.27] Added paragraph \emph{Helping the editor} in the documentation,
+              added \texttt{settings.tosc.tex}.
+\item[v 0.90] Moved to github, various fixes.
+              Added \texttt{journal} class option to switch between TCHES and ToSC.
+              Changed default mode to \texttt{preprint}.
 \end{description}
 
 
