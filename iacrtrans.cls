@@ -1,12 +1,12 @@
-\def\fileversion{0.26}
-\def\filedate{2017/03/19}
+\def\fileversion{0.90}
+\def\filedate{2018/08/17}
 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \typeout{^^J  ***  LaTeX class for IACR Transactions v\fileversion\space ***^^J}
 \ProvidesClass{iacrtrans}[\filedate]
 
 % IACR Transactions DOCUMENT CLASS
-% Written by Gaetan Leurent gaetan.leurent@inria.fr (2016-2017)
+% Written by Gaetan Leurent gaetan.leurent@inria.fr (2016-2018)
 %
 % To the extent possible under law, the author(s) have dedicated all
 % copyright and related and neighboring rights to this software to the
@@ -50,11 +50,14 @@
 % Common definitions
 \RequirePackage{xkeyval}
 \def\publname{IACR Transactions}
+\def\publnameshort{IACR Transactions}
 \define@choicekey*+{IACR}{journal}[\val\nr]{tosc,tches}{%
     \ifcase\nr\relax
         \def\publname{IACR Transactions on Symmetric Cryptology}%
+        \def\publnameshort{IACR ToSC}%
     \or
         \def\publname{IACR Transactions on Cryptographic Hardware and Embedded Systems}%
+        \def\publnameshort{IACR TCHES}%
     \fi
 }{%
     \ClassError{iacrtrans}{journal value is only allowed to be: tosc, or tches}%
@@ -84,9 +87,9 @@
 \newif\if@submission
 \@submissionfalse
 \newif\if@preprint
-\@preprintfalse
-\DeclareOption{final}{\PassOptionsToClass{\CurrentOption}{article}}      % Default
-\DeclareOption{preprint}{\@preprinttrue}
+\@preprinttrue
+\DeclareOption{final}{\PassOptionsToClass{\CurrentOption}{article}\@preprintfalse}
+\DeclareOption{preprint}{\@preprinttrue}      % Default
 \DeclareOption{submission}{\@submissiontrue}
 \DeclareOption{draft}{\@preprinttrue\PassOptionsToClass{\CurrentOption}{article}}
 \newif\if@spthm
@@ -106,9 +109,9 @@
 % Title fonts: bf+sf
 \RequirePackage{sectsty}
 \allsectionsfont{\sffamily\boldmath}
-% Also for descrptions
+% Also for descriptions
 \renewcommand*\descriptionlabel[1]{\hspace\labelsep
-                                   \normalfont\bfseries\sffamily #1}
+                                   \normalfont\bfseries\sffamily\boldmath #1}
 
 
 % Title/Author/affiliations
@@ -193,7 +196,7 @@
 \def\IACR@@author#1{\gdef\@author{#1}}
 
 \if@submission
-\gdef\@author{Anonymous Submission to \publname}
+\gdef\@author{Anonymous Submission to \publnameshort}
 \renewcommand{\author}[2][]{}
 \renewcommand{\authorrunning}[1]{}
 \renewcommand{\institute}[2][]{}
