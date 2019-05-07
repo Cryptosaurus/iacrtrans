@@ -275,7 +275,7 @@ Received: \IACR@Received, \if@IACR@Revised Revised: \IACR@Revised, \fi Accepted:
 \if@loadhr
   \hypersetup{pdfcopyright={Licensed under Creative Commons License CC-BY 4.0.}}
   \hypersetup{pdflicenseurl={http://creativecommons.org/licenses/by/4.0/}}
-  \hypersetup{pdfsubject={IACR Transactions on Symmetric Cryptology, DOI:\IACR@DOI}}
+  \hypersetup{pdfsubject={\publname{}, DOI:\IACR@DOI}}
   \hypersetup{pdflang=en}
 \fi
 \fi\fi
