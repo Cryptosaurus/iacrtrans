@@ -316,6 +316,7 @@
       ##2,##3}
     \ifdefined\IACR@runningauthors
       \hypersetup{pdfauthor=\IACR@runningauthors}
+      \typeout{IACR@AUTHOR: \IACR@runningauthors}
     \else
       \protected@edef\@tmp{\expandafter\@author}
       \protected@edef\@tmp{\expandafter\zap@last@comma\@tmp,\@empty,\@empty}
@@ -327,10 +328,21 @@
         \protected@edef\@tmp{\expandafter\zap@first@space \@tmp}
         \hypersetup{pdfauthor=\@tmp}
       \fi
+      %% Print author to log file for script use
+      \protected@edef\@tmp{\expandafter\@author}
+      \protected@edef\@tmp{\expandafter\insert@last@space\@tmp,\@empty}
+      \protected@edef\@tmp{\expandafter\zap@comma@space\@tmp ,\@empty}
+      \protected@edef\@tmp{\expandafter\insert@last@space\@tmp,\@empty}
+      \protected@edef\@tmp{\expandafter\zap@dbl@space\@tmp \@empty}
+      \ifx\@tmp\empty\else
+        \protected@edef\@tmp{\expandafter\zap@first@space \@tmp}
+        \typeout{IACR@AUTHOR: \@tmp}
+      \fi
     \fi
     %% PDF title
     \ifdefined\IACR@runningtitle
       \hypersetup{pdftitle=\IACR@runningtitle}
+      \typeout{IACR@TITLE: \IACR@runningtitle^^J}
     \else
       \protected@edef\@tmp{\expandafter\@title}
       \protected@edef\@tmp{\expandafter\insert@last@space\@tmp,\@empty}
@@ -338,6 +350,7 @@
       \ifx\@tmp\empty\else
         \protected@edef\@tmp{\expandafter\zap@first@space \@tmp}
         \hypersetup{pdftitle=\@tmp}
+        \typeout{IACR@TITLE: \@tmp^^J}
       \fi
     \fi
   \fi
