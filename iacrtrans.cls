@@ -20,11 +20,21 @@
 %
 %%% Class options:
 %
-% [preprint]   Preprint (no copyright info)
-% [submission] Anonymous submission
-% [spthm]      Emulate llncs sptheorem and remove automatic \qed in proof
-% [nohyperref] Disable automatic loading of hyperref
+%% Document mode
+% [preprint]      Preprint (no copyright info) -- default mode
+% [submission]    Anonymous submission
+% [notanonymous]  Keep author names in submission mode
+% [final]         Final version
+% [journal=tosc]
+% [journal=tches]
 % [draft]
+%% Package options
+% [spthm]         Emulate llncs sptheorem and remove automatic \qed in proof
+% [floatrow]      Load floatrow package with correct captions
+% [nohyperref]    Disable automatic loading of hyperref
+% [nolastpage]    Disable automatic loading of lastpage
+% [xcolor=xxx]    Pass xxx to xcolor package
+% [hyperref=xxx]  Pass xxx to hyperref package
 %
 %%% HOWTO use this class
 %
@@ -65,6 +75,7 @@
 \def\IACR@vol{0}
 \def\IACR@no{0}
 \def\IACR@fp{1}
+\def\IACR@lp{\if@loadhr\pageref*{LastPage}\else\pageref{LastPage}\fi}
 \def\IACR@ISSN{XXXX-XXXX}
 \def\IACR@DOI{XXXXXXXX}
 \def\IACR@Received{20XX-XX-XX}
@@ -72,8 +83,6 @@
 \def\IACR@Accepted{20XX-XX-XX}
 \def\IACR@Published{20XX-XX-XX}
 \newif\if@IACR@Revised \@IACR@Revisedfalse
-\RequirePackage{lastpage}
-\def\IACR@lp{\if@loadhr\pageref*{LastPage}\else\pageref{LastPage}\fi}
 
 \newcommand{\setfirstpage}[1]{\def\IACR@fp{#1}\setcounter{page}{#1}}
 \newcommand{\setlastpage}[1]{\def\IACR@lp{#1}}
@@ -96,15 +105,24 @@
 \DeclareOption{floatrow}{\@floatrowtrue}
 \newif\if@submission
 \@submissionfalse
+\newif\if@anonymous
+\@anonymousfalse
 \newif\if@preprint
 \@preprinttrue
 \DeclareOption{final}{\PassOptionsToClass{\CurrentOption}{article}\@preprintfalse}
 \DeclareOption{preprint}{\@preprinttrue}      % Default
-\DeclareOption{submission}{\@submissiontrue}
+\DeclareOption{submission}{\@submissiontrue\@anonymoustrue}
 \DeclareOption{draft}{\@preprinttrue\PassOptionsToClass{\CurrentOption}{article}}
+\DeclareOption{notanonymous}{\@anonymousfalse}
 \newif\if@spthm
 \@spthmfalse
 \DeclareOption{spthm}{\@spthmtrue}
+\newif\if@IACR@lastpage
+\@IACR@lastpagetrue
+\DeclareOption{nolastpage}{\@IACR@lastpagefalse}
+
+\define@key{IACR}{xcolor}{\PassOptionsToPackage{#1}{xcolor}}
+\define@key{IACR}{hyperref}{\PassOptionsToPackage{#1}{hyperref}}
 
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
 \ProcessOptionsX<IACR>
@@ -115,7 +133,7 @@
 
 % Geometry
 \RequirePackage[a4paper,hscale=0.65,vscale=0.75,marginratio=1:1,marginparwidth=2.7cm]{geometry}
-
+\RequirePackage{afterpage}
 % Title fonts: bf+sf
 \RequirePackage{sectsty}
 \allsectionsfont{\sffamily\boldmath}
@@ -159,6 +177,13 @@
   \global\let\author\relax
   \global\let\date\relax
   \global\let\and\relax
+  % Adjust header size for title page
+  \addtolength{\headheight}{\baselineskip}%
+  \addtolength{\headsep}{-\baselineskip}%
+  \afterpage{%
+    \global\advance\headheight by -\baselineskip%
+    \global\advance\headsep by \baselineskip%
+  }%
 }
 \def\@maketitle{%
   % Count authors and affiliations
@@ -181,7 +206,7 @@
     \vskip 1.5em%
     {\large
       \lineskip .5em%
-        \if@submission
+        \if@anonymous
         Anonymous Submission
         \else
         \setcounter{IACR@author@cnt}{1}%
@@ -205,7 +230,7 @@
 \def\IACR@@@author[#1]#2{\authorrunning{#1}\gdef\@author{#2}}
 \def\IACR@@author#1{\gdef\@author{#1}}
 
-\if@submission
+\if@anonymous
 \gdef\@author{Anonymous Submission to \publnameshort}
 \renewcommand{\author}[2][]{}
 \renewcommand{\authorrunning}[1]{}
@@ -226,6 +251,13 @@
 % Head/foot
 \RequirePackage{fancyhdr}
 \RequirePackage{graphicx}
+\if@submission\else\if@preprint\else
+\if@IACR@lastpage
+\RequirePackage{lastpage}
+\else
+\typeout{IACR Trans: not loading lastpage, please use \@backslashchar setlastpage}
+\fi
+\fi\fi
 \fancypagestyle{title}{%
 \fancyhf{} % clear all header and footer fields
 \if@submission\else\if@preprint\else
@@ -233,8 +265,7 @@
 \fancyhead[L]{\small \publname{}\\
 ISSN~\IACR@ISSN, Vol.~\IACR@vol, No.~\IACR@no, pp.~\IACR@fp--\IACR@lp. \hfill \href{https://doi.org/\IACR@DOI}{DOI:\IACR@DOI}}
 \fancyfoot[L]{\small Licensed under \href{http://creativecommons.org/licenses/by/4.0/}{Creative Commons License CC-BY 4.0.}\\
-Received: \IACR@Received, \if@IACR@Revised Revised: \IACR@Revised, \fi Accepted: \IACR@Accepted, Published: \IACR@Published
-}
+Received: \IACR@Received, \if@IACR@Revised Revised: \IACR@Revised, \fi Accepted: \IACR@Accepted, Published: \IACR@Published}
 \else
 \fancyhead[L]{\small \publname{}\\
 ISSN~\IACR@ISSN, Vol.~\IACR@vol, No.~\IACR@no, pp.~\IACR@fp--\IACR@lp. \hfill  DOI:\IACR@DOI}
