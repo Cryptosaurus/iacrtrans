@@ -1,5 +1,5 @@
-\def\fileversion{0.90}
-\def\filedate{2018/08/17}
+\def\fileversion{0.91}
+\def\filedate{2019/11/14}
 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \typeout{^^J  ***  LaTeX class for IACR Transactions v\fileversion\space ***^^J}

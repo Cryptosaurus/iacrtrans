@@ -19,7 +19,7 @@
 \institute{Inria, France, \email{gaetan.leurent@inria.fr} \and
            Ruhr-Universität Bochum, Germany, \email{friedrich.wiemer@rub.de}}
 \title[\texttt{iacrtans} class documentation]{\publname}
-\subtitle{\LaTeX{} Class Documentation (v. 0.90)}
+\subtitle{\LaTeX{} Class Documentation (v. 0.91)}
 
 \begin{document}
 
@@ -54,7 +54,7 @@ tickets for issues or to submit pull requests.
 
 \section{\textcolor{red!70!black}{FAQ}: Frequently Asked Questions}
 
-\subsection{Converting \texttt{llncs} papers to \texttt{iacrtrans}}
+\subsection{Converting \texttt{llncs} papers to \texttt{iacrtrans} for submission}
 
 If you have a paper typeset with the \texttt{llncs} class, conversion
 should be relatively easy.  The following steps should be sufficient
@@ -75,6 +75,14 @@ in most cases (for the submission version):
   typeset the bibliography.
 \end{enumerate}
 
+\subsection{Preparing the final version}
+
+Before submitting your final version, please make sure that it compiles
+properly with the \texttt{[final]} option (see the next subsection in
+case of issues), and check that the author names and affiliation are
+correct.  In particular, each affiliation MUST be of the form
+$\langle\text{institue}\rangle, \langle\text{city}\rangle,
+\langle\text{country}\rangle$.
 
 \subsection{Compilation issues}
 
@@ -82,9 +90,9 @@ If your document doesn't compile with the \texttt{iacrtrans} class,
 you can try adding the \texttt{[nohyperref]} option.  This will
 disable some code in the class that is known to be fragile, in
 particular the generation of metadata.  If this fixes your compilation
-problems, please try to define a clean version of \texttt{author},
+problems, please try to define a clean version of \texttt{author}, \texttt{institute},
 \texttt{title} and/or \texttt{keywords} as optional arguments to
-these commands (in particular, remove \LaTeX{}  macros, and write
+these commands (in particular, remove \LaTeX{} macros, and write
 everything on a single line), and see if you document now compiles
 without the \texttt{[nohyperref]} option.
 
@@ -206,16 +214,21 @@ is typeset at a wrong position, you can force its position with
 
 The class supports four publication types, selected with the
 following class options:
-
 \begin{description}
-\item[\texttt{[journal=XXX]}] allowed values are \texttt{tosc} and \texttt{tches},
-    sets the \texttt{publname} macro accordingly to the right journal
 \item[\texttt{[final]}] for final papers
 \item[\texttt{[preprint]}] for preprints (without copyright info, default)
 \item[\texttt{[submission]}] for submissions (anonymous, with line numbers)
 \item[\texttt{[draft]}] is similar to preprint, but activates draft
   mode for the underlying \texttt{article} class (which shows overfull hboxes), and other packages
   (\emph{e.\,g.} \texttt{graphicx}, \texttt{hyperref}).
+\end{description}
+Some types supports further options:
+\begin{description}
+\item[\texttt{[journal=XXX]}] must be used for submissions and
+  final papers; allowed values are \texttt{tosc} and \texttt{tches},
+  to set the \texttt{publname} macro accordingly to the right journal
+\item[\texttt{[notanonymous]}] can be used in submission mode, when the
+  call for paper requires non-anonymous submissions.
 \end{description}
 
 \subsection{Other Options}
@@ -258,6 +271,18 @@ you can ask each figure to take its natural space instead with
 \verb+\ffigbox[\FBwidth]+.  For more advanced use, see the
 \texttt{floatrow} documentation.
 
+\paragraph{\texttt{[xcolor=$\langle\text{\emph{list of options}}\rangle$]}}
+passes $\langle\text{\emph{list of options}}\rangle$ to the
+\texttt{xcolor} package.  Since \texttt{xcolor} is loaded by the class,
+you have to use this mechanism to pass options at load time; for instance
+use \texttt{xcolor=svgnames} to load SVG color names.
+
+
+\paragraph{\texttt{[hyperref=$\langle\text{\emph{list of options}}\rangle$]}}
+passes $\langle\text{\emph{list of options}}\rangle$ to the
+\texttt{hyperref} package.  Alternatively, you can load
+\texttt{hyperref} yourself with the required options and the class will
+detect that it already loaded.
 
 \paragraph{\texttt{[nohyperref]}}
 disables the automatic loading of
@@ -277,6 +302,13 @@ explicitly at the correct position, but not use the \texttt{[nohyperref]} option
 % should try to define a clean version of \texttt{author},
 % \texttt{title} and/or \texttt{keywords} as optionnal arguments to
 % these commands.
+
+\paragraph{\texttt{[nolastpage]}}
+disables the automatic loading the \texttt{lastpage} package in
+\texttt{[final]} mode.  When this option is enabled, the last page
+number must be set explicitly with
+\texttt{\textbackslash{}setlastpage}.
+
 
 \section{Typesetting the Bibliography}
 \label{sec:biblio}
@@ -370,10 +402,14 @@ version:
 
 \begin{itemize}
 \item \texttt{\textbackslash{}setfirstpage} to set the first page number.
-\item \texttt{\textbackslash{}setlastpage} to set the first page number (optional).
+\item \texttt{\textbackslash{}setlastpage} to set the last page number (optional).
 \item \texttt{\textbackslash{}setvolume} to set the volume number.
 \item \texttt{\textbackslash{}setnumber} to set the edition number.
 \item \texttt{\textbackslash{}setDOI} to set the DOI\@.
+\item \texttt{\textbackslash{}setPublished} to set the publication date.
+\item \texttt{\textbackslash{}setAccepted} to set the notification date.
+\item \texttt{\textbackslash{}setRevised} to set the re-submission date for paper that went though major revision.
+\item \texttt{\textbackslash{}setReceived} to set the submission date.
 \end{itemize}
 
 There is a special \texttt{settings.tosc.tex} file, that sets default values for these commands
@@ -399,13 +435,15 @@ More general information can be found in the following documents:
 The class is based on the standard \texttt{article} class, and loads
 the following packages:
 \begin{itemize}
-\item \texttt{geometry}, \texttt{sectsty}, \texttt{fancyhdr}, \texttt{mathtools},
-  \texttt{float}, \texttt{microtype}, \texttt{lastpage}
-\item \texttt{amsmath}, \texttt{amssymb}, \texttt{amsthm}
+\item \texttt{geometry}, \texttt{sectsty}, \texttt{fancyhdr},
+  \texttt{float}, \texttt{microtype}, \texttt{fontenc}, \texttt{lmodern}
+\item \texttt{amsmath}, \texttt{amssymb}, \texttt{amsthm}, \texttt{mathtools}
 \item \texttt{graphicx}
+\item \texttt{xkeyval}, \texttt{afterpage}
 \item \texttt{hyperref}, \texttt{hyperxmp}, \texttt{etoolbox}, \texttt{xcolor} (unless
   the \texttt{[nohyperref]} option is used)
 \item \texttt{lineno} (in \texttt{[submission]} mode)
+\item \texttt{lastpage} (in \texttt{[final]} mode, unless disabled with \texttt{[nolastpage]})
 \item \texttt{floatrow,caption} (with option \texttt{[floatrow]})
 \end{itemize}
 
@@ -436,12 +474,15 @@ Jonas Wloka.
               Added \texttt{floatrow} option.
 \item[v 0.24] Added CC licence text, and added XMP metadata.
               Fixed some metadata transformations.
-\item[v 0.26] Added ISSN number and fixed a few bugs with spthm (thanks to <marc.joye@nxp.com>).
+\item[v 0.26] Added ISSN number and fixed a few bugs with spthm (thanks
+  to Marc Joye).
 \item[v 0.27] Added paragraph \emph{Helping the editor} in the documentation,
               added \texttt{settings.tosc.tex}.
 \item[v 0.90] Moved to github, various fixes.
               Added \texttt{journal} class option to switch between TCHES and ToSC.
               Changed default mode to \texttt{preprint}.
+\item[v 0.91] Adding publication in the final version.
+              Added new class options: \texttt{notanonymous}, \texttt{xcolor=xxx}, \texttt{hyperref=xxx}, \texttt{nolastpage}.
 \end{description}
 
 
