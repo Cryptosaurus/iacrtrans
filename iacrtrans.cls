@@ -99,34 +99,33 @@
 % Options
 \newif\if@loadhr
 \@loadhrtrue
-\DeclareOption{nohyperref}{\@loadhrfalse}
+\define@key{IACR}{nohyperref}[]{\@loadhrfalse}
 \newif\if@floatrow
 \@floatrowfalse
-\DeclareOption{floatrow}{\@floatrowtrue}
+\define@key{IACR}{floatrow}[]{\@floatrowtrue}
 \newif\if@submission
 \@submissionfalse
 \newif\if@anonymous
 \@anonymousfalse
 \newif\if@preprint
 \@preprinttrue
-\DeclareOption{final}{\PassOptionsToClass{\CurrentOption}{article}\@preprintfalse}
-\DeclareOption{preprint}{\@preprinttrue}      % Default
-\DeclareOption{submission}{\@submissiontrue\@anonymoustrue}
-\DeclareOption{draft}{\@preprinttrue\PassOptionsToClass{\CurrentOption}{article}}
-\DeclareOption{notanonymous}{\@anonymousfalse}
+\define@key{IACR}{final}[]{\PassOptionsToClass{\CurrentOption}{article}\@preprintfalse}
+\define@key{IACR}{preprint}[]{\@preprinttrue}      % Default
+\define@key{IACR}{submission}[]{\@submissiontrue\@anonymoustrue}
+\define@key{IACR}{draft}[]{\@preprinttrue\PassOptionsToClass{\CurrentOption}{article}}
+\define@key{IACR}{notanonymous}[]{\@anonymousfalse}
 \newif\if@spthm
 \@spthmfalse
-\DeclareOption{spthm}{\@spthmtrue}
+\define@key{IACR}{spthm}[]{\@spthmtrue}
 \newif\if@IACR@lastpage
 \@IACR@lastpagetrue
-\DeclareOption{nolastpage}{\@IACR@lastpagefalse}
+\define@key{IACR}{nolastpage}[]{\@IACR@lastpagefalse}
 
 \define@key{IACR}{xcolor}{\PassOptionsToPackage{#1}{xcolor}}
 \define@key{IACR}{hyperref}{\PassOptionsToPackage{#1}{hyperref}}
 
-\DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
-\ProcessOptionsX<IACR>
-\ProcessOptions\relax
+\DeclareOptionX*{\PassOptionsToClass{\CurrentOption}{article}}
+\ProcessOptionsX<IACR>\relax
 
 % article class with a4paper
 \LoadClass[10pt,twoside]{article}[2007/10/19]
