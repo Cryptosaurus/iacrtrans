@@ -266,11 +266,13 @@
 \if@loadhr
 \fancyhead[L]{%
 \small%
+\sffamily%
 \publname{}\\
 ISSN~\IACR@ISSN, Vol.~\IACR@vol, No.~\IACR@no, pp.~\IACR@fp--\IACR@lp. \hfill{}%
 \if@loadhr\href{https://doi.org/\IACR@DOI}{DOI:\IACR@DOI}}\else {DOI:\IACR@DOI}\fi%
 \fancyfoot[L]{
 \small%
+\sffamily\color{darkgray}%
 Licensed under %
 \if@loadhr\href{http://creativecommons.org/licenses/by/4.0/}{Creative Commons License CC-BY 4.0.}%
 \else{Creative Commons License CC-BY 4.0.}\fi%
