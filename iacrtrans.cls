@@ -82,7 +82,10 @@
 \def\IACR@Revised{20XX-XX-XX}
 \def\IACR@Accepted{20XX-XX-XX}
 \def\IACR@Published{20XX-XX-XX}
+\newif\if@IACR@Received \@IACR@Receivedfalse
 \newif\if@IACR@Revised \@IACR@Revisedfalse
+\newif\if@IACR@Accepted \@IACR@Acceptedfalse
+\newif\if@IACR@Published \@IACR@Publishedfalse
 
 \newcommand{\setfirstpage}[1]{\def\IACR@fp{#1}\setcounter{page}{#1}}
 \newcommand{\setlastpage}[1]{\def\IACR@lp{#1}}
@@ -91,10 +94,10 @@
 \newcommand{\setISSN}[1]{\def\IACR@ISSN{#1}}
 \newcommand{\setDOI}[1]{\def\IACR@DOI{#1}}
 
-\newcommand{\setReceived}[1]{\def\IACR@Received{#1}}
+\newcommand{\setReceived}[1]{\@IACR@Receivedtrue\def\IACR@Received{#1}}
 \newcommand{\setRevised}[1]{\@IACR@Revisedtrue\def\IACR@Revised{#1}}
-\newcommand{\setAccepted}[1]{\def\IACR@Accepted{#1}}
-\newcommand{\setPublished}[1]{\def\IACR@Published{#1}}
+\newcommand{\setAccepted}[1]{\@IACR@Acceptedtrue\def\IACR@Accepted{#1}}
+\newcommand{\setPublished}[1]{\@IACR@Publishedtrue\def\IACR@Published{#1}}
 
 % Options
 \newif\if@loadhr
@@ -261,17 +264,23 @@
 \fancyhf{} % clear all header and footer fields
 \if@submission\else\if@preprint\else
 \if@loadhr
-\fancyhead[L]{\small \publname{}\\
-ISSN~\IACR@ISSN, Vol.~\IACR@vol, No.~\IACR@no, pp.~\IACR@fp--\IACR@lp. \hfill \href{https://doi.org/\IACR@DOI}{DOI:\IACR@DOI}}
-\fancyfoot[L]{\small Licensed under \href{http://creativecommons.org/licenses/by/4.0/}{Creative Commons License CC-BY 4.0.}\\
-Received: \IACR@Received, \if@IACR@Revised Revised: \IACR@Revised, \fi Accepted: \IACR@Accepted, Published: \IACR@Published}
-\else
-\fancyhead[L]{\small \publname{}\\
-ISSN~\IACR@ISSN, Vol.~\IACR@vol, No.~\IACR@no, pp.~\IACR@fp--\IACR@lp. \hfill  DOI:\IACR@DOI}
-\fancyfoot[L]{\small Licensed under Creative Commons License CC-BY 4.0.\\
-Received: \IACR@Received, \if@IACR@Revised Revised: \IACR@Revised, \fi Accepted: \IACR@Accepted, Published: \IACR@Published}
-\fi
-\fancyfoot[R]{\includegraphics[clip,height=2ex]{CC-by}}
+\fancyhead[L]{%
+\small%
+\publname{}\\
+ISSN~\IACR@ISSN, Vol.~\IACR@vol, No.~\IACR@no, pp.~\IACR@fp--\IACR@lp. \hfill{}%
+\if@loadhr\href{https://doi.org/\IACR@DOI}{DOI:\IACR@DOI}}\else {DOI:\IACR@DOI}\fi%
+\fancyfoot[L]{
+\small%
+Licensed under %
+\if@loadhr\href{http://creativecommons.org/licenses/by/4.0/}{Creative Commons License CC-BY 4.0.}%
+\else{Creative Commons License CC-BY 4.0.}\fi%
+\hfill{}%
+\includegraphics[clip,height=2ex]{CC-by}\\[.1em]%
+\if@IACR@Received Received: \IACR@Received \hfill{} \fi%
+\if@IACR@Revised Revised: \IACR@Revised \hfill{} \fi%
+\if@IACR@Accepted Accepted: \IACR@Accepted \hfill{} \fi%
+\if@IACR@Published Published: \IACR@Published \fi%
+}%
 \if@loadhr
   \hypersetup{pdfcopyright={Licensed under Creative Commons License CC-BY 4.0.}}
   \hypersetup{pdflicenseurl={http://creativecommons.org/licenses/by/4.0/}}
