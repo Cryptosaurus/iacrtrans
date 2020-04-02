@@ -10,8 +10,6 @@
 % along with this software. If not, see
 % <http://creativecommons.org/publicdomain/zero/1.0/>.
 
-%%% script AUTHORS: Ga{\"{e}}tan Leurent, Friedrich Wiemer%%%
-%%% script TITLE: {IACR} Transactions class documentation%%%
 \documentclass{iacrtrans}
 \usepackage[utf8]{inputenc}
 
@@ -111,21 +109,6 @@ ticket on github, and we will try to find a solution when possible.
 As a quick workaround, you can wrap the offending environment with
 \verb+\begin{linenomath}+ / \verb+\end{linenomath}+ (this will do
 nothing in preprint or final mode when line numbers are deactivated).
-
-\subsection{Helping the editor}
-
-We would be very grateful, if you help us to prepare the final version for publishing.
-In order to generate bibliographic information for your paper, we parse the author and title fields of your tex files.
-As there are a lot of special cases that the script needs to take into account, there are special \texttt{hints} you can provide.
-Currently, this template supports \texttt{author-} and \texttt{title-hints}.
-An example how these hints are used, \emph{e.\,g.}, for this document is:
-\begin{verbatim}
-%%% script AUTHOR: Ga{\"{e}}tan Leurent, Friedrich Wiemer%%%
-%%% script TITLE: {IACR} Transactions class documentation%%%
-\documentclass{iacrtrans}
-\end{verbatim}
-Note the extra \{\} which are needed to tell bibtex how to handle special characters or parts that should be set in uppercase (\emph{e.\,g.}, for cipher names).
-When using this hint fields, you should not use any custom \LaTeX-macro defined in your paper.
 
 \section{Main Commands}
 
