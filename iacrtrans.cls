@@ -253,46 +253,61 @@
 % Head/foot
 \RequirePackage{fancyhdr}
 \RequirePackage{graphicx}
-\if@submission\else\if@preprint\else
-\if@IACR@lastpage
-\RequirePackage{lastpage}
+
+\if@submission
 \else
-\typeout{IACR Trans: not loading lastpage, please use \@backslashchar setlastpage}
-\fi
-\fi\fi
+  \if@preprint
+  \else
+    \if@IACR@lastpage
+      \RequirePackage{lastpage}
+    \else
+      \typeout{IACR Trans: not loading lastpage, please use \@backslashchar setlastpage}
+    \fi%!lastpage
+  \fi%!preprint
+\fi%!submission
+
 \fancypagestyle{title}{%
 \fancyhf{} % clear all header and footer fields
-\if@submission\else\if@preprint\else
-\if@loadhr
-\fancyhead[L]{%
-\small%
-\publname{}\\
-ISSN~\IACR@ISSN, Vol.~\IACR@vol, No.~\IACR@no, pp.~\IACR@fp--\IACR@lp. \hfill{}%
-\if@loadhr\href{https://doi.org/\IACR@DOI}{DOI:\IACR@DOI}}\else {DOI:\IACR@DOI}\fi%
-\fancyfoot[L]{
-\small%
-Licensed under %
-\if@loadhr\href{http://creativecommons.org/licenses/by/4.0/}{Creative Commons License CC-BY 4.0.}%
-\else{Creative Commons License CC-BY 4.0.}\fi%
-\hfill{}%
-\includegraphics[clip,height=2ex]{CC-by}\\[.1em]%
-\if@IACR@Received Received: \IACR@Received \hfill{} \fi%
-\if@IACR@Revised Revised: \IACR@Revised \hfill{} \fi%
-\if@IACR@Accepted Accepted: \IACR@Accepted \hfill{} \fi%
-\if@IACR@Published Published: \IACR@Published \fi%
-}%
-\if@loadhr
-  \hypersetup{pdfcopyright={Licensed under Creative Commons License CC-BY 4.0.}}
-  \hypersetup{pdflicenseurl={http://creativecommons.org/licenses/by/4.0/}}
-  \hypersetup{pdfsubject={\publname{}, DOI:\IACR@DOI}}
-  \hypersetup{pdflang=en}
-\fi
-\fi\fi
+\if@submission
+\else
+  \if@preprint
+  \else
+    \fancyhead[L]{%
+      \small%
+      \publname{}\\
+      ISSN~\IACR@ISSN, Vol.~\IACR@vol, No.~\IACR@no, pp.~\IACR@fp--\IACR@lp. \hfill{}%
+      \if@loadhr{\href{https://doi.org/\IACR@DOI}{DOI:\IACR@DOI}}\else{DOI:\IACR@DOI}\fi%
+    }
+    \fancyfoot[L]{%
+      \small%
+      Licensed under %
+      \if@loadhr{\href{http://creativecommons.org/licenses/by/4.0/}{Creative Commons License CC-BY 4.0.}}%
+      \else{Creative Commons License CC-BY 4.0.}%
+      \fi%
+      \hfill{}%
+      \includegraphics[clip,height=2ex]{CC-by}\\[.1em]%
+      \if@IACR@Received Received: \IACR@Received \hfill{} \fi%
+      \if@IACR@Revised Revised: \IACR@Revised \hfill{} \fi%
+      \if@IACR@Accepted Accepted: \IACR@Accepted \hfill{} \fi%
+      \if@IACR@Published Published: \IACR@Published \fi%
+    }%
+    \if@loadhr
+      \hypersetup{pdfcopyright={Licensed under Creative Commons License CC-BY 4.0.}}
+      \hypersetup{pdflicenseurl={http://creativecommons.org/licenses/by/4.0/}}
+      \hypersetup{pdfsubject={\publname{}, DOI:\IACR@DOI}}
+      \hypersetup{pdflang=en}
+    \fi
+  \fi%!preprint
+\fi%!submission
+
 \renewcommand{\headrulewidth}{0pt}
-\renewcommand{\footrulewidth}{0pt}}
-\fancyhf{} % clear all header and footer fields
+\renewcommand{\footrulewidth}{0pt}
+}%fancypagestyle
+
+\fancyhf{}
 \fancyhead[RO,LE]{\thepage}
-\fancyhead[RE]{\ifdefined\IACR@runningtitle\IACR@runningtitle%
+\fancyhead[RE]{%
+  \ifdefined\IACR@runningtitle\IACR@runningtitle%
   \else%
     \def\thanks##1{}%
     \def\fnmsep{}%
@@ -300,7 +315,8 @@ Licensed under %
     \def\footnote##1{}%
     \@title%
   \fi}
-\fancyhead[LO]{\ifdefined\IACR@runningauthors\IACR@runningauthors%
+\fancyhead[LO]{%
+  \ifdefined\IACR@runningauthors\IACR@runningauthors%
   \else%
     \def\thanks##1{}%
     \def\inst##1{}%
@@ -309,9 +325,10 @@ Licensed under %
     \def\footnote##1{}%
     \setcounter{IACR@author@cnt}{1}%
     \def\and{\stepcounter{IACR@author@cnt}%
-      \ifnum\theIACR@author@cnt=\IACR@author@last\unskip\space and \ignorespaces\else\unskip, \ignorespaces\fi}
+      \ifnum\theIACR@author@cnt=\IACR@author@last\unskip\space and \ignorespaces \else\unskip, \ignorespaces\fi}
     \@author%
   \fi}
+
 \renewcommand{\markboth}[2]{}
 \pagestyle{fancy}
 
