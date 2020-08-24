@@ -102,6 +102,8 @@
 % Options
 \newif\if@loadhr
 \@loadhrtrue
+\newif\if@hyperxmp@doi
+\@hyperxmp@doifalse
 \define@key{IACR}{nohyperref}[]{\@loadhrfalse}
 \newif\if@floatrow
 \@floatrowfalse
@@ -295,7 +297,6 @@
       \hypersetup{pdfcopyright={Licensed under Creative Commons License CC-BY 4.0.}}
       \hypersetup{pdflicenseurl={http://creativecommons.org/licenses/by/4.0/}}
       \hypersetup{pdfsubject={\publname{}, DOI:\IACR@DOI}}
-      \hypersetup{pdflang=en}
     \fi
   \fi%!preprint
 \fi%!submission
@@ -424,6 +425,21 @@
         \typeout{IACR@TITLE: \@tmp^^J}
       \fi
     \fi
+    % PDF metadata
+    \if@submission\else
+      \if@preprint\else
+        \if@hyperxmp@doi{
+          \hypersetup{%
+            pdfdoi=\IACR@DOI,%
+            pdfissn=\IACR@ISSN,%
+            pdfpubtype=journal,%
+            pdfpublication=\publname,%
+            pdfvolumenum=\IACR@vol,%
+            pdfissuenum=\IACR@no,%
+            pdfpagerange={\IACR@fp-\IACR@lp},%
+        }}
+      \fi
+    \fi
   \fi
 }
 
@@ -435,25 +451,9 @@
   \AtEndPreamble{
     \@ifpackageloaded{hyperref}{}{\RequirePackage{hyperref}}
     \@ifpackageloaded{hyperxmp}{}{\RequirePackage{hyperxmp}}
-    % Add Doi to dc schema
-    \renewcommand*{\hyxmp@dc@schema}{%
-      \hyxmp@add@to@xml{%
-    ______<rdf:Description rdf:about=""^^J%
-    ____________xmlns:dc="http://purl.org/dc/elements/1.1/">^^J%
-    _________<dc:format>application/pdf</dc:format>^^J%
-      }%
-      \hyxmp@rdf@dc{title}{\@pdftitle}%
-      \hyxmp@rdf@dc{description}{\@pdfsubject}%
-      \hyxmp@rdf@dc{rights}{\@pdfcopyright}%
-      \hyxmp@rdf@dc{identifier}{doi:\IACR@DOI}%
-      \hyxmp@list@to@xml{creator}{Seq}{\@pdfauthor}%
-      \hyxmp@list@to@xml{subject}{Bag}{\@pdfkeywords}%
-      \hyxmp@list@to@xml{date}{Seq}{\hyxmp@today}%
-      \hyxmp@add@to@xml{%
-    ______</rdf:Description>^^J%
-      }%
-    }
-
+    \hypersetup{pdflang=en}
+    % Old versions of hyperxmp do not support DOI
+    \@ifpackagelater{hyperxmp}{2019/03/14}{\@hyperxmp@doitrue\hypersetup{keeppdfinfo=true}}{}
     \hypersetup{colorlinks=true,
       citecolor=black!70!green,
       linkcolor=black!70!red}
