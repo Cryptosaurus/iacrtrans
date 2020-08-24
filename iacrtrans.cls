@@ -452,6 +452,11 @@
     \@ifpackageloaded{hyperref}{}{\RequirePackage{hyperref}}
     \@ifpackageloaded{hyperxmp}{}{\RequirePackage{hyperxmp}}
     \hypersetup{pdflang=en}
+    % Disable latexdiff commands in PDF links
+    \pdfstringdefDisableCommands{%
+      \def\DIFadd{}%
+      \def\DIFdel{}%
+    }
     % Old versions of hyperxmp do not support DOI
     \@ifpackagelater{hyperxmp}{2019/03/14}{\@hyperxmp@doitrue\hypersetup{keeppdfinfo=true}}{}
     \hypersetup{colorlinks=true,
