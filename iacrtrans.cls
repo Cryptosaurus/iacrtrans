@@ -6,7 +6,7 @@
 \ProvidesClass{iacrtrans}[\filedate]
 
 % IACR Transactions DOCUMENT CLASS
-% Written by Gaetan Leurent gaetan.leurent@inria.fr (2016-2018)
+% Written by Gaetan Leurent gaetan.leurent@inria.fr and others (2016-2020)
 %
 % To the extent possible under law, the author(s) have dedicated all
 % copyright and related and neighboring rights to this software to the
@@ -222,7 +222,7 @@
         \small
         \setcounter{IACR@author@cnt}{1}%
         \def\and{\par\stepcounter{IACR@author@cnt}$^\theIACR@author@cnt$~}
-        \ifnum\IACR@inst@last>1 $^1$~\fi
+        \ifnum\IACR@inst@last>1 $^1$~\fi\ignorespaces%
         \@institute
         \fi
       }%
