@@ -14,10 +14,10 @@
 \usepackage[utf8]{inputenc}
 
 \author{Gaëtan Leurent\inst{1} \and Friedrich Wiemer\inst{2}}
-\institute{Inria, France, \email{gaetan.leurent@inria.fr} \and
-           Ruhr-Universität Bochum, Germany, \email{friedrich.wiemer@rub.de}}
+\institute{Inria, Paris, France, \email{gaetan.leurent@inria.fr} \and
+           Ruhr-Universität Bochum, Bochum, Germany, \email{friedrich.wiemer@rub.de}}
 \title[\texttt{iacrtans} class documentation]{\publname}
-\subtitle{\LaTeX{} Class Documentation (v. 0.91)}
+\subtitle{\LaTeX{} Class Documentation (v. 0.92)}
 
 \begin{document}
 
@@ -42,8 +42,7 @@ and TCHES (IACR Transactions on Cryptographic Hardware and Embedded
 Systems).  The class is based on standard \LaTeX{} classes and packages
 (mainly the \texttt{article} class with \texttt{amsmath}), and should be
 similar in use to the \texttt{llncs} class used for Springer's
-proceedings.  The \LaTeX{} source of this documentation is meant as an
-example to show basic usage of the class.
+proceedings.
 
 The class is still in development and feedback and comments are welcome.
 The latest version can be found on the Github page of the project:
@@ -72,6 +71,13 @@ in most cases (for the submission version):
 \item See also \autoref{sec:biblio} for information about how to
   typeset the bibliography.
 \end{enumerate}
+
+\subsection{Template file}
+
+There is a \texttt{template.tex} file included with this class, to use
+as a starting point for writing a paper.  The \LaTeX{} source of this
+documentation can also be used as a more advanced example, but please
+make sure to remove any unnecessary code.
 
 \subsection{Preparing the final version}
 
@@ -465,7 +471,11 @@ Jonas Wloka.
               Added \texttt{journal} class option to switch between TCHES and ToSC.
               Changed default mode to \texttt{preprint}.
 \item[v 0.91] Adding publication in the final version.
-              Added new class options: \texttt{notanonymous}, \texttt{xcolor=xxx}, \texttt{hyperref=xxx}, \texttt{nolastpage}.
+              Added new class options: \texttt{notanonymous},
+              \texttt{xcolor=xxx}, \texttt{hyperref=xxx},
+              \texttt{nolastpage}.
+\item[v 0.92] Fixed hyperxmp issues.
+              Added template for authors.
 \end{description}
 
 
