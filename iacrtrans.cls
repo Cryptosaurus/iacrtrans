@@ -135,6 +135,29 @@
 % article class with a4paper
 \LoadClass[10pt,twoside]{article}[2007/10/19]
 
+% Hyperref must be loaded last, but before other AtEndPreamble hooks
+\if@loadhr
+  \RequirePackage{xcolor}
+  \RequirePackage{etoolbox}
+  \AtEndPreamble{
+    \@ifpackageloaded{hyperref}{}{\RequirePackage{hyperref}}
+    \hypersetup{pdflang=en}
+    \hypersetup{colorlinks=true,
+      citecolor=black!70!green,
+      linkcolor=black!70!red}
+    % Disable latexdiff commands in PDF links
+    \pdfstringdefDisableCommands{%
+      \def\DIFadd#1{#1}%
+      \def\DIFdel#1{}%
+    }
+    % Old versions of hyperxmp do not support DOI
+    \@ifpackagelater{hyperxmp}{2019/03/14}{\@hyperxmp@doitrue\hypersetup{keeppdfinfo=true}}{}
+  }
+  \RequirePackage{hyperxmp} % hyperxmp 5.x has issues with AtEndPreamble
+  \setcounter{tocdepth}{2}
+\fi
+
+
 % Geometry
 \RequirePackage[a4paper,hscale=0.65,vscale=0.75,marginratio=1:1,marginparwidth=2.7cm]{geometry}
 \RequirePackage{afterpage}
@@ -444,27 +467,6 @@
 }
 
 
-% Hyperref
-\if@loadhr
-  \RequirePackage{xcolor}
-  \RequirePackage{etoolbox}
-  \AtEndPreamble{
-    \@ifpackageloaded{hyperref}{}{\RequirePackage{hyperref}}
-    \@ifpackageloaded{hyperxmp}{}{\RequirePackage{hyperxmp}}
-    \hypersetup{pdflang=en}
-    % Disable latexdiff commands in PDF links
-    \pdfstringdefDisableCommands{%
-      \def\DIFadd#1{#1}%
-      \def\DIFdel#1{}%
-    }
-    % Old versions of hyperxmp do not support DOI
-    \@ifpackagelater{hyperxmp}{2019/03/14}{\@hyperxmp@doitrue\hypersetup{keeppdfinfo=true}}{}
-    \hypersetup{colorlinks=true,
-      citecolor=black!70!green,
-      linkcolor=black!70!red}
-  }
-  \setcounter{tocdepth}{2}
-\fi
 % autoref: capitals for Sections, and adding Algorithm
 \def\equationautorefname{Equation}%
 \def\footnoteautorefname{footnote}%
