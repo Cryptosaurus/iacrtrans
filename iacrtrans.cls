@@ -283,11 +283,16 @@
 \else
   \if@preprint
   \else
-    \if@IACR@lastpage
-      \RequirePackage{lastpage}
-    \else
-      \typeout{IACR Trans: not loading lastpage, please use \@backslashchar setlastpage}
-    \fi%!lastpage
+    % recent versions of hyperxmp load totpages, which conflicts with lastpage
+    \@ifpackageloaded{totpages}{
+      \def\IACR@lp{\if@loadhr\pageref*{TotPages}\else\pageref{TotPages}\fi}
+    }{
+      \if@IACR@lastpage
+        \RequirePackage{lastpage}
+      \else
+        \typeout{IACR Trans: not loading lastpage, please use \@backslashchar setlastpage}
+      \fi%!lastpage
+    }
   \fi%!preprint
 \fi%!submission
 
