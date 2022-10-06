@@ -244,7 +244,7 @@
         \vskip 1em\par
         \small
         \setcounter{IACR@author@cnt}{1}%
-        \def\and{\par\stepcounter{IACR@author@cnt}$^\theIACR@author@cnt$~}
+        \def\and{\par\stepcounter{IACR@author@cnt}$^{\theIACR@author@cnt}$~}
         \ifnum\IACR@inst@last>1 $^1$~\fi\ignorespaces%
         \@institute
         \fi
