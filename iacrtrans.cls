@@ -446,7 +446,7 @@
     % PDF metadata
     \if@submission\else
       \if@preprint\else
-        \if@hyperxmp@doi{
+        \if@hyperxmp@doi
           \hypersetup{%
             pdfdoi=\IACR@DOI,%
             pdfissn=\IACR@ISSN,%
@@ -455,7 +455,8 @@
             pdfvolumenum=\IACR@vol,%
             pdfissuenum=\IACR@no,%
             pdfpagerange={\IACR@fp-\IACR@lp},%
-        }}
+          }
+        \fi
       \fi
     \fi
   \fi
