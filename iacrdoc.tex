@@ -13,6 +13,8 @@
 \documentclass{iacrtrans}
 \usepackage[utf8]{inputenc}
 
+\usepackage{booktabs}
+
 \author{Gaëtan Leurent\inst{1} \and Friedrich Wiemer\inst{2}}
 \institute{Inria, Paris, France, \email{gaetan.leurent@inria.fr} \and
            Ruhr-Universität Bochum, Bochum, Germany, \email{friedrich.wiemer@rub.de}}
@@ -51,7 +53,7 @@ tickets for issues or to submit pull requests.
 
 \section{\textcolor{red!70!black}{FAQ}: Frequently Asked Questions}
 
-\subsection{Converting \texttt{llncs} papers to \texttt{iacrtrans} for submission}
+\subsection{Converting \texttt{llncs} Papers to \texttt{iacrtrans} for Submission}
 
 If you have a paper typeset with the \texttt{llncs} class, conversion
 should be relatively easy.  The following steps should be sufficient
@@ -72,14 +74,14 @@ in most cases (for the submission version):
   typeset the bibliography.
 \end{enumerate}
 
-\subsection{Template file}
+\subsection{Template File}
 
 There is a \texttt{template.tex} file included with this class, to use
 as a starting point for writing a paper.  The \LaTeX{} source of this
 documentation can also be used as a more advanced example, but please
 make sure to remove any unnecessary code.
 
-\subsection{Preparing the final version}
+\subsection{Preparing the Final Version}
 
 Before submitting your final version, please make sure that it compiles
 properly with the \texttt{[final]} option (see the next subsection in
@@ -88,7 +90,7 @@ correct.  In particular, each affiliation MUST be of the form
 $\langle\text{institue}\rangle, \langle\text{city}\rangle,
 \langle\text{country}\rangle$.
 
-\subsection{Compilation issues}
+\subsection{Compilation Issues}
 
 If your document doesn't compile with the \texttt{iacrtrans} class,
 you can try adding the \texttt{[nohyperref]} option.  This will
@@ -100,7 +102,7 @@ these commands (in particular, remove \LaTeX{} macros, and write
 everything on a single line), and see if you document now compiles
 without the \texttt{[nohyperref]} option.
 
-\subsection{Line number issues}
+\subsection{Line Number Issues}
 
 In submission mode, the class adds line numbers to help reviewers refer
 to specific elements.  Unfortunately, the code that does this is rather
@@ -118,7 +120,7 @@ nothing in preprint or final mode when line numbers are deactivated).
 
 \section{Main Commands}
 
-\subsection{Title page}
+\subsection{Title Page}
 
 The following commands are used to input informations for the title page.
 
@@ -196,10 +198,10 @@ symbol at the end of the proof (unless you give option
 is typeset at a wrong position, you can force its position with
 \verb+\qedhere+.
 
-\section{Class options}
+\section{Class Options}
 \label{sec:options}
 
-\subsection{Publication type}
+\subsection{Publication Type}
 
 The class supports four publication types, selected with the
 following class options:
@@ -318,7 +320,7 @@ expect to have more specific instructions when producing the final
 version of the papers, including a dedicated \BibTeX{} style.
 
 
-\section{Further instructions}
+\section{Further Instructions}
 
 \paragraph{\LaTeX{} distribution, and worklow.}  \LaTeX{}
 distributions are available on a variaty of platforms.  In particular,
@@ -343,6 +345,13 @@ supports more features than \texttt{latex} and \texttt{dvips}
 (\texttt{xelatex} and \texttt{lualatex} are also missing some advanced
 features from \texttt{pdflatex}).
 
+\paragraph{Section and paragraph headings.}
+
+Section heading of all levels should be typeset in Camel Case.
+%
+Paragraph headings (\texttt{\textbackslash{}paragraph}) should be typeset in
+normal case and have a ``.'' at the end.
+
 \paragraph{Internal references.}
 
 We recommend the use of \verb+\autoref+ from \texttt{hyperref}
@@ -359,24 +368,51 @@ In particular, a large variety of crypto pictures made with
 \paragraph{External pictures.}  The \texttt{graphicx} is loaded by the
 class, and is recommended for external figures.
 
-If possible, external figures should be in a vector format: you can
+If possible, external figures should be in a vector format: You can
 use PDF files when compiling with \texttt{pdflatex}, and EPS files
 when compiling with \texttt{latex}, and \texttt{dvips}.  Note that the
 \verb+\includegraphics+ command will automatically select a file with
 the right extension, so if you write \verb+\includegraphics{figure}+
 and have two files \texttt{figure.pdf} and \texttt{figure.eps}, it
-should work with both workflow.
+should work with both workflows.
 
 \paragraph{Floats.}
 
+All floats should be on the top of the page as shown in \autoref{fig::example}.
+%
+\begin{figure}
+  \center
+  \includegraphics[height=2cm]{CC-by.pdf}
+  \caption{Example for a floating figure on top of the page.}
+  \label{fig::example}
+\end{figure}
+%
 Figure captions should be below the figures, and table captions above
 the tables.  The \texttt{float} package loaded by the class should
 take care of this automatically.  If want to have several figures side
 by side, see the \texttt{[floatrow]} option.
+Float captions are complete sentences with a ``.'' at the end.
 
 \paragraph{Tables.}
 
-We recommend the \texttt{booktabs} package to typeset tables.
+We recommend the \texttt{booktabs} package to typeset tables as shown in
+\autoref{tab::example}.
+
+\begin{table}
+  \center
+  \begin{tabular}{@{}cc@{}}
+    \toprule
+    {\bf Column 1} & {\bf Column 2} \\
+    \midrule
+    Cell 1 & Cell 2 \\
+    Cell 3 & Cell 4 \\
+    \bottomrule
+  \end{tabular}
+  \caption{Example for a floating table on top of the page using the
+           \texttt{booktabs} package.}
+  \label{tab::example}
+\end{table}
+
 
 \paragraph{Algorithms.}
 
@@ -404,7 +440,7 @@ version:
 There is a special \texttt{settings.tosc.tex} file, that sets default values for these commands
 and which can be included in the beginning of the main tex file.
 
-\section{Further information}
+\section{Further Information}
 
 More general information can be found in the following documents:
 \begin{itemize}
@@ -419,7 +455,7 @@ More general information can be found in the following documents:
 \item Documentation of the \LaTeX{} packages used in the class (see below).
 \end{itemize}
 
-\subsection{Packages used}
+\subsection{Packages Used}
 
 The class is based on the standard \texttt{article} class, and loads
 the following packages:
