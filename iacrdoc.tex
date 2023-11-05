@@ -17,7 +17,7 @@
 \institute{Inria, Paris, France, \email{gaetan.leurent@inria.fr} \and
            Ruhr-Universität Bochum, Bochum, Germany, \email{friedrich.wiemer@rub.de}}
 \title[\texttt{iacrtans} class documentation]{\publname}
-\subtitle{\LaTeX{} Class Documentation (v. 0.92)}
+\subtitle{\LaTeX{} Class Documentation (v. 0.93)}
 
 \begin{document}
 
@@ -283,6 +283,11 @@ after all other packages.  If you need some packages to be loaded
 \emph{after} \texttt{hyperref}, you should load \texttt{hyperref}
 explicitly at the correct position, but not use the \texttt{[nohyperref]} option.
 
+\paragraph{\texttt{[nohyperxmp]}}
+disables the automatic loading of \texttt{hyperxmp}.
+The \texttt{iacrtrans} class has issues with \texttt{hyperxmp}
+versions betwen 5.0 and 5.4, use this option to disable loading it.
+
 % \paragraph{\texttt{[metada]}}
 % activates the automatic creation of PDF metadata.  This is
 % enabled automatically byin the \texttt{final} version, but it has been disabled by default
@@ -476,6 +481,9 @@ Jonas Wloka.
               \texttt{nolastpage}.
 \item[v 0.92] Fixed hyperxmp issues.
               Added template for authors.
+\item[v 0.93] Fixed bug with affiliation footnote numbering for more than 10 affiliations.
+              Fixed hyperxmp issues (new issues with version 5.12).
+              Added new class option \texttt{nohyperxmp}.
 \end{description}
 
 
