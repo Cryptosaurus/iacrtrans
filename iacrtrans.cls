@@ -32,6 +32,7 @@
 % [spthm]         Emulate llncs sptheorem and remove automatic \qed in proof
 % [floatrow]      Load floatrow package with correct captions
 % [nohyperref]    Disable automatic loading of hyperref
+% [nohyperxmp]    Disable automatic loading of hyperxmp
 % [nolastpage]    Disable automatic loading of lastpage
 % [xcolor=xxx]    Pass xxx to xcolor package
 % [hyperref=xxx]  Pass xxx to hyperref package
@@ -70,7 +71,7 @@
         \def\publnameshort{IACR TCHES}%
     \fi
 }{%
-    \ClassError{iacrtrans}{journal value is only allowed to be: tosc, or tches}%
+    \ClassError{iacrtrans}{journal value is only allowed to be: tosc, or tches}{}%
 }
 \def\IACR@vol{0}
 \def\IACR@no{0}
@@ -105,6 +106,9 @@
 \newif\if@hyperxmp@doi
 \@hyperxmp@doifalse
 \define@key{IACR}{nohyperref}[]{\@loadhrfalse}
+\newif\if@loadhxmp
+\@loadhxmptrue
+\define@key{IACR}{nohyperxmp}[]{\@loadhxmpfalse}
 \newif\if@floatrow
 \@floatrowfalse
 \define@key{IACR}{floatrow}[]{\@floatrowtrue}
@@ -135,12 +139,27 @@
 % article class with a4paper
 \LoadClass[10pt,twoside]{article}[2007/10/19]
 
-% Hyperref must be loaded last, but before other AtEndPreamble hooks
+% Loading hyperref and hyperxmp is tricky:
+% - hyperref must be loaded after most other packages => we use AtEndPreamble
+% - version 5.12 of hyperxmp must be loaded after hyperref
+% - some versions of hyperxmp (5.x, x<5) have issues when loaded from AtEndPreamble
+%   => there is no easy way to detect version number before loading, throw error
 \if@loadhr
   \RequirePackage{xcolor}
   \RequirePackage{etoolbox}
   \AtEndPreamble{
     \@ifpackageloaded{hyperref}{}{\RequirePackage{hyperref}}
+    \if@loadhxmp
+      \RequirePackage{hyperxmp} % Load hyperxmp after hyperref
+      % hyperxmp 5.x, x<5 has issues with AtEndPreamble, throw error
+      \@ifpackagelater{hyperxmp}{2020/03/20}{
+        \@ifpackagelater{hyperxmp}{2020/09/24}{}{
+          \ClassError{iacrtrans}{Unsupported hyperxmp version.\MessageBreak
+            Add class option nohyperxmp no disable this package}{}
+        }}{}
+      % Old versions of hyperxmp do not support DOI
+      \@ifpackagelater{hyperxmp}{2019/03/14}{\@hyperxmp@doitrue\hypersetup{keeppdfinfo=true}}{}
+    \fi
     \hypersetup{pdflang=en}
     \hypersetup{colorlinks=true,
       citecolor=black!70!green,
@@ -150,10 +169,7 @@
       \def\DIFadd#1{#1}%
       \def\DIFdel#1{}%
     }
-    % Old versions of hyperxmp do not support DOI
-    \@ifpackagelater{hyperxmp}{2019/03/14}{\@hyperxmp@doitrue\hypersetup{keeppdfinfo=true}}{}
   }
-  \RequirePackage{hyperxmp} % hyperxmp 5.x has issues with AtEndPreamble
   \setcounter{tocdepth}{2}
 \fi
 
