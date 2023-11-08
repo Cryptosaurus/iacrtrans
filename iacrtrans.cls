@@ -33,7 +33,7 @@
 % [floatrow]      Load floatrow package with correct captions
 % [nohyperref]    Disable automatic loading of hyperref
 % [nohyperxmp]    Disable automatic loading of hyperxmp
-% [nolastpage]    Disable automatic loading of lastpage
+% [nolastpage]    Obsolete
 % [xcolor=xxx]    Pass xxx to xcolor package
 % [hyperref=xxx]  Pass xxx to hyperref package
 %
@@ -76,7 +76,7 @@
 \def\IACR@vol{0}
 \def\IACR@no{0}
 \def\IACR@fp{1}
-\def\IACR@lp{\if@loadhr\pageref*{LastPage}\else\pageref{LastPage}\fi}
+\def\IACR@lp{\if@loadhr\pageref*{TotPages}\else\pageref{TotPages}\fi}
 \def\IACR@ISSN{XXXX-XXXX}
 \def\IACR@DOI{XXXXXXXX}
 \def\IACR@Received{20XX-XX-XX}
@@ -126,9 +126,7 @@
 \newif\if@spthm
 \@spthmfalse
 \define@key{IACR}{spthm}[]{\@spthmtrue}
-\newif\if@IACR@lastpage
-\@IACR@lastpagetrue
-\define@key{IACR}{nolastpage}[]{\@IACR@lastpagefalse}
+\define@key{IACR}{nolastpage}[]{\ClassWarning{Option nolastpage is obsolete}}
 
 \define@key{IACR}{xcolor}{\PassOptionsToPackage{#1}{xcolor}}
 \define@key{IACR}{hyperref}{\PassOptionsToPackage{#1}{hyperref}}
@@ -299,16 +297,7 @@
 \else
   \if@preprint
   \else
-    % recent versions of hyperxmp load totpages, which conflicts with lastpage
-    \@ifpackageloaded{totpages}{
-      \def\IACR@lp{\if@loadhr\pageref*{TotPages}\else\pageref{TotPages}\fi}
-    }{
-      \if@IACR@lastpage
-        \RequirePackage{lastpage}
-      \else
-        \typeout{IACR Trans: not loading lastpage, please use \@backslashchar setlastpage}
-      \fi%!lastpage
-    }
+    \RequirePackage{totpages}
   \fi%!preprint
 \fi%!submission
 
