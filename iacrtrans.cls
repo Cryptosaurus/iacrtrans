@@ -338,8 +338,10 @@
       \if@IACR@Published Published: \IACR@Published \fi%
     }%
     \if@loadhr
-      \hypersetup{pdfcopyright={Licensed under Creative Commons License CC-BY 4.0.}}
-      \hypersetup{pdflicenseurl={http://creativecommons.org/licenses/by/4.0/}}
+      \if@loadhxmp
+        \hypersetup{pdfcopyright={Licensed under Creative Commons License CC-BY 4.0.}}
+        \hypersetup{pdflicenseurl={http://creativecommons.org/licenses/by/4.0/}}
+      \fi
       \hypersetup{pdfsubject={\publname{}, DOI:\IACR@DOI}}
     \fi
   \fi%!preprint
