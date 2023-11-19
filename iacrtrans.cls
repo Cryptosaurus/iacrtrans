@@ -648,5 +648,12 @@
 \RequirePackage[T1]{fontenc}
 \RequirePackage{lmodern}
 
+% OrcID
+\RequirePackage{xcolor}
+\RequirePackage{fontawesome5}
+
+\definecolor{orcidlogocol}{rgb}{0.65, 0.807, 0.223}
+\newcommand{\orcid}[1]{$\,$\href{https://orcid.org/#1}{\textcolor{orcidlogocol}{\faOrcid}}}
+
 \endinput
 %end of file iacrtrans.cls
