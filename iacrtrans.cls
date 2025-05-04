@@ -176,8 +176,12 @@
 \RequirePackage[a4paper,hscale=0.65,vscale=0.75,marginratio=1:1,marginparwidth=2.7cm]{geometry}
 \RequirePackage{afterpage}
 % Title fonts: bf+sf
-\RequirePackage{sectsty}
-\allsectionsfont{\sffamily\boldmath}
+\RequirePackage{titlesec}
+\titleformat{\section}{\sffamily\Large\bfseries\boldmath}{\thesection}{1em}{}
+\titleformat{\subsection}{\sffamily\large\bfseries\boldmath}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\sffamily\normalsize\bfseries\boldmath}{\thesubsubsection}{1em}{}
+\titleformat{\paragraph}[runin]{\sffamily\normalsize\bfseries\boldmath}{\theparagraph}{1em}{}
+\titleformat{\subparagraph}[runin]{\sffamily\normalsize\bfseries\boldmath}{\thesubparagraph}{1em}{}
 % Also for descriptions
 \renewcommand*\descriptionlabel[1]{\hspace\labelsep
                                    \normalfont\bfseries\sffamily\boldmath #1}
